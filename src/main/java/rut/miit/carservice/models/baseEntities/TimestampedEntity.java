@@ -18,3 +18,4 @@ public abstract class TimestampedEntity extends BaseEntity {
     @Column(name = "modified")
     private LocalDateTime modified;
 }
+

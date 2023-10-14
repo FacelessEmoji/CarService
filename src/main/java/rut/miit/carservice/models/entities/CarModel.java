@@ -13,23 +13,23 @@ import rut.miit.carservice.models.enums.ModelCategory;
 @AllArgsConstructor
 public class CarModel extends TimestampedEntity{
 
-    @Column(name = "name")
+    @Column(name = "name", length = 255, nullable = false)
     private String name;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "category")
+    @Column(name = "category", length = 11, nullable = false)
     private ModelCategory category;
 
-    @Column(name = "imageUrl")
+    @Column(name = "imageUrl", length = 512, nullable = false)
     private String imageUrl;
 
-    @Column(name = "startYear")
+    @Column(name = "startYear", length = 11, nullable = false)
     private Integer startYear;
 
-    @Column(name = "endYear")
+    @Column(name = "endYear", length = 11, nullable = false)
     private Integer endYear;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "brand_id")
     private CarBrand brand;
 }

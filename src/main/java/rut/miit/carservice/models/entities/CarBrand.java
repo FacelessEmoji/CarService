@@ -9,12 +9,17 @@ import java.util.*;
 @Entity
 @Table(name = "brands")
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class CarBrand extends TimestampedEntity {
-    @Column(name = "name")
+    @Column(name = "name", length = 255, nullable = false)
     private String name;
 
     @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CarModel> models = new ArrayList<>();
+
+    public CarBrand(String name) {
+        this.name = name;
+    }
 }
