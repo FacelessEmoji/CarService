@@ -10,10 +10,8 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name = "offers")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class Offer extends TimestampedEntity {
 
     @Column(name = "description", columnDefinition = "text")

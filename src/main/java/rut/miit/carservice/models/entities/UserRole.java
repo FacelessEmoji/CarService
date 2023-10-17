@@ -10,10 +10,8 @@ import java.util.*;
 
 @Entity
 @Table(name = "user_roles")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class UserRole extends BaseEntity {
 
     @Enumerated(EnumType.STRING)

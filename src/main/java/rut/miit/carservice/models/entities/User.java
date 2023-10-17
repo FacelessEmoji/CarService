@@ -8,10 +8,8 @@ import java.util.*;
 
 @Entity
 @Table(name = "users")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class User extends TimestampedEntity {
     @Column(name = "username", length = 255, nullable = false)
     private String username;

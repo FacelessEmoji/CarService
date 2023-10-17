@@ -7,10 +7,8 @@ import rut.miit.carservice.models.enums.ModelCategory;
 
 @Entity
 @Table(name = "models")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class CarModel extends TimestampedEntity{
 
     @Column(name = "name", length = 255, nullable = false)

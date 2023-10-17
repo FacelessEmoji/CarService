@@ -8,10 +8,8 @@ import java.util.*;
 
 @Entity
 @Table(name = "brands")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class CarBrand extends TimestampedEntity {
     @Column(name = "name", length = 255, nullable = false)
     private String name;
