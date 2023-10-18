@@ -14,14 +14,10 @@ import java.util.*;
 @NoArgsConstructor
 public class UserRole extends BaseEntity {
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     @Column(name = "role", length = 11, nullable = false)
     private UserRoleType role;
 
     @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<User> users = new ArrayList<>();
-
-    public UserRole(UserRoleType role) {
-        this.role = role;
-    }
 }

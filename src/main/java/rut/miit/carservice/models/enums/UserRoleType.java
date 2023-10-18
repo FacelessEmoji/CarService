@@ -1,6 +1,12 @@
 package rut.miit.carservice.models.enums;
 
 public enum UserRoleType {
-    USER,
-    ADMIN
+    USER(1),
+    ADMIN(2);
+
+    private final int userRoleTypeCode;
+
+    private UserRoleType(int userRoleTypeCode) {
+        this.userRoleTypeCode = userRoleTypeCode;
+    }
 }

@@ -17,7 +17,7 @@ public class Offer extends TimestampedEntity {
     @Column(name = "description", columnDefinition = "text")
     private String description;
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     @Column(name = "engine", length = 11, nullable = false)
     private EngineType engine;
 
@@ -30,18 +30,18 @@ public class Offer extends TimestampedEntity {
     @Column(name = "price", columnDefinition = "numeric(19,2)", nullable = false)
     private BigDecimal price;
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     @Column(name = "transmission", length = 11, nullable = false)
     private TransmissionType transmission;
 
     @Column(name = "year", length = 11, nullable = false)
     private Integer year;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "model_id")
     private CarModel model;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "seller_id")
     private User seller;
 }

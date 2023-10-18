@@ -14,7 +14,7 @@ public class CarModel extends TimestampedEntity{
     @Column(name = "name", length = 255, nullable = false)
     private String name;
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     @Column(name = "category", length = 11, nullable = false)
     private ModelCategory category;
 
@@ -27,7 +27,7 @@ public class CarModel extends TimestampedEntity{
     @Column(name = "endYear", length = 11, nullable = false)
     private Integer endYear;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "brand_id")
     private CarBrand brand;
 }

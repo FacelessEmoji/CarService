@@ -29,21 +29,10 @@ public class User extends TimestampedEntity {
     @Column(name = "imageUrl", length = 512, nullable = false)
     private String imageUrl;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "role_id")
     private UserRole role;
 
     @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Offer> offers = new ArrayList<>();
-
-    public User(String username, String password,
-                String firstName, String lastName, Boolean isActive, String imageUrl, UserRole role) {
-        this.username = username;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.isActive = isActive;
-        this.imageUrl = imageUrl;
-        this.role = role;
-    }
 }
