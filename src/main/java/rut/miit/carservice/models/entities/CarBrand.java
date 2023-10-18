@@ -16,8 +16,4 @@ public class CarBrand extends TimestampedEntity {
 
     @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CarModel> models = new ArrayList<>();
-
-    public CarBrand(String name) {
-        this.name = name;
-    }
 }
