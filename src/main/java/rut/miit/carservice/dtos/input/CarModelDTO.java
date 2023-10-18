@@ -1,13 +1,13 @@
-package rut.miit.carservice.dtos;
+package rut.miit.carservice.dtos.input;
 
 import lombok.Data;
 import rut.miit.carservice.models.enums.ModelCategory;
+import rut.miit.carservice.dtos.base.BaseDTO;
+import rut.miit.carservice.dtos.base.TimestampedDTO;
 
-import java.util.UUID;
 
 @Data
-public class CarModelDTO {
-    private UUID id;
+public class CarModelDTO extends BaseDTO {
     private String name;
     private ModelCategory category;
     private String imageUrl;

@@ -3,6 +3,8 @@ package rut.miit.carservice.models.entities;
 import jakarta.persistence.*;
 import lombok.*;
 import rut.miit.carservice.models.baseEntities.TimestampedEntity;
+import rut.miit.carservice.models.converters.EngineTypeConverter;
+import rut.miit.carservice.models.converters.TransmissionTypeConverter;
 import rut.miit.carservice.models.enums.EngineType;
 import rut.miit.carservice.models.enums.TransmissionType;
 
@@ -17,7 +19,7 @@ public class Offer extends TimestampedEntity {
     @Column(name = "description", columnDefinition = "text")
     private String description;
 
-    @Enumerated(EnumType.ORDINAL)
+    @Convert(converter = EngineTypeConverter.class)
     @Column(name = "engine", length = 11, nullable = false)
     private EngineType engine;
 
@@ -30,7 +32,7 @@ public class Offer extends TimestampedEntity {
     @Column(name = "price", columnDefinition = "numeric(19,2)", nullable = false)
     private BigDecimal price;
 
-    @Enumerated(EnumType.ORDINAL)
+    @Convert(converter = TransmissionTypeConverter.class)
     @Column(name = "transmission", length = 11, nullable = false)
     private TransmissionType transmission;
 

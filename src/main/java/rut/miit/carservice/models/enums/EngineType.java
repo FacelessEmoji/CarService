@@ -1,5 +1,8 @@
 package rut.miit.carservice.models.enums;
 
+import lombok.Getter;
+
+@Getter
 public enum EngineType {
     GASOLINE(1),
     DIESEL(2),

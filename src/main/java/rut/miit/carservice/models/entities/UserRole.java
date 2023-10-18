@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import rut.miit.carservice.models.baseEntities.BaseEntity;
+import rut.miit.carservice.models.converters.RoleTypeConverter;
 import rut.miit.carservice.models.enums.UserRoleType;
 
 import java.util.*;
@@ -14,7 +15,7 @@ import java.util.*;
 @NoArgsConstructor
 public class UserRole extends BaseEntity {
 
-    @Enumerated(EnumType.ORDINAL)
+    @Convert(converter = RoleTypeConverter.class)
     @Column(name = "role", length = 11, nullable = false)
     private UserRoleType role;
 

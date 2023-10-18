@@ -1,5 +1,8 @@
 package rut.miit.carservice.models.enums;
 
+import lombok.Getter;
+
+@Getter
 public enum ModelCategory {
     CAR(1),
     BUSS(2),

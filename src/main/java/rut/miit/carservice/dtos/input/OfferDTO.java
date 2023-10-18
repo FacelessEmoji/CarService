@@ -1,15 +1,14 @@
-package rut.miit.carservice.dtos;
+package rut.miit.carservice.dtos.input;
 
 import lombok.Data;
 import rut.miit.carservice.models.enums.EngineType;
 import rut.miit.carservice.models.enums.TransmissionType;
+import rut.miit.carservice.dtos.base.BaseDTO;
 
 import java.math.BigDecimal;
-import java.util.UUID;
 
 @Data
-public class OfferDTO {
-    private UUID id;
+public class OfferDTO extends BaseDTO{
     private String description;
     private EngineType engine;
     private String imageUrl;
@@ -18,6 +17,6 @@ public class OfferDTO {
     private TransmissionType transmission;
     private Integer year;
     //
-    private CarModelWithBrandDTO model;
-    private UserWithRoleDTO seller;
+    private CarModelDTO model;
+    private UserDTO seller;
 }
