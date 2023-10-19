@@ -1,9 +1,12 @@
 package rut.miit.carservice.dtos.input;
 
-import lombok.Data;
+import lombok.*;
 import rut.miit.carservice.dtos.base.BaseDTO;
 
-@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class UserDTO extends BaseDTO{
     private String username;
     private String password;

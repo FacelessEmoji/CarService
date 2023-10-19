@@ -39,11 +39,11 @@ public class Offer extends TimestampedEntity {
     @Column(name = "year", length = 11, nullable = false)
     private Integer year;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "model_id")
     private CarModel model;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "seller_id")
     private User seller;
 }

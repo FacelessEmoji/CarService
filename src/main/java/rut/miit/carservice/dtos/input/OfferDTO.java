@@ -1,13 +1,16 @@
 package rut.miit.carservice.dtos.input;
 
-import lombok.Data;
+import lombok.*;
 import rut.miit.carservice.models.enums.EngineType;
 import rut.miit.carservice.models.enums.TransmissionType;
 import rut.miit.carservice.dtos.base.BaseDTO;
 
 import java.math.BigDecimal;
 
-@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class OfferDTO extends BaseDTO{
     private String description;
     private EngineType engine;

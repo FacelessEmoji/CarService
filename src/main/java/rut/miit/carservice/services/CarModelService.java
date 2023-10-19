@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface CarModelService<ID>{
     CarModelDTO getModelById(ID modelId);
+    CarModelDTO getModelByNameAndBrand(String modelName, String brandName);
     List<CarModelDTO> getAllModels();
     CarModelDTO addNewModel(CarModelDTO modelDTO);
     CarModelDTO updateModelName(ID modelId, String modelName);

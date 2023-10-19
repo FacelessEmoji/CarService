@@ -8,4 +8,5 @@ import java.util.UUID;
 
 @Repository
 public interface CarModelRepository extends JpaRepository<CarModel, UUID>{
+    CarModel findByNameAndBrand_Name(String modelName, String brandName);
 }

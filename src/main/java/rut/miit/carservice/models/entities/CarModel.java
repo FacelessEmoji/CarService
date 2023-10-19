@@ -27,7 +27,7 @@ public class CarModel extends TimestampedEntity{
 
     @Column(name = "endYear", length = 11, nullable = false)
     private Integer endYear;
-
+//
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "brand_id")
     private CarBrand brand;
