@@ -10,7 +10,6 @@ public class RoleTypeConverter implements AttributeConverter<UserRoleType, Integ
 
     @Override
     public Integer convertToDatabaseColumn(UserRoleType attribute) {
-        System.out.println(attribute.getUserRoleTypeCode());
         return attribute == null ? null : attribute.getUserRoleTypeCode();
     }
 
