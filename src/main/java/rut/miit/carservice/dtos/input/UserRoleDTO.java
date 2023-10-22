@@ -9,6 +9,7 @@ import rut.miit.carservice.dtos.base.TimestampedDTO;
 @NoArgsConstructor
 @Getter
 @Setter
+@ToString
 public class UserRoleDTO extends BaseDTO{
     private UserRoleType role;
 }

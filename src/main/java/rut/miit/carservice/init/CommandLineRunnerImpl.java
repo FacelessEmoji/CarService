@@ -4,14 +4,14 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 import rut.miit.carservice.dtos.input.*;
-import rut.miit.carservice.repositories.*;
-import rut.miit.carservice.models.entities.*;
 import rut.miit.carservice.models.enums.*;
+import rut.miit.carservice.repositories.OfferRepository;
 import rut.miit.carservice.services.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.UUID;
 
 @Component
@@ -27,6 +27,7 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
 
     @Autowired
     private UserService<UUID> userService;
+
     @Autowired
     private UserRoleService<UUID> userRoleService;
 
@@ -76,7 +77,7 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
                 2022, carModelService.getModelByNameAndBrand("Model X", "Tesla"),userService.getUserByUsername("test1")));
         offerService.addNewOffer(new OfferDTO("Brand New BMW", EngineType.GASOLINE,
                 "https://82.146.90.6:81",5000, new BigDecimal("50200"), TransmissionType.AUTOMATIC,
-                2021, carModelService.getModelByNameAndBrand("3 Series", "BMW"),userService.getUserByUsername("martin23")));
+                2021, carModelService.getModelByNameAndBrand("3 Series", "BMW"),userService.getUserByUsername("test1")));
         offerService.addNewOffer(new OfferDTO("Elegant Mercedes", EngineType.DIESEL,
                 "https://82.146.90.6:82",8000, new BigDecimal("56000"), TransmissionType.AUTOMATIC,
                 2021, carModelService.getModelByNameAndBrand("C-Class", "Mercedes"),userService.getUserByUsername("julia45")));
@@ -97,31 +98,22 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
                 2017, carModelService.getModelByNameAndBrand("A6", "Audi"),userService.getUserByUsername("isabella99")));
     }
 
-
-
-//    public void seedData() {
-//
-//        userRoleService.addNewRole(new UserRoleDTO(UserRoleType.USER));
-//        userRoleService.addNewRole(new UserRoleDTO(UserRoleType.ADMIN));
-//
-//        userService.addNewUser(new UserDTO( "test1", "111", "Nick", "Jackson", true, "https://82.126.59.6:80", userRoleService.getRoleByName(UserRoleType.USER)));
-//        userService.addNewUser(new UserDTO( "test2", "qwerty123", "test", "test", true, "https://42.146.59.6:80", userRoleService.getRoleByName(UserRoleType.USER)));
-//
-//        carBrandService.addNewBrand(new CarBrandDTO("Toyota"));
-//        carBrandService.addNewBrand(new CarBrandDTO("BMW"));
-//        carBrandService.addNewBrand(new CarBrandDTO("Tesla"));
-//
-//        carModelService.addNewModel(new CarModelDTO("Model X", ModelCategory.CAR,"https://82.146.59.6:80",2015,2023,carBrandService.getBrandByName("Tesla")));
-//
-//        offerService.addNewOffer(new OfferDTO("Test Description", EngineType.ELECTRIC,
-//                "https://82.146.90.6:80",13744, new BigDecimal("45700"), TransmissionType.AUTOMATIC,
-//                2022, carModelService.getModelByNameAndBrand("Model X", "Tesla"),userService.getUserByUsername("test1")));
-//
-//    }
-
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args){
         seedData();
+        System.out.println("Test");
+        LocalDateTime startTime = LocalDateTime.of(2023, Month.JANUARY, 1, 0, 0);
+        LocalDateTime endTime = LocalDateTime.of(2024, Month.JANUARY, 1, 0, 0);
+        offerService.getOffersCreatedBetweenDates(startTime, endTime).forEach(System.out::println);
+        System.out.println();
+        offerService.getOffersByModelAndBrand("Model X", "Tesla").forEach(System.out::println);
+        System.out.println();
+        offerService.getOffersBySellerUsername("test1").forEach(System.out::println);
+        System.out.println();
+        carModelService.getModelsByBrandAndYears("Tesla", 2015, 2023).forEach(System.out::println);
+        System.out.println();
+        carModelService.getModelsByCriteria(ModelCategory.CAR, EngineType.GASOLINE, TransmissionType.AUTOMATIC,
+                1000000, new BigDecimal(10000000)).forEach(System.out::println);
     }
 }
 

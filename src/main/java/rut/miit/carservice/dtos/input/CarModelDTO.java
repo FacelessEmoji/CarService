@@ -10,6 +10,7 @@ import rut.miit.carservice.dtos.base.TimestampedDTO;
 @NoArgsConstructor
 @Getter
 @Setter
+@ToString
 public class CarModelDTO extends BaseDTO {
     private String name;
     private ModelCategory category;

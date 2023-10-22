@@ -15,7 +15,6 @@ import java.math.BigDecimal;
 @Data
 @NoArgsConstructor
 public class Offer extends TimestampedEntity {
-
     @Column(name = "description", columnDefinition = "text")
     private String description;
 

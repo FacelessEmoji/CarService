@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Getter
 @Setter
+@ToString
 public class OfferDTO extends BaseDTO{
     private String description;
     private EngineType engine;

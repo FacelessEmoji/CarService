@@ -1,12 +1,16 @@
 package rut.miit.carservice.dtos.output;
 
 
-import lombok.Data;
+import lombok.*;
 import rut.miit.carservice.dtos.input.UserRoleDTO;
 import rut.miit.carservice.dtos.base.BaseDTO;
 import rut.miit.carservice.dtos.base.TimestampedDTO;
 
-@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@ToString
 public class UserOutputDTO extends BaseDTO{
     private String username;
     //pass

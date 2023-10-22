@@ -7,6 +7,7 @@ import rut.miit.carservice.dtos.base.BaseDTO;
 @NoArgsConstructor
 @Getter
 @Setter
+@ToString
 public class UserDTO extends BaseDTO{
     private String username;
     private String password;

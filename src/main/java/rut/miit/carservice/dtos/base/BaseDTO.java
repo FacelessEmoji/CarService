@@ -1,6 +1,6 @@
 package rut.miit.carservice.dtos.base;
 
-import lombok.Data;
+import lombok.*;
 
 import java.util.UUID;
 

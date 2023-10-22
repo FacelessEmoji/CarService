@@ -5,9 +5,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import rut.miit.carservice.dtos.input.CarModelDTO;
 import rut.miit.carservice.models.entities.CarModel;
+import rut.miit.carservice.models.enums.EngineType;
+import rut.miit.carservice.models.enums.ModelCategory;
+import rut.miit.carservice.models.enums.TransmissionType;
 import rut.miit.carservice.repositories.CarModelRepository;
 import rut.miit.carservice.services.CarModelService;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -39,6 +43,18 @@ public class CarModelServiceImpl implements CarModelService<UUID> {
     @Override
     public List<CarModelDTO> getAllModels() {
         return modelRepository.findAll().stream()
+                .map(m -> modelMapper.map(m, CarModelDTO.class)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<CarModelDTO> getModelsByCriteria(ModelCategory category, EngineType engine, TransmissionType transmission, Integer maxMileage, BigDecimal maxPrice) {
+        return modelRepository.findModelsByCriteria(category, engine, transmission, maxMileage, maxPrice).stream()
+                .map(m -> modelMapper.map(m, CarModelDTO.class)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<CarModelDTO> getModelsByBrandAndYears(String brandName, Integer startYear, Integer endYear) {
+        return modelRepository.findAllByBrand_NameAndStartYearGreaterThanEqualAndEndYearGreaterThanEqualOrderByEndYearDesc(brandName, startYear, endYear).stream()
                 .map(m -> modelMapper.map(m, CarModelDTO.class)).collect(Collectors.toList());
     }
 

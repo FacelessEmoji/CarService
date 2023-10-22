@@ -8,6 +8,7 @@ import rut.miit.carservice.dtos.base.TimestampedDTO;
 @NoArgsConstructor
 @Getter
 @Setter
+@ToString
 public class CarBrandDTO extends BaseDTO {
     private String name;
 }

@@ -1,12 +1,16 @@
 package rut.miit.carservice.dtos.output;
 
-import lombok.Data;
+import lombok.*;
 import rut.miit.carservice.models.enums.ModelCategory;
 import rut.miit.carservice.dtos.base.BaseDTO;
 import rut.miit.carservice.dtos.base.TimestampedDTO;
 
 
-@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@ToString
 public class CarModelOutputDTO extends BaseDTO {
     private String name;
     private ModelCategory category;
