@@ -9,8 +9,6 @@ import org.hibernate.annotations.UuidGenerator;
 import java.util.UUID;
 
 @MappedSuperclass
-@Getter
-@Setter
 public abstract class BaseEntity {
     @Id
     @GeneratedValue(generator = "UUID")
@@ -22,4 +20,11 @@ public abstract class BaseEntity {
     @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
 
+    public UUID getId() {
+        return id;
+    }
+
+    private void setId(UUID id) {
+        this.id = id;
+    }
 }

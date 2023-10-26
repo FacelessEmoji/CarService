@@ -66,7 +66,7 @@ public class UserServiceImpl implements UserService<UUID> {
     @Override
     public UserDTO updateIsActive(UUID userId, boolean isActive) {
         User user = userRepository.findById(userId).orElseThrow();
-        user.setIsActive(isActive);
+        user.setActive(isActive);
         userRepository.save(user);
         return modelMapper.map(user, UserDTO.class);
     }

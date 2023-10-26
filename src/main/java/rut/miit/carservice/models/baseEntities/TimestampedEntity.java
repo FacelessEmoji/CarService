@@ -7,8 +7,6 @@ import org.hibernate.annotations.*;
 import java.time.LocalDateTime;
 
 @MappedSuperclass
-@Getter
-@Setter
 public abstract class TimestampedEntity extends BaseEntity {
     @CreationTimestamp
     @Column(name = "created", updatable = false)
@@ -17,5 +15,21 @@ public abstract class TimestampedEntity extends BaseEntity {
     @UpdateTimestamp
     @Column(name = "modified")
     private LocalDateTime modified;
+
+    public LocalDateTime getCreated() {
+        return created;
+    }
+
+    private void setCreated(LocalDateTime created) {
+        this.created = created;
+    }
+
+    public LocalDateTime getModified() {
+        return modified;
+    }
+
+    private void setModified(LocalDateTime modified) {
+        this.modified = modified;
+    }
 }
 
