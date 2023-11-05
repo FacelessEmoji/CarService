@@ -11,24 +11,23 @@ import rut.miit.carservice.services.interfaces.publicAPI.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.Month;
-import java.util.UUID;
 
 @Component
 public class CommandLineRunnerImpl implements CommandLineRunner {
     @Autowired
-    private CarBrandService<UUID> carBrandService;
+    private CarBrandService<String> carBrandService;
 
     @Autowired
-    private CarModelService<UUID> carModelService;
+    private CarModelService<String> carModelService;
 
     @Autowired
-    private OfferService<UUID> offerService;
+    private OfferService<String> offerService;
 
     @Autowired
-    private UserService<UUID> userService;
+    private UserService<String> userService;
 
     @Autowired
-    private UserRoleService<UUID> userRoleService;
+    private UserRoleService<String> userRoleService;
 
     private ModelMapper modelMapper;
 
@@ -100,6 +99,7 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
     @Override
     public void run(String... args){
         seedData();
+
         System.out.println("Test");
         LocalDateTime startTime = LocalDateTime.of(2023, Month.JANUARY, 1, 0, 0);
         LocalDateTime endTime = LocalDateTime.of(2024, Month.JANUARY, 1, 0, 0);

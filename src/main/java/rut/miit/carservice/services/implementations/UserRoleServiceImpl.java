@@ -12,11 +12,10 @@ import rut.miit.carservice.services.interfaces.publicAPI.UserRoleService;
 import rut.miit.carservice.util.ValidationUtilImpl;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-public class UserRoleServiceImpl implements UserRoleService<UUID>, UserRoleInternalService<UUID> {
+public class UserRoleServiceImpl implements UserRoleService<String>, UserRoleInternalService<String> {
     private final UserRoleRepository roleRepository;
     private final ModelMapper modelMapper;
     private final ValidationUtilImpl validationUtil;
@@ -29,7 +28,7 @@ public class UserRoleServiceImpl implements UserRoleService<UUID>, UserRoleInter
     }
 
     @Override
-    public UserRole getRoleById(UUID roleId) {
+    public UserRole getRoleById(String roleId) {
         return roleRepository.findById(roleId).orElse(null);
     }
 
@@ -50,7 +49,7 @@ public class UserRoleServiceImpl implements UserRoleService<UUID>, UserRoleInter
     }
 
     @Override
-    public UserRoleDTO updateRoleName(UUID roleId, UserRoleType roleName) {
+    public UserRoleDTO updateRoleName(String roleId, UserRoleType roleName) {
         UserRole role = roleRepository.findById(roleId).orElseThrow();
         role.setRole(roleName);
         roleRepository.save(role);
@@ -58,7 +57,7 @@ public class UserRoleServiceImpl implements UserRoleService<UUID>, UserRoleInter
     }
 
     @Override
-    public void deleteRoleById(UUID roleId) {
+    public void deleteRoleById(String roleId) {
         roleRepository.deleteById(roleId);
     }
 }

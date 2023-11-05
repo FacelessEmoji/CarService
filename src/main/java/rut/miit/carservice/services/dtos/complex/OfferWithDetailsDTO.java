@@ -7,7 +7,6 @@ import rut.miit.carservice.services.dtos.base.BaseDTO;
 
 import java.math.BigDecimal;
 
-
 @Data
 public class OfferWithDetailsDTO extends BaseDTO{
     private String description;

@@ -11,11 +11,10 @@ import rut.miit.carservice.services.interfaces.publicAPI.CarBrandService;
 import rut.miit.carservice.util.ValidationUtilImpl;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-public class CarBrandServiceImpl implements CarBrandService<UUID>, CarBrandInternalService<UUID> {
+public class CarBrandServiceImpl implements CarBrandService<String>, CarBrandInternalService<String> {
     private final CarBrandRepository brandRepository;
     private final ModelMapper modelMapper;
     private final ValidationUtilImpl validationUtil;
@@ -28,7 +27,7 @@ public class CarBrandServiceImpl implements CarBrandService<UUID>, CarBrandInter
     }
 
     @Override
-    public CarBrand getBrandById(UUID brandId) {
+    public CarBrand getBrandById(String brandId) {
         return brandRepository.findById(brandId).orElse(null);
     }
 
@@ -49,7 +48,7 @@ public class CarBrandServiceImpl implements CarBrandService<UUID>, CarBrandInter
     }
 
     @Override
-    public CarBrandDTO updateBrandName(UUID brandId, String brandName) {
+    public CarBrandDTO updateBrandName(String brandId, String brandName) {
         CarBrand newCarBrand = brandRepository.findById(brandId).orElseThrow();
         newCarBrand.setName(brandName);
         brandRepository.save(newCarBrand);
@@ -57,7 +56,7 @@ public class CarBrandServiceImpl implements CarBrandService<UUID>, CarBrandInter
     }
 
     @Override
-    public void deleteBrandById(UUID brandId) {
+    public void deleteBrandById(String brandId) {
         brandRepository.deleteById(brandId);
     }
 }

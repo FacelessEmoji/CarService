@@ -11,10 +11,9 @@ import rut.miit.carservice.models.enums.TransmissionType;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.UUID;
 
 @Repository
-public interface CarModelRepository extends JpaRepository<CarModel, UUID>{
+public interface CarModelRepository extends JpaRepository<CarModel, String>{
     @Query("SELECT o.model FROM Offer o " +
             "WHERE o.model.category = :category " +
             "AND o.engine = :engine " +

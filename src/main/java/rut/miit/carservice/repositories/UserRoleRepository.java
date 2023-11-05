@@ -5,9 +5,7 @@ import org.springframework.stereotype.Repository;
 import rut.miit.carservice.models.entities.UserRole;
 import rut.miit.carservice.models.enums.UserRoleType;
 
-import java.util.UUID;
-
 @Repository
-public interface UserRoleRepository extends JpaRepository<UserRole, UUID> {
+public interface UserRoleRepository extends JpaRepository<UserRole, String> {
     UserRole findByRole(UserRoleType userRoleType);
 }

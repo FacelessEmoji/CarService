@@ -15,11 +15,10 @@ import rut.miit.carservice.util.ValidationUtilImpl;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-public class CarModelServiceImpl implements CarModelService<UUID>, CarModelInternalService<UUID>{
+public class CarModelServiceImpl implements CarModelService<String>, CarModelInternalService<String>{
     private final CarModelRepository modelRepository;
     private final ModelMapper modelMapper;
     private final ValidationUtilImpl validationUtil;
@@ -32,7 +31,7 @@ public class CarModelServiceImpl implements CarModelService<UUID>, CarModelInter
     }
 
     @Override
-    public CarModel getModelById(UUID modelId) {
+    public CarModel getModelById(String modelId) {
         return modelRepository.findById(modelId).orElse(null);
     }
 
@@ -65,7 +64,7 @@ public class CarModelServiceImpl implements CarModelService<UUID>, CarModelInter
     }
 
     @Override
-    public CarModelDTO updateModelName(UUID modelId, String modelName) {
+    public CarModelDTO updateModelName(String modelId, String modelName) {
         CarModel carModel = modelRepository.findById(modelId).orElseThrow();
         carModel.setName(modelName);
         modelRepository.save(carModel);
@@ -73,7 +72,7 @@ public class CarModelServiceImpl implements CarModelService<UUID>, CarModelInter
     }
 
     @Override
-    public CarModelDTO updateModelImageUrl(UUID modelId, String imageUrl) {
+    public CarModelDTO updateModelImageUrl(String modelId, String imageUrl) {
         CarModel carModel = modelRepository.findById(modelId).orElseThrow();
         carModel.setImageUrl(imageUrl);
         modelRepository.save(carModel);
@@ -81,7 +80,7 @@ public class CarModelServiceImpl implements CarModelService<UUID>, CarModelInter
     }
 
     @Override
-    public CarModelDTO updateModelStartYear(UUID modelId, int startYear) {
+    public CarModelDTO updateModelStartYear(String modelId, int startYear) {
         CarModel carModel = modelRepository.findById(modelId).orElseThrow();
         carModel.setStartYear(startYear);
         modelRepository.save(carModel);
@@ -89,7 +88,7 @@ public class CarModelServiceImpl implements CarModelService<UUID>, CarModelInter
     }
 
     @Override
-    public CarModelDTO updateModelEndYear(UUID modelId, int endYear) {
+    public CarModelDTO updateModelEndYear(String modelId, int endYear) {
         CarModel carModel = modelRepository.findById(modelId).orElseThrow();
         carModel.setEndYear(endYear);
         modelRepository.save(carModel);
@@ -97,7 +96,7 @@ public class CarModelServiceImpl implements CarModelService<UUID>, CarModelInter
     }
 
     @Override
-    public void deleteModelById(UUID modelId) {
+    public void deleteModelById(String modelId) {
         modelRepository.deleteById(modelId);
     }
 }

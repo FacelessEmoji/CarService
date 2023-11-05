@@ -11,11 +11,10 @@ import rut.miit.carservice.services.interfaces.publicAPI.UserService;
 import rut.miit.carservice.util.ValidationUtilImpl;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-public class UserServiceImpl implements UserService<UUID>, UserInternalService<UUID> {
+public class UserServiceImpl implements UserService<String>, UserInternalService<String> {
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
     private final ValidationUtilImpl validationUtil;
@@ -27,9 +26,8 @@ public class UserServiceImpl implements UserService<UUID>, UserInternalService<U
         this.validationUtil = validationUtil;
     }
 
-
     @Override
-    public User getUserById(UUID userId) {
+    public User getUserById(String userId) {
         return userRepository.findById(userId).orElse(null);
     }
 
@@ -50,7 +48,7 @@ public class UserServiceImpl implements UserService<UUID>, UserInternalService<U
     }
 
     @Override
-    public UserDTO updateUsername(UUID userId, String username) {
+    public UserDTO updateUsername(String userId, String username) {
         User user = userRepository.findById(userId).orElseThrow();
         user.setUsername(username);
         userRepository.save(user);
@@ -58,7 +56,7 @@ public class UserServiceImpl implements UserService<UUID>, UserInternalService<U
     }
 
     @Override
-    public UserDTO updatePassword(UUID userId, String password) {
+    public UserDTO updatePassword(String userId, String password) {
         User user = userRepository.findById(userId).orElseThrow();
         user.setPassword(password);
         userRepository.save(user);
@@ -66,7 +64,7 @@ public class UserServiceImpl implements UserService<UUID>, UserInternalService<U
     }
 
     @Override
-    public UserDTO updateIsActive(UUID userId, boolean isActive) {
+    public UserDTO updateIsActive(String userId, boolean isActive) {
         User user = userRepository.findById(userId).orElseThrow();
         user.setActive(isActive);
         userRepository.save(user);
@@ -74,7 +72,7 @@ public class UserServiceImpl implements UserService<UUID>, UserInternalService<U
     }
 
     @Override
-    public UserDTO updateUserImageUrl(UUID userId, String imageUrl) {
+    public UserDTO updateUserImageUrl(String userId, String imageUrl) {
         User user = userRepository.findById(userId).orElseThrow();
         user.setImageUrl(imageUrl);
         userRepository.save(user);
@@ -82,7 +80,7 @@ public class UserServiceImpl implements UserService<UUID>, UserInternalService<U
     }
 
     @Override
-    public void deleteUserById(UUID userId) {
+    public void deleteUserById(String userId) {
         userRepository.deleteById(userId);
     }
 }

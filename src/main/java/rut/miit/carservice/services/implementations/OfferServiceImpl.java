@@ -13,11 +13,10 @@ import rut.miit.carservice.util.ValidationUtilImpl;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-public class OfferServiceImpl implements OfferService<UUID>, OfferInternalService<UUID> {
+public class OfferServiceImpl implements OfferService<String>, OfferInternalService<String> {
     private final OfferRepository offerRepository;
     private final ModelMapper modelMapper;
     private final ValidationUtilImpl validationUtil;
@@ -30,7 +29,7 @@ public class OfferServiceImpl implements OfferService<UUID>, OfferInternalServic
     }
 
     @Override
-    public Offer getOfferById(UUID offerId) {
+    public Offer getOfferById(String offerId) {
         return offerRepository.findById(offerId).orElse(null);
     }
 
@@ -76,7 +75,7 @@ public class OfferServiceImpl implements OfferService<UUID>, OfferInternalServic
     }
 
     @Override
-    public OfferDTO updateOfferDescription(UUID offerId, String description) {
+    public OfferDTO updateOfferDescription(String offerId, String description) {
         Offer offer = offerRepository.findById(offerId).orElseThrow();
         offer.setDescription(description);
         offerRepository.save(offer);
@@ -84,7 +83,7 @@ public class OfferServiceImpl implements OfferService<UUID>, OfferInternalServic
     }
 
     @Override
-    public OfferDTO updateOfferImageUrl(UUID offerId, String imageUrl) {
+    public OfferDTO updateOfferImageUrl(String offerId, String imageUrl) {
         Offer offer = offerRepository.findById(offerId).orElseThrow();
         offer.setImageUrl(imageUrl);
         offerRepository.save(offer);
@@ -92,7 +91,7 @@ public class OfferServiceImpl implements OfferService<UUID>, OfferInternalServic
     }
 
     @Override
-    public OfferDTO updateOfferPrice(UUID offerId, BigDecimal price) {
+    public OfferDTO updateOfferPrice(String offerId, BigDecimal price) {
         Offer offer = offerRepository.findById(offerId).orElseThrow();
         offer.setPrice(price);
         offerRepository.save(offer);
@@ -100,7 +99,7 @@ public class OfferServiceImpl implements OfferService<UUID>, OfferInternalServic
     }
 
     @Override
-    public void deleteOfferById(UUID offerId) {
+    public void deleteOfferById(String offerId) {
         offerRepository.deleteById(offerId);
     }
 }

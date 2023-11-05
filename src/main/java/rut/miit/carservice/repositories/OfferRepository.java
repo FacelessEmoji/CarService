@@ -7,10 +7,9 @@ import rut.miit.carservice.models.enums.UserRoleType;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
 
 @Repository
-public interface OfferRepository extends JpaRepository<Offer, UUID> {
+public interface OfferRepository extends JpaRepository<Offer, String> {
 
 
     List<Offer> findAllBySeller_UsernameAndSeller_IsActiveAndSeller_RoleRole
