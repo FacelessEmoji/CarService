@@ -1,16 +1,10 @@
 package rut.miit.carservice;
 
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeMap;
 import org.modelmapper.config.Configuration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import rut.miit.carservice.dtos.complex.OfferWithDetailsDTO;
-import rut.miit.carservice.dtos.input.*;
-import rut.miit.carservice.dtos.output.CarModelOutputDTO;
-import rut.miit.carservice.dtos.output.UserOutputDTO;
-import rut.miit.carservice.models.entities.*;
 
 @SpringBootApplication
 public class CarServiceApplication {

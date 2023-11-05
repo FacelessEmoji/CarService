@@ -4,10 +4,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-import rut.miit.carservice.dtos.input.*;
 import rut.miit.carservice.models.enums.*;
-import rut.miit.carservice.repositories.OfferRepository;
-import rut.miit.carservice.services.*;
+import rut.miit.carservice.services.dtos.input.*;
+import rut.miit.carservice.services.interfaces.publicAPI.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

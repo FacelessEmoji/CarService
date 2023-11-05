@@ -1,7 +1,6 @@
 package rut.miit.carservice.models.baseEntities;
 
 import jakarta.persistence.*;
-import lombok.*;
 import org.hibernate.annotations.*;
 
 import java.time.LocalDateTime;
