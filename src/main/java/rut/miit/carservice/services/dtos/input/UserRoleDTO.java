@@ -1,5 +1,6 @@
 package rut.miit.carservice.services.dtos.input;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import rut.miit.carservice.models.enums.UserRoleType;
 import rut.miit.carservice.services.dtos.base.BaseDTO;
@@ -10,5 +11,6 @@ import rut.miit.carservice.services.dtos.base.BaseDTO;
 @Setter
 @ToString
 public class UserRoleDTO extends BaseDTO{
+    @NotNull(message = "User role can't be null!")
     private UserRoleType role;
 }
