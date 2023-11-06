@@ -2,7 +2,7 @@ package rut.miit.carservice.contollers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import rut.miit.carservice.services.dtos.complex.OfferWithDetailsDTO;
+import rut.miit.carservice.services.dtos.output.OfferWithDetailsDTO;
 import rut.miit.carservice.services.dtos.input.OfferDTO;
 import rut.miit.carservice.services.interfaces.publicAPI.OfferService;
 

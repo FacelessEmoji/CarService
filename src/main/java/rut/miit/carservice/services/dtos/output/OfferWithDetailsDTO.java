@@ -1,4 +1,4 @@
-package rut.miit.carservice.services.dtos.complex;
+package rut.miit.carservice.services.dtos.output;
 
 import jakarta.validation.constraints.*;
 import lombok.Data;

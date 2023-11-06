@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import rut.miit.carservice.services.dtos.input.UserDTO;
 import rut.miit.carservice.models.entities.User;
 import rut.miit.carservice.repositories.UserRepository;
+import rut.miit.carservice.services.dtos.output.UserOutputDTO;
 import rut.miit.carservice.services.interfaces.internalAPI.UserInternalService;
 import rut.miit.carservice.services.interfaces.publicAPI.UserService;
 import rut.miit.carservice.util.ValidationUtilImpl;
@@ -32,14 +33,14 @@ public class UserServiceImpl implements UserService<String>, UserInternalService
     }
 
     @Override
-    public UserDTO getUserByUsername(String username) {
-        return modelMapper.map(userRepository.findByUsername(username), UserDTO.class);
+    public UserOutputDTO getUserByUsername(String username) {
+        return modelMapper.map(userRepository.findByUsername(username), UserOutputDTO.class);
     }
 
     @Override
-    public List<UserDTO> getAllUsers() {
+    public List<UserOutputDTO> getAllUsers() {
         return userRepository.findAll().stream()
-                .map(u -> modelMapper.map(u, UserDTO.class)).collect(Collectors.toList());
+                .map(u -> modelMapper.map(u, UserOutputDTO.class)).collect(Collectors.toList());
     }
 
     @Override

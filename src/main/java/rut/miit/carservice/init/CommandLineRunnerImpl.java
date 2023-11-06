@@ -12,6 +12,9 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.Month;
 
+/**
+ * todo add all to prohibited usernames, models and other
+ */
 @Component
 public class CommandLineRunnerImpl implements CommandLineRunner {
     @Autowired
@@ -74,35 +77,35 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
         offerService.addNewOffer(new OfferDTO("Test Description", EngineType.ELECTRIC,
                 "https://82.146.90.6:80",13744, new BigDecimal("45700"), TransmissionType.AUTOMATIC,
                 2022,modelMapper.map(carModelService.getModelByBrandAndName("Tesla","Model X"), CarModelDTO.class),
-            userService.getUserByUsername("test1")));
+            modelMapper.map(userService.getUserByUsername("test1"), UserDTO.class)));
         offerService.addNewOffer(new OfferDTO("Brand New BMW", EngineType.GASOLINE,
                 "https://82.146.90.6:81",5000, new BigDecimal("50200"), TransmissionType.AUTOMATIC,
                 2021, modelMapper.map(carModelService.getModelByBrandAndName("BMW","3 Series"), CarModelDTO.class),
-            userService.getUserByUsername("test1")));
+            modelMapper.map(userService.getUserByUsername("test1"), UserDTO.class)));
         offerService.addNewOffer(new OfferDTO("Elegant Mercedes", EngineType.DIESEL,
                 "https://82.146.90.6:82",8000, new BigDecimal("56000"), TransmissionType.AUTOMATIC,
                 2021, modelMapper.map(carModelService.getModelByBrandAndName("Mercedes","C-Class"), CarModelDTO.class),
-            userService.getUserByUsername("julia45")));
+            modelMapper.map(userService.getUserByUsername("julia45"), UserDTO.class)));
         offerService.addNewOffer(new OfferDTO("Sleek Tesla Model S", EngineType.ELECTRIC,
                 "https://82.146.90.6:83",7000, new BigDecimal("80000"), TransmissionType.AUTOMATIC,
                 2020, modelMapper.map(carModelService.getModelByBrandAndName("Tesla", "Model S"), CarModelDTO.class),
-            userService.getUserByUsername("andrew76")));
+            modelMapper.map(userService.getUserByUsername("andrew76"), UserDTO.class)));
         offerService.addNewOffer(new OfferDTO("Reliable Toyota Camry", EngineType.GASOLINE,
                 "https://82.146.90.6:84",12000, new BigDecimal("28000"), TransmissionType.AUTOMATIC,
                 2018, modelMapper.map(carModelService.getModelByBrandAndName("Toyota", "Camry"), CarModelDTO.class),
-            userService.getUserByUsername("samuel89")));
+            modelMapper.map(userService.getUserByUsername("samuel89"), UserDTO.class)));
         offerService.addNewOffer(new OfferDTO("Stylish Audi A4", EngineType.DIESEL,
                 "https://82.146.90.6:85",9000, new BigDecimal("45000"), TransmissionType.AUTOMATIC,
                 2019, modelMapper.map(carModelService.getModelByBrandAndName("Audi", "A4"), CarModelDTO.class),
-            userService.getUserByUsername("diana01")));
+            modelMapper.map(userService.getUserByUsername("diana01"), UserDTO.class)));
         offerService.addNewOffer(new OfferDTO("Powerful Tesla Model 3", EngineType.ELECTRIC,
                 "https://82.146.90.6:86",5000, new BigDecimal("49000"), TransmissionType.AUTOMATIC,
                 2022, modelMapper.map(carModelService.getModelByBrandAndName("Tesla", "Model 3"), CarModelDTO.class),
-            userService.getUserByUsername("oliver55")));
+            modelMapper.map(userService.getUserByUsername("oliver55"), UserDTO.class)));
         offerService.addNewOffer(new OfferDTO("Comfortable Audi A6", EngineType.GASOLINE,
                 "https://82.146.90.6:87",13000, new BigDecimal("58000"), TransmissionType.AUTOMATIC,
                 2017, modelMapper.map(carModelService.getModelByBrandAndName("Audi", "A6"), CarModelDTO.class),
-            userService.getUserByUsername("isabella99")));
+            modelMapper.map(userService.getUserByUsername("isabella99"), UserDTO.class)));
     }
 
     @Override

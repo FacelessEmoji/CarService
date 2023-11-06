@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Configuration;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import rut.miit.carservice.models.entities.*;
-import rut.miit.carservice.services.dtos.complex.*;
 import rut.miit.carservice.services.dtos.output.*;
 
 @Configuration

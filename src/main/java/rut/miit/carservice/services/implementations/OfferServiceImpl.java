@@ -2,7 +2,7 @@ package rut.miit.carservice.services.implementations;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import rut.miit.carservice.services.dtos.complex.OfferWithDetailsDTO;
+import rut.miit.carservice.services.dtos.output.OfferWithDetailsDTO;
 import rut.miit.carservice.services.dtos.input.OfferDTO;
 import rut.miit.carservice.models.entities.Offer;
 import rut.miit.carservice.models.enums.UserRoleType;

@@ -1,7 +1,6 @@
 package rut.miit.carservice.services.interfaces.publicAPI;
 
-import rut.miit.carservice.models.entities.Offer;
-import rut.miit.carservice.services.dtos.complex.OfferWithDetailsDTO;
+import rut.miit.carservice.services.dtos.output.OfferWithDetailsDTO;
 import rut.miit.carservice.services.dtos.input.OfferDTO;
 
 import java.math.BigDecimal;
