@@ -7,6 +7,6 @@ import java.util.List;
 public interface CarBrandService<ID>{
     CarBrandDTO getBrandByName(String brandName);
     List<CarBrandDTO> getAllBrands();
-    CarBrandDTO addNewBrand(CarBrandDTO brandDTO);
-    CarBrandDTO updateBrandName(ID brandId, String brandName);
+    CarBrandDTO addNewBrand(String brandName);
+    CarBrandDTO updateBrandName(String brandName, String newBrandName);
 }

@@ -34,6 +34,7 @@ public class ApplicationBeanConfiguration {
         offerToDTO.addMappings(m -> m.map(src -> src.getModel().getName(), OfferWithDetailsDTO::setModelName));
         offerToDTO.addMappings(m -> m.map(src -> src.getSeller().getUsername(), OfferWithDetailsDTO::setSellerUsername));
         offerToDTO.addMappings(m -> m.map(src -> src.getSeller().getActive(), OfferWithDetailsDTO::setIsActive));
+
         // Mapping from CarModel to CarModelOutputDTO
         TypeMap<CarModel, CarModelOutputDTO> carModelToOutputDTO = modelMapper.createTypeMap(CarModel.class, CarModelOutputDTO.class);
         carModelToOutputDTO.addMappings(m -> m.map(src -> src.getBrand().getName(), CarModelOutputDTO::setCarBrandName));

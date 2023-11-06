@@ -48,11 +48,17 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
         userService.addNewUser(new UserDTO("emily78", "emilypass", "Emily", "Clark", true, "https://82.126.59.1:80", userRoleService.getRoleByName(UserRoleType.USER)));
         userService.addNewUser(new UserDTO("michael34", "mikepass", "Michael", "Bell", true, "https://42.146.59.11:80", userRoleService.getRoleByName(UserRoleType.USER)));
 
-        carBrandService.addNewBrand(new CarBrandDTO("Toyota"));
-        carBrandService.addNewBrand(new CarBrandDTO("BMW"));
-        carBrandService.addNewBrand(new CarBrandDTO("Tesla"));
-        carBrandService.addNewBrand(new CarBrandDTO("Mercedes"));
-        carBrandService.addNewBrand(new CarBrandDTO("Audi"));
+//        carBrandService.addNewBrand(new CarBrandDTO("Toyota"));
+//        carBrandService.addNewBrand(new CarBrandDTO("BMW"));
+//        carBrandService.addNewBrand(new CarBrandDTO("Tesla"));
+//        carBrandService.addNewBrand(new CarBrandDTO("Mercedes"));
+//        carBrandService.addNewBrand(new CarBrandDTO("Audi"));
+
+        carBrandService.addNewBrand("Toyota");
+        carBrandService.addNewBrand("BMW");
+        carBrandService.addNewBrand("Tesla");
+        carBrandService.addNewBrand("Mercedes");
+        carBrandService.addNewBrand("Audi");
 
         carModelService.addNewModel(new CarModelDTO("Model X", ModelCategory.CAR,"https://82.146.59.6:80",2015,2023,carBrandService.getBrandByName("Tesla")));
         carModelService.addNewModel(new CarModelDTO("3 Series", ModelCategory.CAR,"https://82.146.59.6:81",2010,2023,carBrandService.getBrandByName("BMW")));
