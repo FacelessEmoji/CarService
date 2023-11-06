@@ -26,8 +26,8 @@ public interface CarModelRepository extends JpaRepository<CarModel, String>{
                                         @Param("maxMileage") Integer maxMileage,
                                         @Param("maxPrice") BigDecimal maxPrice);
 
-    CarModel findByNameAndBrand_Name(String modelName, String brandName);
+    CarModel findByBrand_NameAndName(String brandName, String modelName);
 
-    List<CarModel> findAllByBrand_NameAndStartYearGreaterThanEqualAndEndYearGreaterThanEqualOrderByEndYearDesc
+    List<CarModel> findAllByBrand_NameAndStartYearGreaterThanEqualAndEndYearLessThanEqualOrderByEndYearDesc
             (String brandName, Integer startYear, Integer endYear);
 }

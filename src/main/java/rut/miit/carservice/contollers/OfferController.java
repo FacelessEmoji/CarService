@@ -6,6 +6,8 @@ import rut.miit.carservice.services.dtos.complex.OfferWithDetailsDTO;
 import rut.miit.carservice.services.dtos.input.OfferDTO;
 import rut.miit.carservice.services.interfaces.publicAPI.OfferService;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -38,19 +40,19 @@ public class OfferController {
 
     @GetMapping("/find/date/between/{startTime}/{endTime}")
     public List<OfferWithDetailsDTO> findByDateBetween(@PathVariable String startTime, @PathVariable String endTime){
-        return offerService.getOffersCreatedBetweenDates(java.time.LocalDateTime.parse(startTime), java.time.LocalDateTime.parse(endTime));
+        return offerService.getOffersCreatedBetweenDates(LocalDateTime.parse(startTime), LocalDateTime.parse(endTime));
     }
 
     @GetMapping("/find/price/between/{minPrice}/{maxPrice}")
     public List<OfferWithDetailsDTO> findByPriceBetween(@PathVariable String minPrice, @PathVariable String maxPrice){
-        return offerService.getOffersByPriceBetween(new java.math.BigDecimal(minPrice), new java.math.BigDecimal(maxPrice));
+        return offerService.getOffersByPriceBetween(new BigDecimal(minPrice), new BigDecimal(maxPrice));
     }
 
     @GetMapping("/find/position/{brandName}/{modelName}/price/between/{minPrice}/{maxPrice}")
     public List<OfferWithDetailsDTO> findByPriceBetweenAndName(@PathVariable String brandName, @PathVariable String modelName,
         @PathVariable String minPrice, @PathVariable String maxPrice){
         return offerService.getOffersByPriceBetweenAndName(brandName, modelName,
-            new java.math.BigDecimal(minPrice), new java.math.BigDecimal(maxPrice));
+            new BigDecimal(minPrice), new BigDecimal(maxPrice));
     }
 
     @PostMapping("/add")
@@ -70,6 +72,6 @@ public class OfferController {
 
     @PutMapping("/update/price/{offerId}")
     public OfferDTO updatePrice(@PathVariable String offerId, @RequestParam String price){
-        return offerService.updateOfferPrice(offerId, new java.math.BigDecimal(price));
+        return offerService.updateOfferPrice(offerId, new BigDecimal(price));
     }
 }

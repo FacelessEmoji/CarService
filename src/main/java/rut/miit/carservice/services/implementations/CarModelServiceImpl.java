@@ -5,9 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import rut.miit.carservice.services.dtos.input.CarModelDTO;
 import rut.miit.carservice.models.entities.CarModel;
-import rut.miit.carservice.models.enums.EngineType;
-import rut.miit.carservice.models.enums.ModelCategory;
-import rut.miit.carservice.models.enums.TransmissionType;
+import rut.miit.carservice.models.enums.*;
 import rut.miit.carservice.repositories.CarModelRepository;
 import rut.miit.carservice.services.dtos.output.CarModelOutputDTO;
 import rut.miit.carservice.services.interfaces.internalAPI.CarModelInternalService;
@@ -37,8 +35,8 @@ public class CarModelServiceImpl implements CarModelService<String>, CarModelInt
     }
 
     @Override
-    public CarModelOutputDTO getModelByNameAndBrand(String modelName, String brandName) {
-        return modelMapper.map(modelRepository.findByNameAndBrand_Name(modelName, brandName), CarModelOutputDTO.class);
+    public CarModelOutputDTO getModelByBrandAndName(String brandName, String modelName) {
+        return modelMapper.map(modelRepository.findByBrand_NameAndName(brandName, modelName), CarModelOutputDTO.class);
     }
 
     @Override
@@ -55,7 +53,7 @@ public class CarModelServiceImpl implements CarModelService<String>, CarModelInt
 
     @Override
     public List<CarModelOutputDTO> getModelsByBrandAndYears(String brandName, Integer startYear, Integer endYear) {
-        return modelRepository.findAllByBrand_NameAndStartYearGreaterThanEqualAndEndYearGreaterThanEqualOrderByEndYearDesc(brandName, startYear, endYear).stream()
+        return modelRepository.findAllByBrand_NameAndStartYearGreaterThanEqualAndEndYearLessThanEqualOrderByEndYearDesc(brandName, startYear, endYear).stream()
                 .map(m -> modelMapper.map(m, CarModelOutputDTO.class)).collect(Collectors.toList());
     }
 
@@ -76,14 +74,6 @@ public class CarModelServiceImpl implements CarModelService<String>, CarModelInt
     public CarModelDTO updateModelImageUrl(String modelId, String imageUrl) {
         CarModel carModel = modelRepository.findById(modelId).orElseThrow();
         carModel.setImageUrl(imageUrl);
-        modelRepository.save(carModel);
-        return modelMapper.map(carModel, CarModelDTO.class);
-    }
-
-    @Override
-    public CarModelDTO updateModelStartYear(String modelId, int startYear) {
-        CarModel carModel = modelRepository.findById(modelId).orElseThrow();
-        carModel.setStartYear(startYear);
         modelRepository.save(carModel);
         return modelMapper.map(carModel, CarModelDTO.class);
     }

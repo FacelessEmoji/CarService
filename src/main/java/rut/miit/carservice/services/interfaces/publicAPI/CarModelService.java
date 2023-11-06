@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public interface CarModelService<ID>{
-    CarModelOutputDTO getModelByNameAndBrand(String modelName, String brandName);
+    CarModelOutputDTO getModelByBrandAndName(String brandName, String modelName);
     List<CarModelOutputDTO> getAllModels();
     List<CarModelOutputDTO> getModelsByBrandAndYears(String brandName, Integer startYear, Integer endYear);
     List<CarModelOutputDTO> getModelsByCriteria(ModelCategory category, EngineType engine,
@@ -18,7 +18,6 @@ public interface CarModelService<ID>{
     CarModelDTO addNewModel(CarModelDTO modelDTO);
     CarModelDTO updateModelName(ID modelId, String modelName);
     CarModelDTO updateModelImageUrl(ID modelId, String imageUrl);
-    CarModelDTO updateModelStartYear(ID modelId, int startYear);
     CarModelDTO updateModelEndYear(ID modelId, int endYear);
 }
 
