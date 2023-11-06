@@ -2,6 +2,7 @@ package rut.miit.carservice.services.implementations;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import rut.miit.carservice.services.dtos.complex.OfferWithDetailsDTO;
 import rut.miit.carservice.services.dtos.input.OfferDTO;
 import rut.miit.carservice.models.entities.Offer;
 import rut.miit.carservice.models.enums.UserRoleType;
@@ -34,39 +35,40 @@ public class OfferServiceImpl implements OfferService<String>, OfferInternalServ
     }
 
     @Override
-    public List<OfferDTO> getAllOffers() {
+    public List<OfferWithDetailsDTO> getAllOffers() {
         return offerRepository.findAll().stream()
-                .map(o -> modelMapper.map(o, OfferDTO.class)).collect(Collectors.toList());
+                .map(o -> modelMapper.map(o, OfferWithDetailsDTO.class)).collect(Collectors.toList());
     }
 
     @Override
-    public List<OfferDTO> getOffersByModelAndBrand(String modelName, String brandName) {
-        return offerRepository.findAllByModelNameAndModel_BrandName(modelName, brandName).stream()
-                .map(o -> modelMapper.map(o, OfferDTO.class)).collect(Collectors.toList());
+    public List<OfferWithDetailsDTO> getOffersByBrandAndModel(String brandName, String modelName) {
+        return offerRepository.findAllByModel_Brand_NameAndModel_Name(brandName, modelName).stream()
+                .map(o -> modelMapper.map(o, OfferWithDetailsDTO.class)).collect(Collectors.toList());
     }
 
     @Override
-    public List<OfferDTO> getOffersBySellerUsername(String username) {
+    public List<OfferWithDetailsDTO> getOffersBySellerUsername(String username) {
         return offerRepository.findAllBySeller_UsernameAndSeller_IsActiveAndSeller_RoleRole(username, true, UserRoleType.USER).stream()
-                .map(o -> modelMapper.map(o, OfferDTO.class)).collect(Collectors.toList());
+                .map(o -> modelMapper.map(o, OfferWithDetailsDTO.class)).collect(Collectors.toList());
     }
 
     @Override
-    public List<OfferDTO> getOffersCreatedAfterDate(LocalDateTime time) {
-        return offerRepository.findAllByCreatedAfterOrderByCreated(time).stream()
-                .map(o -> modelMapper.map(o, OfferDTO.class)).collect(Collectors.toList());
-    }
-
-    @Override
-    public List<OfferDTO> getOffersCreatedBeforeDate(LocalDateTime time) {
-        return offerRepository.findAllByCreatedBeforeOrderByCreated(time).stream()
-                .map(o -> modelMapper.map(o, OfferDTO.class)).collect(Collectors.toList());
-    }
-
-    @Override
-    public List<OfferDTO> getOffersCreatedBetweenDates(LocalDateTime startTime, LocalDateTime endTime) {
+    public List<OfferWithDetailsDTO> getOffersCreatedBetweenDates(LocalDateTime startTime, LocalDateTime endTime) {
         return offerRepository.findAllByCreatedAfterAndCreatedBeforeOrderByCreated(startTime, endTime).stream()
-                .map(o -> modelMapper.map(o, OfferDTO.class)).collect(Collectors.toList());
+                .map(o -> modelMapper.map(o, OfferWithDetailsDTO.class)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<OfferWithDetailsDTO> getOffersByPriceBetween(BigDecimal minPrice, BigDecimal maxPrice) {
+        return offerRepository.findAllByPriceGreaterThanEqualAndPriceLessThanEqual(minPrice, maxPrice) .stream()
+            .map(o -> modelMapper.map(o, OfferWithDetailsDTO.class)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<OfferWithDetailsDTO> getOffersByPriceBetweenAndName(String brandName, String modelName, BigDecimal minPrice, BigDecimal maxPrice) {
+        return offerRepository.
+            findAllByModel_Brand_NameAndModel_NameAndPriceGreaterThanEqualAndPriceLessThanEqual(brandName, modelName, minPrice, maxPrice).stream()
+            .map(o -> modelMapper.map(o, OfferWithDetailsDTO.class)).collect(Collectors.toList());
     }
 
     @Override

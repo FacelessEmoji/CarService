@@ -40,4 +40,11 @@ public class CarBrandController {
     public CarBrandDTO updateBrandName(@PathVariable String brandName, @RequestParam String newBrandName){
         return brandService.updateBrandName(brandName, newBrandName);
     }
+
+    //fix error and no more deleting
+    @Deprecated
+    @DeleteMapping("/delete/{brandName}")
+    public void deleteBrand(@PathVariable String brandName){
+        brandService.deleteBrandByName(brandName);
+    }
 }
