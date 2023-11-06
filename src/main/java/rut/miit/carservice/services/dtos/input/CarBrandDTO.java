@@ -1,7 +1,6 @@
 package rut.miit.carservice.services.dtos.input;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.*;
 import rut.miit.carservice.services.dtos.base.BaseDTO;
 

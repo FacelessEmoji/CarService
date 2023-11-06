@@ -1,6 +1,6 @@
 package rut.miit.carservice.services.dtos.input;
 
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 import lombok.*;
 import rut.miit.carservice.models.enums.UserRoleType;
 import rut.miit.carservice.services.dtos.base.BaseDTO;

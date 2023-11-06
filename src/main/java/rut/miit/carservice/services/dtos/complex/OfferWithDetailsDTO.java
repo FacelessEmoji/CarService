@@ -1,8 +1,6 @@
 package rut.miit.carservice.services.dtos.complex;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.*;
 import lombok.Data;
 import rut.miit.carservice.models.enums.EngineType;
 import rut.miit.carservice.models.enums.TransmissionType;
