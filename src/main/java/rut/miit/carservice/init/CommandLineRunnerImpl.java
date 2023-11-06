@@ -22,6 +22,9 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
     private CarModelService<String> carModelService;
 
     @Autowired
+    private CarModelInternalService<String> carModelInternalService;
+
+    @Autowired
     private OfferService<String> offerService;
 
     @Autowired
