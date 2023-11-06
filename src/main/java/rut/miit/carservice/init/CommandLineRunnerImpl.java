@@ -6,6 +6,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import rut.miit.carservice.models.enums.*;
 import rut.miit.carservice.services.dtos.input.*;
+import rut.miit.carservice.services.interfaces.internalAPI.CarModelInternalService;
 import rut.miit.carservice.services.interfaces.publicAPI.*;
 
 import java.math.BigDecimal;
@@ -21,6 +22,9 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
     private CarModelService<String> carModelService;
 
     @Autowired
+    private CarModelInternalService<String> carModelInternalService;
+
+    @Autowired
     private OfferService<String> offerService;
 
     @Autowired
@@ -29,6 +33,7 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
     @Autowired
     private UserRoleService<String> userRoleService;
 
+    @Autowired
     private ModelMapper modelMapper;
 
     public void seedData() {
@@ -78,28 +83,36 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
 
         offerService.addNewOffer(new OfferDTO("Test Description", EngineType.ELECTRIC,
                 "https://82.146.90.6:80",13744, new BigDecimal("45700"), TransmissionType.AUTOMATIC,
-                2022, carModelService.getModelByNameAndBrand("Model X", "Tesla"),userService.getUserByUsername("test1")));
+                2022,modelMapper.map(carModelService.getModelByNameAndBrand("Model X", "Tesla"), CarModelDTO.class),
+            userService.getUserByUsername("test1")));
         offerService.addNewOffer(new OfferDTO("Brand New BMW", EngineType.GASOLINE,
                 "https://82.146.90.6:81",5000, new BigDecimal("50200"), TransmissionType.AUTOMATIC,
-                2021, carModelService.getModelByNameAndBrand("3 Series", "BMW"),userService.getUserByUsername("test1")));
+                2021, modelMapper.map(carModelService.getModelByNameAndBrand("3 Series", "BMW"), CarModelDTO.class),
+            userService.getUserByUsername("test1")));
         offerService.addNewOffer(new OfferDTO("Elegant Mercedes", EngineType.DIESEL,
                 "https://82.146.90.6:82",8000, new BigDecimal("56000"), TransmissionType.AUTOMATIC,
-                2021, carModelService.getModelByNameAndBrand("C-Class", "Mercedes"),userService.getUserByUsername("julia45")));
+                2021, modelMapper.map(carModelService.getModelByNameAndBrand("C-Class", "Mercedes"), CarModelDTO.class),
+            userService.getUserByUsername("julia45")));
         offerService.addNewOffer(new OfferDTO("Sleek Tesla Model S", EngineType.ELECTRIC,
                 "https://82.146.90.6:83",7000, new BigDecimal("80000"), TransmissionType.AUTOMATIC,
-                2020, carModelService.getModelByNameAndBrand("Model S", "Tesla"),userService.getUserByUsername("andrew76")));
+                2020, modelMapper.map(carModelService.getModelByNameAndBrand("Model S", "Tesla"), CarModelDTO.class),
+            userService.getUserByUsername("andrew76")));
         offerService.addNewOffer(new OfferDTO("Reliable Toyota Camry", EngineType.GASOLINE,
                 "https://82.146.90.6:84",12000, new BigDecimal("28000"), TransmissionType.AUTOMATIC,
-                2018, carModelService.getModelByNameAndBrand("Camry", "Toyota"),userService.getUserByUsername("samuel89")));
+                2018, modelMapper.map(carModelService.getModelByNameAndBrand("Camry", "Toyota"), CarModelDTO.class),
+            userService.getUserByUsername("samuel89")));
         offerService.addNewOffer(new OfferDTO("Stylish Audi A4", EngineType.DIESEL,
                 "https://82.146.90.6:85",9000, new BigDecimal("45000"), TransmissionType.AUTOMATIC,
-                2019, carModelService.getModelByNameAndBrand("A4", "Audi"),userService.getUserByUsername("diana01")));
+                2019, modelMapper.map(carModelService.getModelByNameAndBrand("A4", "Audi"), CarModelDTO.class),
+            userService.getUserByUsername("diana01")));
         offerService.addNewOffer(new OfferDTO("Powerful Tesla Model 3", EngineType.ELECTRIC,
                 "https://82.146.90.6:86",5000, new BigDecimal("49000"), TransmissionType.AUTOMATIC,
-                2022, carModelService.getModelByNameAndBrand("Model 3", "Tesla"),userService.getUserByUsername("oliver55")));
+                2022, modelMapper.map(carModelService.getModelByNameAndBrand("Model 3", "Tesla"), CarModelDTO.class),
+            userService.getUserByUsername("oliver55")));
         offerService.addNewOffer(new OfferDTO("Comfortable Audi A6", EngineType.GASOLINE,
                 "https://82.146.90.6:87",13000, new BigDecimal("58000"), TransmissionType.AUTOMATIC,
-                2017, carModelService.getModelByNameAndBrand("A6", "Audi"),userService.getUserByUsername("isabella99")));
+                2017, modelMapper.map(carModelService.getModelByNameAndBrand("A6", "Audi"), CarModelDTO.class),
+            userService.getUserByUsername("isabella99")));
     }
 
     @Override

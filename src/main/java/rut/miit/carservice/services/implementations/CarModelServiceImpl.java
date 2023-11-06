@@ -9,6 +9,7 @@ import rut.miit.carservice.models.enums.EngineType;
 import rut.miit.carservice.models.enums.ModelCategory;
 import rut.miit.carservice.models.enums.TransmissionType;
 import rut.miit.carservice.repositories.CarModelRepository;
+import rut.miit.carservice.services.dtos.output.CarModelOutputDTO;
 import rut.miit.carservice.services.interfaces.internalAPI.CarModelInternalService;
 import rut.miit.carservice.services.interfaces.publicAPI.CarModelService;
 import rut.miit.carservice.util.ValidationUtilImpl;
@@ -36,26 +37,26 @@ public class CarModelServiceImpl implements CarModelService<String>, CarModelInt
     }
 
     @Override
-    public CarModelDTO getModelByNameAndBrand(String modelName, String brandName) {
-        return modelMapper.map(modelRepository.findByNameAndBrand_Name(modelName, brandName), CarModelDTO.class);
+    public CarModelOutputDTO getModelByNameAndBrand(String modelName, String brandName) {
+        return modelMapper.map(modelRepository.findByNameAndBrand_Name(modelName, brandName), CarModelOutputDTO.class);
     }
 
     @Override
-    public List<CarModelDTO> getAllModels() {
+    public List<CarModelOutputDTO> getAllModels() {
         return modelRepository.findAll().stream()
-                .map(m -> modelMapper.map(m, CarModelDTO.class)).collect(Collectors.toList());
+                .map(m -> modelMapper.map(m, CarModelOutputDTO.class)).collect(Collectors.toList());
     }
 
     @Override
-    public List<CarModelDTO> getModelsByCriteria(ModelCategory category, EngineType engine, TransmissionType transmission, Integer maxMileage, BigDecimal maxPrice) {
+    public List<CarModelOutputDTO> getModelsByCriteria(ModelCategory category, EngineType engine, TransmissionType transmission, Integer maxMileage, BigDecimal maxPrice) {
         return modelRepository.findModelsByCriteria(category, engine, transmission, maxMileage, maxPrice).stream()
-                .map(m -> modelMapper.map(m, CarModelDTO.class)).collect(Collectors.toList());
+                .map(m -> modelMapper.map(m, CarModelOutputDTO.class)).collect(Collectors.toList());
     }
 
     @Override
-    public List<CarModelDTO> getModelsByBrandAndYears(String brandName, Integer startYear, Integer endYear) {
+    public List<CarModelOutputDTO> getModelsByBrandAndYears(String brandName, Integer startYear, Integer endYear) {
         return modelRepository.findAllByBrand_NameAndStartYearGreaterThanEqualAndEndYearGreaterThanEqualOrderByEndYearDesc(brandName, startYear, endYear).stream()
-                .map(m -> modelMapper.map(m, CarModelDTO.class)).collect(Collectors.toList());
+                .map(m -> modelMapper.map(m, CarModelOutputDTO.class)).collect(Collectors.toList());
     }
 
     @Override
