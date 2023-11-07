@@ -1,5 +1,6 @@
 package rut.miit.carservice.services.implementations;
 
+import jakarta.validation.ConstraintViolation;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,8 +45,21 @@ public class CarBrandServiceImpl implements CarBrandService<String>, CarBrandInt
 
     @Override
     public CarBrandDTO addNewBrand(String brandName) {
-        CarBrandDTO brandDTO = new CarBrandDTO(brandName);
-        return modelMapper.map(brandRepository.save(modelMapper.map(brandDTO, CarBrand.class)), CarBrandDTO.class);
+        CarBrandDTO brand = new CarBrandDTO(brandName);
+        if (!this.validationUtil.isValid(brand)) {
+            this.validationUtil
+                .violations(brand)
+                .stream()
+                .map(ConstraintViolation::getMessage)
+                .forEach(System.out::println);
+        } else {
+            try {
+                return modelMapper.map(brandRepository.saveAndFlush(modelMapper.map(brand,CarBrand.class)),CarBrandDTO.class);
+            } catch (Exception e) {
+                System.out.println("Some thing went wrong!");
+            }
+        }
+        return null;
     }
 
     @Override

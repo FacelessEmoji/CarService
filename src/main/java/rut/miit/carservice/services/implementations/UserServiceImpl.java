@@ -1,5 +1,6 @@
 package rut.miit.carservice.services.implementations;
 
+import jakarta.validation.ConstraintViolation;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,8 +45,21 @@ public class UserServiceImpl implements UserService<String>, UserInternalService
     }
 
     @Override
-    public UserDTO addNewUser(UserDTO userDTO) {
-        return modelMapper.map(userRepository.save(modelMapper.map(userDTO, User.class)), UserDTO.class);
+    public UserDTO addNewUser(UserDTO user) {
+        if (!this.validationUtil.isValid(user)) {
+            this.validationUtil
+                .violations(user)
+                .stream()
+                .map(ConstraintViolation::getMessage)
+                .forEach(System.out::println);
+        } else {
+            try {
+                return modelMapper.map(userRepository.saveAndFlush(modelMapper.map(user, User.class)), UserDTO.class);
+            } catch (Exception e) {
+                System.out.println("Some thing went wrong!");
+            }
+        }
+        return null;
     }
 
     @Override

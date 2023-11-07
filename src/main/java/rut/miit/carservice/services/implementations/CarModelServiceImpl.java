@@ -1,5 +1,6 @@
 package rut.miit.carservice.services.implementations;
 
+import jakarta.validation.ConstraintViolation;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -58,10 +59,24 @@ public class CarModelServiceImpl implements CarModelService<String>, CarModelInt
     }
 
     @Override
-    public CarModelDTO addNewModel(CarModelDTO modelDTO) {
-        return modelMapper.map(modelRepository.save(modelMapper.map(modelDTO, CarModel.class)), CarModelDTO.class);
-    }
+    public CarModelDTO addNewModel(CarModelDTO model) {
+        if (!this.validationUtil.isValid(model)) {
+            this.validationUtil
+                .violations(model)
+                .stream()
+                .map(ConstraintViolation::getMessage)
+                .forEach(System.out::println);
+        } else {
+            try {
+                return modelMapper.map(modelRepository.saveAndFlush(modelMapper.map(model, CarModel.class)), CarModelDTO.class);
+            } catch (Exception e) {
+                System.out.println("Some thing went wrong!");
+            }
+        }
 
+        return null;
+
+    }
     @Override
     public CarModelDTO updateModelName(String modelId, String modelName) {
         CarModel carModel = modelRepository.findById(modelId).orElseThrow();

@@ -1,5 +1,6 @@
 package rut.miit.carservice.services.implementations;
 
+import jakarta.validation.ConstraintViolation;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,8 +45,21 @@ public class UserRoleServiceImpl implements UserRoleService<String>, UserRoleInt
     }
 
     @Override
-    public UserRoleDTO addNewRole(UserRoleDTO roleDTO) {
-        return modelMapper.map(roleRepository.save(modelMapper.map(roleDTO, UserRole.class)), UserRoleDTO.class);
+    public UserRoleDTO addNewRole(UserRoleDTO userRole) {
+        if (!this.validationUtil.isValid(userRole)) {
+            this.validationUtil
+                .violations(userRole)
+                .stream()
+                .map(ConstraintViolation::getMessage)
+                .forEach(System.out::println);
+        } else {
+            try {
+                return modelMapper.map(roleRepository.saveAndFlush(modelMapper.map(userRole, UserRole.class)), UserRoleDTO.class);
+            } catch (Exception e) {
+                System.out.println("Some thing went wrong!");
+            }
+        }
+        return null;
     }
 
     @Override

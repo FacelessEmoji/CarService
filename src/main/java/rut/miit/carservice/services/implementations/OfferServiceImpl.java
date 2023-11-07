@@ -1,4 +1,5 @@
 package rut.miit.carservice.services.implementations;
+import jakarta.validation.ConstraintViolation;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -72,10 +73,23 @@ public class OfferServiceImpl implements OfferService<String>, OfferInternalServ
     }
 
     @Override
-    public OfferDTO addNewOffer(OfferDTO offerDTO) {
-        return modelMapper.map(offerRepository.save(modelMapper.map(offerDTO, Offer.class)), OfferDTO.class);
-    }
+    public OfferDTO addNewOffer(OfferDTO offer) {
+        if (!this.validationUtil.isValid(offer)) {
+            this.validationUtil
+                .violations(offer)
+                .stream()
+                .map(ConstraintViolation::getMessage)
+                .forEach(System.out::println);
 
+        } else {
+            try {
+                return modelMapper.map(offerRepository.saveAndFlush(modelMapper.map(offer, Offer.class)), OfferDTO.class);
+            } catch (Exception e) {
+                System.out.println("Some thing went wrong!");
+            }
+        }
+        return null;
+    }
     @Override
     public OfferDTO updateOfferDescription(String offerId, String description) {
         Offer offer = offerRepository.findById(offerId).orElseThrow();
