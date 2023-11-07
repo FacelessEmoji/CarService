@@ -1,4 +1,4 @@
-package rut.miit.carservice.util;
+package rut.miit.carservice.util.serviceValidators;
 
 import jakarta.validation.ConstraintViolation;
 import java.util.Set;

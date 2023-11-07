@@ -10,7 +10,7 @@ import rut.miit.carservice.models.enums.UserRoleType;
 import rut.miit.carservice.repositories.UserRoleRepository;
 import rut.miit.carservice.services.interfaces.internalAPI.UserRoleInternalService;
 import rut.miit.carservice.services.interfaces.publicAPI.UserRoleService;
-import rut.miit.carservice.util.ValidationUtilImpl;
+import rut.miit.carservice.util.serviceValidators.ValidationUtilImpl;
 
 import java.util.List;
 import java.util.stream.Collectors;

@@ -11,7 +11,7 @@ import rut.miit.carservice.repositories.CarModelRepository;
 import rut.miit.carservice.services.dtos.output.CarModelOutputDTO;
 import rut.miit.carservice.services.interfaces.internalAPI.CarModelInternalService;
 import rut.miit.carservice.services.interfaces.publicAPI.CarModelService;
-import rut.miit.carservice.util.ValidationUtilImpl;
+import rut.miit.carservice.util.serviceValidators.ValidationUtilImpl;
 
 import java.math.BigDecimal;
 import java.util.List;

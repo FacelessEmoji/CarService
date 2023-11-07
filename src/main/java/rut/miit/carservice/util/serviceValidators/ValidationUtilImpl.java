@@ -1,10 +1,12 @@
-package rut.miit.carservice.util;
+package rut.miit.carservice.util.serviceValidators;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
+import rut.miit.carservice.util.serviceValidators.ValidationUtil;
+
 import java.util.Set;
 
 @Component

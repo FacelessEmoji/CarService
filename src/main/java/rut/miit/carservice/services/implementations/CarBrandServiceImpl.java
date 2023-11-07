@@ -4,12 +4,14 @@ import jakarta.validation.ConstraintViolation;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import rut.miit.carservice.models.entities.User;
 import rut.miit.carservice.services.dtos.input.CarBrandDTO;
 import rut.miit.carservice.models.entities.CarBrand;
 import rut.miit.carservice.repositories.CarBrandRepository;
+import rut.miit.carservice.services.dtos.output.UserOutputDTO;
 import rut.miit.carservice.services.interfaces.internalAPI.CarBrandInternalService;
 import rut.miit.carservice.services.interfaces.publicAPI.CarBrandService;
-import rut.miit.carservice.util.ValidationUtilImpl;
+import rut.miit.carservice.util.serviceValidators.ValidationUtilImpl;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,6 +36,10 @@ public class CarBrandServiceImpl implements CarBrandService<String>, CarBrandInt
 
     @Override
     public CarBrandDTO getBrandByName(String brandName) {
+        CarBrand carBrand = brandRepository.findByName(brandName);
+        if (carBrand == null) {
+            return null;
+        }
         return modelMapper.map(brandRepository.findByName(brandName), CarBrandDTO.class);
     }
 

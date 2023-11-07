@@ -13,7 +13,7 @@ import rut.miit.carservice.services.dtos.input.UserRoleDTO;
 import rut.miit.carservice.services.dtos.output.UserOutputDTO;
 import rut.miit.carservice.services.interfaces.internalAPI.UserInternalService;
 import rut.miit.carservice.services.interfaces.publicAPI.UserService;
-import rut.miit.carservice.util.ValidationUtilImpl;
+import rut.miit.carservice.util.serviceValidators.ValidationUtilImpl;
 
 import java.util.List;
 import java.util.stream.Collectors;

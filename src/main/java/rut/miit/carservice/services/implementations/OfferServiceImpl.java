@@ -10,7 +10,7 @@ import rut.miit.carservice.models.enums.UserRoleType;
 import rut.miit.carservice.repositories.OfferRepository;
 import rut.miit.carservice.services.interfaces.internalAPI.OfferInternalService;
 import rut.miit.carservice.services.interfaces.publicAPI.OfferService;
-import rut.miit.carservice.util.ValidationUtilImpl;
+import rut.miit.carservice.util.serviceValidators.ValidationUtilImpl;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
