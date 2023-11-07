@@ -40,6 +40,7 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
         userRoleService.addNewRole(new UserRoleDTO(UserRoleType.ADMIN));
 
         userService.addNewUser(new UserDTO("test1", "111", "Nick", "Jackson", true, "https://82.126.59.6:80", userRoleService.getRoleByName(UserRoleType.USER)));
+        userService.addNewUser(new UserDTO("test3", "111", "Nick", "Jackson", true, "https://82.126.59.6:80"));
         userService.addNewUser(new UserDTO("test2", "qwerty123", "test", "test", true, "https://42.146.59.6:80", userRoleService.getRoleByName(UserRoleType.USER)));
         userService.addNewUser(new UserDTO("martin23", "passw123", "Martin", "Gates", true, "https://82.126.59.5:80", userRoleService.getRoleByName(UserRoleType.USER)));
         userService.addNewUser(new UserDTO("julia45", "mysecretpass", "Julia", "Roberts", true, "https://42.146.59.7:80", userRoleService.getRoleByName(UserRoleType.USER)));
@@ -124,6 +125,10 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
         System.out.println("-----");
         carModelService.getModelsByCriteria(ModelCategory.CAR, EngineType.GASOLINE, TransmissionType.AUTOMATIC,
                 1000000, new BigDecimal(10000000)).forEach(System.out::println);
+        System.out.println("-----");
+        System.out.println(userRoleService.getRoleByName(UserRoleType.USER));
+        System.out.println("-----");
+//        System.out.println(userService.getUserByUsername("fdsdfskfm"));
     }
 }
 

@@ -4,9 +4,12 @@ import jakarta.validation.ConstraintViolation;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import rut.miit.carservice.models.enums.UserRoleType;
+import rut.miit.carservice.repositories.UserRoleRepository;
 import rut.miit.carservice.services.dtos.input.UserDTO;
 import rut.miit.carservice.models.entities.User;
 import rut.miit.carservice.repositories.UserRepository;
+import rut.miit.carservice.services.dtos.input.UserRoleDTO;
 import rut.miit.carservice.services.dtos.output.UserOutputDTO;
 import rut.miit.carservice.services.interfaces.internalAPI.UserInternalService;
 import rut.miit.carservice.services.interfaces.publicAPI.UserService;
@@ -18,12 +21,15 @@ import java.util.stream.Collectors;
 @Service
 public class UserServiceImpl implements UserService<String>, UserInternalService<String> {
     private final UserRepository userRepository;
+    private final UserRoleRepository roleRepository;
     private final ModelMapper modelMapper;
     private final ValidationUtilImpl validationUtil;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, ValidationUtilImpl validationUtil) {
+    public UserServiceImpl(UserRepository userRepository, UserRoleRepository roleRepository, ModelMapper modelMapper,
+        ValidationUtilImpl validationUtil) {
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
         this.modelMapper = modelMapper;
         this.validationUtil = validationUtil;
     }
@@ -35,7 +41,11 @@ public class UserServiceImpl implements UserService<String>, UserInternalService
 
     @Override
     public UserOutputDTO getUserByUsername(String username) {
-        return modelMapper.map(userRepository.findByUsername(username), UserOutputDTO.class);
+        User user = userRepository.findByUsername(username);
+        if (user == null) {
+            return null;
+        }
+        return modelMapper.map(user, UserOutputDTO.class);
     }
 
     @Override
@@ -60,6 +70,18 @@ public class UserServiceImpl implements UserService<String>, UserInternalService
             }
         }
         return null;
+    }
+
+    @Override
+    public UserDTO setAdmin(UserDTO userDTO) {
+        userDTO.setRole(modelMapper.map(roleRepository.findByRole(UserRoleType.ADMIN), UserRoleDTO.class));
+        return userDTO;
+    }
+
+    @Override
+    public UserDTO setUser(UserDTO userDTO) {
+        userDTO.setRole(modelMapper.map(roleRepository.findByRole(UserRoleType.USER), UserRoleDTO.class));
+        return userDTO;
     }
 
     @Override

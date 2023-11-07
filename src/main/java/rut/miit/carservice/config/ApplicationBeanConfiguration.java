@@ -11,7 +11,6 @@ import rut.miit.carservice.services.dtos.output.*;
 
 @Configuration
 public class ApplicationBeanConfiguration {
-
     @Bean
     public Validator validator(){
         return Validation

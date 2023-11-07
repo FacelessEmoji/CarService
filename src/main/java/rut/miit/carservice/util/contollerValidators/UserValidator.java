@@ -1,31 +1,36 @@
-package rut.miit.carservice.util.Validators;
+package rut.miit.carservice.util.contollerValidators;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-import rut.miit.carservice.repositories.UserRepository;
 import rut.miit.carservice.services.dtos.input.UserDTO;
+import rut.miit.carservice.services.implementations.UserServiceImpl;
 
 /**
  * todo Document type UserValidator
  */
+@Component
 public class UserValidator implements Validator {
-
-    public final UserRepository userRepository;
+    private final UserServiceImpl userService;
 
     @Autowired
-    public UserValidator(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserValidator(UserServiceImpl userService) {
+        this.userService = userService;
     }
 
     @Override
-    public boolean supports(Class<?> clazz) {
-        return UserDTO.class.equals(clazz);
+    public boolean supports(Class<?> someClass) {
+        return UserDTO.class.equals(someClass);
     }
 
     @Override
     public void validate(Object target, Errors errors) {
         UserDTO userDto = (UserDTO) target;
+        // Проверяем, что username уникален
+        if (userService.getUserByUsername(userDto.getUsername()) != null) {
+            errors.rejectValue("username", "Username.unique", "Username must be unique");
+        }
 
         // Проверяем, что username не может быть “all”
         if ("all".equals(userDto.getUsername())) {
@@ -36,12 +41,6 @@ public class UserValidator implements Validator {
         if (userDto.getUsername().length() < 3 || userDto.getUsername().length() > 20) {
             errors.rejectValue("username", "Username.length", "Username must be from 3 to 20 characters");
         }
-
-        // Проверяем, что username уникален
-        // (в реальной реализации необходимо использовать базу данных)
-//        if (userRepository.existsByUsername(userDto.getUsername())) {
-//            errors.rejectValue("username", "Username.unique", "Username must be unique");
-//        }
 
         // Проверяем, что Имя и Фамилия начинаются с большой буквы
         if (!Character.isUpperCase(userDto.getFirstName().charAt(0))) {

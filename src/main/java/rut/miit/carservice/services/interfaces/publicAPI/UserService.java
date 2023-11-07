@@ -13,6 +13,7 @@ public interface UserService<ID>{
     UserDTO updatePassword(ID userId, String password);
     UserDTO updateIsActive(ID userId, boolean isActive);
     UserDTO updateUserImageUrl(ID userId, String imageUrl);
-
+    UserDTO setAdmin(UserDTO userDTO);
+    UserDTO setUser(UserDTO userDTO);
 }
 

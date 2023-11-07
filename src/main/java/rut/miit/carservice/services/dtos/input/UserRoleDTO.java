@@ -5,7 +5,6 @@ import lombok.*;
 import rut.miit.carservice.models.enums.UserRoleType;
 import rut.miit.carservice.services.dtos.base.BaseDTO;
 
-@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
@@ -13,4 +12,8 @@ import rut.miit.carservice.services.dtos.base.BaseDTO;
 public class UserRoleDTO extends BaseDTO{
     @NotNull(message = "User role can't be null!")
     private UserRoleType role;
+
+    public UserRoleDTO(UserRoleType role) {
+        this.role = role;
+    }
 }
