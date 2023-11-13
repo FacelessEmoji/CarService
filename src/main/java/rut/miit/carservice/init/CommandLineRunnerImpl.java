@@ -40,7 +40,7 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
         userRoleService.addNewRole(new UserRoleDTO(UserRoleType.ADMIN));
 
         userService.addNewUser(new UserDTO("test1", "111", "Nick", "Jackson", true, "https://82.126.59.6:80", userRoleService.getRoleByName(UserRoleType.USER)));
-        userService.addNewUser(new UserDTO("test3", "111", "Nick", "Jackson", true, "https://82.126.59.6:80"));
+        //userService.addNewUser(new UserDTO("test3", "111", "Nick", "Jackson", true, "https://82.126.59.6:80"));
         userService.addNewUser(new UserDTO("test2", "qwerty123", "test", "test", true, "https://42.146.59.6:80", userRoleService.getRoleByName(UserRoleType.USER)));
         userService.addNewUser(new UserDTO("martin23", "passw123", "Martin", "Gates", true, "https://82.126.59.5:80", userRoleService.getRoleByName(UserRoleType.USER)));
         userService.addNewUser(new UserDTO("julia45", "mysecretpass", "Julia", "Roberts", true, "https://42.146.59.7:80", userRoleService.getRoleByName(UserRoleType.USER)));
@@ -59,7 +59,7 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
         carBrandService.addNewBrand("Mercedes");
         carBrandService.addNewBrand("Audi");
 
-        carModelService.addNewModel(new CarModelDTO("Model X", ModelCategory.CAR,"https://82.146.59.6:80",2015,2023,carBrandService.getBrandByName("Tesla")));
+        carModelService.addNewModel(new CarModelDTO("Model X", "CAR","https://82.146.59.6:80",2015,2023,carBrandService.getBrandByName("Tesla")));
         carModelService.addNewModel(new CarModelDTO("3 Series", ModelCategory.CAR,"https://82.146.59.6:81",2010,2023,carBrandService.getBrandByName("BMW")));
         carModelService.addNewModel(new CarModelDTO("A4", ModelCategory.CAR,"https://82.146.59.6:82",2012,2023,carBrandService.getBrandByName("Audi")));
         carModelService.addNewModel(new CarModelDTO("Model S", ModelCategory.CAR,"https://82.146.59.6:83",2014,2023,carBrandService.getBrandByName("Tesla")));

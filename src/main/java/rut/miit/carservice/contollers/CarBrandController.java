@@ -1,20 +1,14 @@
 package rut.miit.carservice.contollers;
 
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BeanPropertyBindingResult;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import rut.miit.carservice.services.dtos.input.CarBrandDTO;
-import rut.miit.carservice.services.implementations.CarBrandServiceImpl;
-import rut.miit.carservice.services.implementations.UserServiceImpl;
 import rut.miit.carservice.services.interfaces.publicAPI.CarBrandService;
 import rut.miit.carservice.util.contollerValidators.BrandValidator;
-import rut.miit.carservice.util.contollerValidators.UserValidator;
 
 import java.util.HashMap;
 import java.util.List;
@@ -26,12 +20,16 @@ import java.util.Map;
 @RestController
 @RequestMapping("/brand")
 public class CarBrandController {
-    private final CarBrandService<String> brandService;
-    private final  BrandValidator brandValidator;
+    private CarBrandService<String> brandService;
+    private BrandValidator brandValidator;
 
     @Autowired
-    public CarBrandController(CarBrandService<String> brandService, BrandValidator brandValidator) {
+    public void setBrandService(CarBrandService<String> brandService) {
         this.brandService = brandService;
+    }
+
+    @Autowired
+    public void setBrandValidator(BrandValidator brandValidator) {
         this.brandValidator = brandValidator;
     }
 

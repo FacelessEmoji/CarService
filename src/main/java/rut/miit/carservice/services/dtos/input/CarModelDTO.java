@@ -30,4 +30,14 @@ public class CarModelDTO extends BaseDTO {
     private Integer endYear;
 
     private CarBrandDTO brandDTO; // Вторичный ключ, валидацию не добавляем
+
+    public CarModelDTO(String name, String category, String imageUrl, Integer startYear, Integer endYear,
+        CarBrandDTO brandDTO) {
+        this.name = name;
+        this.category = ModelCategory.valueOf(category);
+        this.imageUrl = imageUrl;
+        this.startYear = startYear;
+        this.endYear = endYear;
+        this.brandDTO = brandDTO;
+    }
 }

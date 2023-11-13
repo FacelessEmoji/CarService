@@ -4,11 +4,9 @@ import jakarta.validation.ConstraintViolation;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import rut.miit.carservice.models.entities.User;
 import rut.miit.carservice.services.dtos.input.CarBrandDTO;
 import rut.miit.carservice.models.entities.CarBrand;
 import rut.miit.carservice.repositories.CarBrandRepository;
-import rut.miit.carservice.services.dtos.output.UserOutputDTO;
 import rut.miit.carservice.services.interfaces.internalAPI.CarBrandInternalService;
 import rut.miit.carservice.services.interfaces.publicAPI.CarBrandService;
 import rut.miit.carservice.util.serviceValidators.ValidationUtilImpl;
@@ -18,14 +16,22 @@ import java.util.stream.Collectors;
 
 @Service
 public class CarBrandServiceImpl implements CarBrandService<String>, CarBrandInternalService<String> {
-    private final CarBrandRepository brandRepository;
-    private final ModelMapper modelMapper;
-    private final ValidationUtilImpl validationUtil;
+    private CarBrandRepository brandRepository;
+    private ModelMapper modelMapper;
+    private ValidationUtilImpl validationUtil;
 
     @Autowired
-    public CarBrandServiceImpl(CarBrandRepository brandRepository, ModelMapper modelMapper, ValidationUtilImpl validationUtil) {
+    public void setBrandRepository(CarBrandRepository brandRepository) {
         this.brandRepository = brandRepository;
+    }
+
+    @Autowired
+    public void setModelMapper(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
+    }
+
+    @Autowired
+    public void setValidationUtil(ValidationUtilImpl validationUtil) {
         this.validationUtil = validationUtil;
     }
 

@@ -19,9 +19,22 @@ import java.util.stream.Collectors;
 
 @Service
 public class OfferServiceImpl implements OfferService<String>, OfferInternalService<String> {
-    private final OfferRepository offerRepository;
-    private final ModelMapper modelMapper;
-    private final ValidationUtilImpl validationUtil;
+    private OfferRepository offerRepository;
+    private ModelMapper modelMapper;
+    private ValidationUtilImpl validationUtil;
+
+    @Autowired
+    public void setOfferRepository(OfferRepository offerRepository) {
+        this.offerRepository = offerRepository;
+    }
+    @Autowired
+    public void setModelMapper(ModelMapper modelMapper) {
+        this.modelMapper = modelMapper;
+    }
+    @Autowired
+    public void setValidationUtil(ValidationUtilImpl validationUtil) {
+        this.validationUtil = validationUtil;
+    }
 
     @Autowired
     public OfferServiceImpl(OfferRepository offerRepository, ModelMapper modelMapper, ValidationUtilImpl validationUtil) {

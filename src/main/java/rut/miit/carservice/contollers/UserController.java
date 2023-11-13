@@ -24,10 +24,10 @@ import java.util.Map;
 @RestController
 @RequestMapping("/user")
 public class UserController {
-    private final UserService<String> userService;
+    private UserService<String> userService;
 
     @Autowired
-    public UserController(UserService<String> userService) {
+    public void setUserService(UserService<String> userService) {
         this.userService = userService;
     }
 
@@ -45,6 +45,18 @@ public class UserController {
     public UserOutputDTO findByUsername(@PathVariable String username) {
         return userService.getUserByUsername(username);
     }
+
+//    @PostMapping("/add/test")
+//    public ResponseEntity<?> add(@Valid @RequestBody UserDTO userDTO, BindingResult result) {
+//        if (result.hasErrors()) {
+//            Map<String, String> errors = new HashMap<>();
+//            for (FieldError fieldError : result.getFieldErrors()) {
+//                errors.put(fieldError.getField(), fieldError.getDefaultMessage());
+//            }
+//            return ResponseEntity.badRequest().body(errors);
+//        }
+//        return ResponseEntity.ok(userService.addNewUser(userDTO));
+//    }
 
     @PostMapping("/add/user")
     public ResponseEntity<?> addUser(@Valid @RequestBody UserDTO userDTO, BindingResult result) {

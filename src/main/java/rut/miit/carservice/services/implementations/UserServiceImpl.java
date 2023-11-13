@@ -20,17 +20,25 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService<String>, UserInternalService<String> {
-    private final UserRepository userRepository;
-    private final UserRoleRepository roleRepository;
-    private final ModelMapper modelMapper;
-    private final ValidationUtilImpl validationUtil;
+    private UserRepository userRepository;
+    private UserRoleRepository roleRepository;
+    private ModelMapper modelMapper;
+    private ValidationUtilImpl validationUtil;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, UserRoleRepository roleRepository, ModelMapper modelMapper,
-        ValidationUtilImpl validationUtil) {
+    public void setUserRepository(UserRepository userRepository) {
         this.userRepository = userRepository;
+    }
+    @Autowired
+    public void setRoleRepository(UserRoleRepository roleRepository) {
         this.roleRepository = roleRepository;
+    }
+    @Autowired
+    public void setModelMapper(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
+    }
+    @Autowired
+    public void setValidationUtil(ValidationUtilImpl validationUtil) {
         this.validationUtil = validationUtil;
     }
 

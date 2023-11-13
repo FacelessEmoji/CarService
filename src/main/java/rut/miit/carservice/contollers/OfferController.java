@@ -16,10 +16,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/offer")
 public class OfferController {
-    private final OfferService<String> offerService;
+    private OfferService<String> offerService;
 
     @Autowired
-    public OfferController(OfferService<String> offerService) {
+    public void setOfferService(OfferService<String> offerService) {
         this.offerService = offerService;
     }
 

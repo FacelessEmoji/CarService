@@ -4,6 +4,7 @@ import jakarta.validation.ConstraintViolation;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import rut.miit.carservice.models.entities.CarBrand;
 import rut.miit.carservice.services.dtos.input.CarModelDTO;
 import rut.miit.carservice.models.entities.CarModel;
 import rut.miit.carservice.models.enums.*;
@@ -19,14 +20,20 @@ import java.util.stream.Collectors;
 
 @Service
 public class CarModelServiceImpl implements CarModelService<String>, CarModelInternalService<String>{
-    private final CarModelRepository modelRepository;
-    private final ModelMapper modelMapper;
-    private final ValidationUtilImpl validationUtil;
+    private CarModelRepository modelRepository;
+    private ModelMapper modelMapper;
+    private ValidationUtilImpl validationUtil;
 
     @Autowired
-    public CarModelServiceImpl(CarModelRepository modelRepository, ModelMapper modelMapper, ValidationUtilImpl validationUtil) {
+    public void setModelRepository(CarModelRepository modelRepository) {
         this.modelRepository = modelRepository;
+    }
+    @Autowired
+    public void setModelMapper(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
+    }
+    @Autowired
+    public void setValidationUtil(ValidationUtilImpl validationUtil) {
         this.validationUtil = validationUtil;
     }
 
@@ -37,7 +44,11 @@ public class CarModelServiceImpl implements CarModelService<String>, CarModelInt
 
     @Override
     public CarModelOutputDTO getModelByBrandAndName(String brandName, String modelName) {
-        return modelMapper.map(modelRepository.findByBrand_NameAndName(brandName, modelName), CarModelOutputDTO.class);
+        CarModel carModel = modelRepository.findByBrand_NameAndName(brandName, modelName);
+        if (carModel == null) {
+            return null;
+        }
+        return modelMapper.map(carModel, CarModelOutputDTO.class);
     }
 
     @Override

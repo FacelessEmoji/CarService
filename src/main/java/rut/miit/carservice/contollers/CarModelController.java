@@ -18,10 +18,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/model")
 public class CarModelController {
-    CarModelService<String> modelService;
+    private CarModelService<String> modelService;
 
     @Autowired
-    public CarModelController(CarModelService<String> modelService) {
+    public void setModelService(CarModelService<String> modelService) {
         this.modelService = modelService;
     }
 
