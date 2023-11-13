@@ -11,7 +11,6 @@ import rut.miit.carservice.services.interfaces.publicAPI.CarBrandService;
 import rut.miit.carservice.util.contollerValidators.BrandValidator;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -38,13 +37,10 @@ public class CarBrandController {
         binder.setValidator(brandValidator);
     }
 
-    @GetMapping("/find/all")
-    public List<CarBrandDTO> findAll(){
-        return brandService.getAllBrands();
-    }
-
     @PostMapping("/add")
-    public ResponseEntity<?> addBrand(@RequestParam String brandName) {
+    public ResponseEntity<?> addBrand(
+        @RequestParam(name = "name", defaultValue = "null") String brandName
+    ) {
         // Применяем валидацию
         Errors errors = new BeanPropertyBindingResult(brandName, "brandName");
         brandValidator.validate(brandName, errors);
@@ -58,15 +54,23 @@ public class CarBrandController {
     }
 
 
-    //validation
-    @GetMapping("/find/{brandName}")
-    public CarBrandDTO findByName(@PathVariable String brandName){
-        return brandService.getBrandByName(brandName);
+    @GetMapping("/find")
+    public ResponseEntity<?> findByName(
+        @RequestParam(name = "name", defaultValue = "null") String brandName
+    ){
+        if (brandName.equals("all")){
+            return ResponseEntity.ok(brandService.getAllBrands());
+        } else if (brandName.equals("null")){
+            return ResponseEntity.badRequest().body("Brand name can't be null");
+        }
+        return ResponseEntity.ok(brandService.getBrandByName(brandName));
     }
 
-    //validation
-    @PutMapping("/update/{brandName}")
-    public CarBrandDTO updateBrandName(@PathVariable String brandName, @RequestParam String newBrandName){
+    @PutMapping("/update")
+    public CarBrandDTO updateBrandName(
+        @RequestParam(name = "oldName", defaultValue = "null") String brandName,
+        @RequestParam(name = "newName", defaultValue = "null") String newBrandName
+    ){
         return brandService.updateBrandName(brandName, newBrandName);
     }
 
