@@ -1,6 +1,7 @@
 package rut.miit.carservice.contollers;
 
 import jakarta.validation.*;
+import jakarta.validation.constraints.AssertFalse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -15,7 +16,6 @@ import rut.miit.carservice.util.contollerValidators.AdminValidator;
 import rut.miit.carservice.util.contollerValidators.UserValidator;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -24,10 +24,10 @@ import java.util.Map;
 @RestController
 @RequestMapping("/user")
 public class UserController {
-    private UserService<String> userService;
+    private UserServiceImpl userService;
 
     @Autowired
-    public void setUserService(UserService<String> userService) {
+    public void setUserService(UserServiceImpl userService) {
         this.userService = userService;
     }
 
@@ -36,14 +36,15 @@ public class UserController {
         binder.setValidator(new UserValidator((UserServiceImpl) userService));
     }
 
-    @GetMapping("/find/all")
-    public List<UserOutputDTO> findAll() {
-        return userService.getAllUsers();
-    }
-
-    @GetMapping("/find/{username}")
-    public UserOutputDTO findByUsername(@PathVariable String username) {
-        return userService.getUserByUsername(username);
+    @GetMapping("/find")
+    public ResponseEntity<?> findByUsername(
+        @RequestParam(name = "username", defaultValue = "null") String username
+    ) {
+        if (username.equals("all")){
+            return ResponseEntity.ok(userService.getAllUsers());
+        } else if (username.equals("null")){
+            return ResponseEntity.badRequest().body("Username can't be null");
+        } else return ResponseEntity.ok(userService.getUserByUsername(username));
     }
 
 //    @PostMapping("/add/test")
@@ -82,23 +83,48 @@ public class UserController {
         return ResponseEntity.ok(userService.addNewUser(userService.setAdmin(adminDTO)));
     }
 
-    @PutMapping("/update/{userId}")
-    public UserDTO updateUsername(@PathVariable String userId, @RequestParam String newUsername) {
-        return userService.updateUsername(userId, newUsername);
+    @PutMapping("/update/username")
+    public ResponseEntity<?> updateUsername(
+        @RequestParam(name = "id", defaultValue = "null") String userId,
+        @RequestParam(name = "username", defaultValue = "null") String newUsername
+    ) {
+        if (userId.equals("null") || newUsername.equals("null")){
+            return ResponseEntity.badRequest().body("User id or new username can't be null");
+        }else if (userService.getUserById(userId).getUsername().equals(newUsername)){
+            return ResponseEntity.badRequest().body("New username can't be the same as the old one");
+        } else return ResponseEntity.ok(userService.updateUsername(userId, newUsername));
     }
 
-    @PutMapping("/update/password/{userId}")
-    public UserDTO updatePassword(@PathVariable String userId, @RequestParam String newPassword) {
-        return userService.updatePassword(userId, newPassword);
+    @PutMapping("/update/password")
+    public ResponseEntity<?> updatePassword(
+        @RequestParam(name = "id", defaultValue = "null") String userId,
+        @RequestParam(name = "password", defaultValue = "null") String newPassword) {
+        if (userId.equals("null") || newPassword.equals("null")){
+            return ResponseEntity.badRequest().body("User id or new password can't be null");
+        } else if (userService.getUserById(userId).getPassword().equals(newPassword)){
+            return ResponseEntity.badRequest().body("New password can't be the same as the old one");
+        } else return ResponseEntity.ok(userService.updatePassword(userId, newPassword));
     }
 
-    @PutMapping("/update/isActive/{userId}")
-    public UserDTO updateIsActive(@PathVariable String userId, @RequestParam boolean newIsActive) {
-        return userService.updateIsActive(userId, newIsActive);
+    @PutMapping("/update/isActive")
+    public ResponseEntity<?> updateIsActive(
+        @RequestParam(name = "id", defaultValue = "null") String userId,
+        @RequestParam(name = "isActive", defaultValue = "true") boolean newIsActive) {
+        if (userId.equals("null")) {
+            return ResponseEntity.badRequest().body("User id can't be null");
+        } else if (userService.getUserById(userId).getActive().equals(newIsActive)){
+            return ResponseEntity.badRequest().body("New user state can't be the same as the old one");
+        } else return ResponseEntity.ok(userService.updateIsActive(userId, newIsActive));
     }
 
-    @PutMapping("/update/imageUrl/{userId}")
-    public UserDTO updateUserImageUrl(@PathVariable String userId, @RequestParam String newImageUrl) {
-        return userService.updateUserImageUrl(userId, newImageUrl);
+    @PutMapping("/update/imageUrl")
+    public ResponseEntity<?> updateUserImageUrl(
+        @RequestParam(name = "id", defaultValue = "null") String userId,
+        @RequestParam(name = "imageUrl", defaultValue = "null") String newImageUrl) {
+        if (userId.equals("null") || newImageUrl.equals("null")) {
+            return ResponseEntity.badRequest().body("User id or new image url can't be null");
+        } else if (userService.getUserById(userId).getImageUrl().equals(newImageUrl)){
+            return ResponseEntity.badRequest().body("New image url can't be the same as the old one");
+        } else return ResponseEntity.ok(userService.updateUserImageUrl(userId, newImageUrl));
     }
 }

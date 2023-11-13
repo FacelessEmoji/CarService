@@ -7,6 +7,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import rut.miit.carservice.services.dtos.input.CarBrandDTO;
+import rut.miit.carservice.services.implementations.CarBrandServiceImpl;
 import rut.miit.carservice.services.interfaces.publicAPI.CarBrandService;
 import rut.miit.carservice.util.contollerValidators.BrandValidator;
 
@@ -19,11 +20,11 @@ import java.util.Map;
 @RestController
 @RequestMapping("/brand")
 public class CarBrandController {
-    private CarBrandService<String> brandService;
+    private CarBrandServiceImpl brandService;
     private BrandValidator brandValidator;
 
     @Autowired
-    public void setBrandService(CarBrandService<String> brandService) {
+    public void setBrandService(CarBrandServiceImpl brandService) {
         this.brandService = brandService;
     }
 
@@ -62,16 +63,21 @@ public class CarBrandController {
             return ResponseEntity.ok(brandService.getAllBrands());
         } else if (brandName.equals("null")){
             return ResponseEntity.badRequest().body("Brand name can't be null");
-        }
-        return ResponseEntity.ok(brandService.getBrandByName(brandName));
+        } else return ResponseEntity.ok(brandService.getBrandByName(brandName));
     }
 
     @PutMapping("/update")
-    public CarBrandDTO updateBrandName(
+    public ResponseEntity<?> updateBrandName(
         @RequestParam(name = "oldName", defaultValue = "null") String brandName,
         @RequestParam(name = "newName", defaultValue = "null") String newBrandName
     ){
-        return brandService.updateBrandName(brandName, newBrandName);
+        if (brandName.equals("null") || newBrandName.equals("null")){
+            return ResponseEntity.badRequest().body("Brand name can't be null");
+        } else if (brandName.equals(newBrandName)){
+            return ResponseEntity.badRequest().body("New brand name can't be the same as the old one");
+        } else {
+            return ResponseEntity.ok(brandService.updateBrandName(brandName, newBrandName));
+        }
     }
 
     //fix error and no more deleting
