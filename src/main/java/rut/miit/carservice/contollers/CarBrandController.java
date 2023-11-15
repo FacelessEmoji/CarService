@@ -19,7 +19,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/brand")
-public class CarBrandController {
+public class CarBrandController {   
     private CarBrandServiceImpl brandService;
     private BrandValidator brandValidator;
 

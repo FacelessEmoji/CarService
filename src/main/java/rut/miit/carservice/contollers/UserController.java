@@ -33,7 +33,7 @@ public class UserController {
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
-        binder.setValidator(new UserValidator((UserServiceImpl) userService));
+        binder.setValidator(new UserValidator(userService));
     }
 
     @GetMapping("/find")

@@ -15,6 +15,7 @@ public interface CarModelService<ID>{
     List<CarModelOutputDTO> getModelsByBrandAndYears(String brandName, Integer startYear, Integer endYear);
     List<CarModelOutputDTO> getModelsByCriteria(ModelCategory category, EngineType engine,
                                        TransmissionType transmission, Integer maxMileage, BigDecimal maxPrice);
+//    CarModelDTO addNewModel(String carBrandName, CarModelDTO modelDTO);
     CarModelDTO addNewModel(CarModelDTO modelDTO);
     CarModelDTO updateModelName(ID modelId, String modelName);
     CarModelDTO updateModelImageUrl(ID modelId, String imageUrl);

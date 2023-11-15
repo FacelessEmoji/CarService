@@ -1,16 +1,28 @@
 package rut.miit.carservice.contollers;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import rut.miit.carservice.models.enums.EngineType;
 import rut.miit.carservice.models.enums.ModelCategory;
 import rut.miit.carservice.models.enums.TransmissionType;
 import rut.miit.carservice.services.dtos.input.CarModelDTO;
 import rut.miit.carservice.services.dtos.output.CarModelOutputDTO;
+import rut.miit.carservice.services.implementations.CarModelServiceImpl;
+import rut.miit.carservice.services.implementations.UserServiceImpl;
 import rut.miit.carservice.services.interfaces.publicAPI.CarModelService;
+import rut.miit.carservice.util.contollerValidators.BrandValidator;
+import rut.miit.carservice.util.contollerValidators.ModelValidator;
+import rut.miit.carservice.util.contollerValidators.UserValidator;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * todo Document type CarModelController
@@ -18,11 +30,16 @@ import java.util.List;
 @RestController
 @RequestMapping("/model")
 public class CarModelController {
-    private CarModelService<String> modelService;
+    private CarModelServiceImpl modelService;
 
     @Autowired
-    public void setModelService(CarModelService<String> modelService) {
+    public void setModelService(CarModelServiceImpl modelService) {
         this.modelService = modelService;
+    }
+
+    @InitBinder
+    protected void initBinder(WebDataBinder binder) {
+        binder.setValidator(new ModelValidator(modelService));
     }
 
     @GetMapping("/find/all")
@@ -30,39 +47,74 @@ public class CarModelController {
         return modelService.getAllModels();
     }
 
-    @GetMapping("/find/position/{brandName}/{modelName}")
-    public CarModelOutputDTO findByBrandAndName(@PathVariable String brandName, @PathVariable String modelName){
-        return modelService.getModelByBrandAndName(brandName, modelName);
+    @GetMapping("/find/position")
+    public ResponseEntity<?> findByBrandAndName(
+        @RequestParam(name = "brand", defaultValue = "null") String brandName,
+        @RequestParam(name = "model", defaultValue = "null") String modelName){
+        if (brandName.equals("null") || modelName.equals("null"))
+            return ResponseEntity.badRequest().body("Brand and model names must be specified");
+        else return ResponseEntity.ok(modelService.getModelByBrandAndName(brandName, modelName));
     }
 
-    @GetMapping("/find/brand/{brandName}/years/between/{startYear}/{endYear}")
-    public List<CarModelOutputDTO> findByBrandAndYears(@PathVariable String brandName, @PathVariable Integer startYear, @PathVariable Integer endYear){
-        return modelService.getModelsByBrandAndYears(brandName, startYear, endYear);
+    @GetMapping("/find/brand/years/between")
+    public ResponseEntity<?> findByBrandAndYears(
+        @RequestParam(name = "brand") String brandName,
+        @RequestParam(name = "startYear", required = false, defaultValue = "1900") Integer startYear,
+        @RequestParam(name = "endYear", required = false, defaultValue = "2100") Integer endYear){
+        if (brandName.equals("null"))
+            return ResponseEntity.badRequest().body("Brand name must be specified");
+        else return ResponseEntity.ok(modelService.getModelsByBrandAndYears(brandName, startYear, endYear));
     }
 
-    @GetMapping("/find/criteria/{category}/{engine}/{transmission}/{maxMileage}/{maxPrice}")
-    public List<CarModelOutputDTO> findByCriteria(@PathVariable ModelCategory category, @PathVariable EngineType engine,
-        @PathVariable TransmissionType transmission, @PathVariable Integer maxMileage, @PathVariable BigDecimal maxPrice){
-        return modelService.getModelsByCriteria(category, engine, transmission, maxMileage, maxPrice);
+    @GetMapping("/find/criteria")
+    public ResponseEntity<?> findByCriteria(
+        @RequestParam(name = "category", required = false, defaultValue = "CAR") ModelCategory category,
+        @RequestParam(name = "engine", required = false, defaultValue = "GASOLINE") EngineType engine,
+        @RequestParam(name = "transmission", required = false, defaultValue = "AUTOMATIC") TransmissionType transmission,
+        @RequestParam(name = "mileage", required = false, defaultValue = "100000") Integer maxMileage,
+        @RequestParam(name = "price", required = false, defaultValue = "100000") BigDecimal maxPrice){
+
+        return ResponseEntity.ok(modelService.getModelsByCriteria(category, engine, transmission, maxMileage, maxPrice));
     }
 
+
+    //todo: add validation
     @PostMapping("/add")
-    public CarModelDTO add(@RequestBody CarModelDTO modelDTO){
-        return modelService.addNewModel(modelDTO);
+    public ResponseEntity<?> add(@Valid @RequestBody CarModelDTO modelDTO, BindingResult result){
+        if (result.hasErrors()) {
+            Map<String, String> errors = new HashMap<>();
+            for (FieldError fieldError : result.getFieldErrors()) {
+                errors.put(fieldError.getField(), fieldError.getDefaultMessage());
+            }
+            return ResponseEntity.badRequest().body(errors);
+        }
+        return ResponseEntity.ok(modelService.addNewModel(modelDTO));
     }
 
-    @PutMapping("/update/name/{modelId}")
-    public CarModelDTO updateName(@PathVariable String modelId, @RequestParam String modelName){
-        return modelService.updateModelName(modelId, modelName);
+    @PutMapping("/update/name")
+    public ResponseEntity<?> updateName(
+        @RequestParam(name = "id", defaultValue = "null") String modelId,
+        @RequestParam(name = "name", defaultValue = "null") String modelName){
+        if (modelId.equals("null") || modelName.equals("null"))
+            return ResponseEntity.badRequest().body("Model id and name must be specified");
+        else return ResponseEntity.ok(modelService.updateModelName(modelId, modelName));
     }
 
-    @PutMapping("/update/image/{modelId}")
-    public CarModelDTO updateImageUrl(@PathVariable String modelId, @RequestParam String imageUrl){
-        return modelService.updateModelImageUrl(modelId, imageUrl);
+    @PutMapping("/update/image")
+    public ResponseEntity<?> updateImageUrl(
+        @RequestParam(name = "id", defaultValue = "null") String modelId,
+        @RequestParam(name = "imageUrl", defaultValue = "null") String imageUrl){
+        if (modelId.equals("null") || imageUrl.equals("null"))
+            return ResponseEntity.badRequest().body("Model id and image url must be specified") ;
+        else return ResponseEntity.ok(modelService.updateModelImageUrl(modelId, imageUrl));
     }
 
-    @PutMapping("/update/endYear/{modelId}")
-    public CarModelDTO updateEndYear(@PathVariable String modelId, @RequestParam int endYear){
-        return modelService.updateModelEndYear(modelId, endYear);
+    @PutMapping("/update/endYear")
+    public ResponseEntity<?> updateEndYear(
+        @RequestParam(name = "id", defaultValue = "null") String modelId,
+        @RequestParam(name = "endYear", defaultValue = "0") int endYear){
+        if (modelId.equals("null") || endYear == 0)
+            return ResponseEntity.badRequest().body("Model id and end year must be specified");
+        else return ResponseEntity.ok(modelService.updateModelEndYear(modelId, endYear));
     }
 }

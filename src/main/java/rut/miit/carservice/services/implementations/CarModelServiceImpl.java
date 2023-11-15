@@ -5,6 +5,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import rut.miit.carservice.models.entities.CarBrand;
+import rut.miit.carservice.repositories.CarBrandRepository;
+import rut.miit.carservice.services.dtos.input.CarBrandDTO;
 import rut.miit.carservice.services.dtos.input.CarModelDTO;
 import rut.miit.carservice.models.entities.CarModel;
 import rut.miit.carservice.models.enums.*;
@@ -21,12 +23,17 @@ import java.util.stream.Collectors;
 @Service
 public class CarModelServiceImpl implements CarModelService<String>, CarModelInternalService<String>{
     private CarModelRepository modelRepository;
+    private CarBrandRepository brandRepository;
     private ModelMapper modelMapper;
     private ValidationUtilImpl validationUtil;
 
     @Autowired
     public void setModelRepository(CarModelRepository modelRepository) {
         this.modelRepository = modelRepository;
+    }
+    @Autowired
+    public void setBrandRepository(CarBrandRepository brandRepository) {
+        this.brandRepository = brandRepository;
     }
     @Autowired
     public void setModelMapper(ModelMapper modelMapper) {
@@ -69,6 +76,28 @@ public class CarModelServiceImpl implements CarModelService<String>, CarModelInt
                 .map(m -> modelMapper.map(m, CarModelOutputDTO.class)).collect(Collectors.toList());
     }
 
+
+//    @Override
+//    public CarModelDTO addNewModel(String carBrandName, CarModelDTO model) {
+//        if (!this.validationUtil.isValid(model)) {
+//            this.validationUtil
+//                .violations(model)
+//                .stream()
+//                .map(ConstraintViolation::getMessage)
+//                .forEach(System.out::println);
+//        } else {
+//            try {
+//                CarBrandDTO brandDTO = modelMapper.map(brandRepository.findByName(carBrandName), CarBrandDTO.class);
+//                model.setBrandDTO(brandDTO);
+//                return modelMapper.map(modelRepository.saveAndFlush(modelMapper.map(model, CarModel.class)), CarModelDTO.class);
+//            } catch (Exception e) {
+//                System.out.println("Some thing went wrong!");
+//            }
+//        }
+//
+//        return null;
+//    }
+
     @Override
     public CarModelDTO addNewModel(CarModelDTO model) {
         if (!this.validationUtil.isValid(model)) {
@@ -86,8 +115,9 @@ public class CarModelServiceImpl implements CarModelService<String>, CarModelInt
         }
 
         return null;
-
     }
+
+
     @Override
     public CarModelDTO updateModelName(String modelId, String modelName) {
         CarModel carModel = modelRepository.findById(modelId).orElseThrow();
