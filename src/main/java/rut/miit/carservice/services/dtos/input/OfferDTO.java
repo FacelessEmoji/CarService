@@ -40,4 +40,17 @@ public class OfferDTO extends BaseDTO {
 
     private CarModelDTO model; // Вторичный ключ, валидацию не добавляем
     private UserDTO seller; // Вторичный ключ, валидацию не добавляем
+
+    public OfferDTO(String description, String engine, String imageUrl, Integer mileage, BigDecimal price,
+        String transmission, Integer year, CarModelDTO model, UserDTO seller) {
+        this.description = description;
+        this.engine = EngineType.valueOf(engine);
+        this.imageUrl = imageUrl;
+        this.mileage = mileage;
+        this.price = price;
+        this.transmission = TransmissionType.valueOf(transmission);
+        this.year = year;
+        this.model = model;
+        this.seller = seller;
+    }
 }

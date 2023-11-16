@@ -12,6 +12,7 @@ import rut.miit.carservice.models.enums.ModelCategory;
 import rut.miit.carservice.models.enums.TransmissionType;
 import rut.miit.carservice.services.dtos.input.CarModelDTO;
 import rut.miit.carservice.services.dtos.output.CarModelOutputDTO;
+import rut.miit.carservice.services.implementations.CarBrandServiceImpl;
 import rut.miit.carservice.services.implementations.CarModelServiceImpl;
 import rut.miit.carservice.services.implementations.UserServiceImpl;
 import rut.miit.carservice.services.interfaces.publicAPI.CarModelService;
@@ -31,6 +32,12 @@ import java.util.Map;
 @RequestMapping("/model")
 public class CarModelController {
     private CarModelServiceImpl modelService;
+    private CarBrandServiceImpl brandService;
+
+    @Autowired
+    public void setBrandService(CarBrandServiceImpl brandService) {
+        this.brandService = brandService;
+    }
 
     @Autowired
     public void setModelService(CarModelServiceImpl modelService) {
@@ -42,18 +49,20 @@ public class CarModelController {
         binder.setValidator(new ModelValidator(modelService));
     }
 
-    @GetMapping("/find/all")
-    public List<CarModelOutputDTO> findAll(){
-        return modelService.getAllModels();
-    }
-
     @GetMapping("/find/position")
     public ResponseEntity<?> findByBrandAndName(
         @RequestParam(name = "brand", defaultValue = "null") String brandName,
         @RequestParam(name = "model", defaultValue = "null") String modelName){
-        if (brandName.equals("null") || modelName.equals("null"))
+        if (brandName.equals("null") && modelName.equals("null")){
             return ResponseEntity.badRequest().body("Brand and model names must be specified");
-        else return ResponseEntity.ok(modelService.getModelByBrandAndName(brandName, modelName));
+            //if brandName equals all and modelName equals null return all models
+        } else if (brandName.equals("all") && modelName.equals("null")){
+            return ResponseEntity.ok(modelService.getAllModels());
+            //if brandName equals all and modelName not equals null return all models with modelName
+        } else if (brandService.getBrandByName(brandName) != null && modelName.equals("all")){
+            return ResponseEntity.ok(modelService.getModelsByBrandAndYears(brandName, 1900, 2100));
+            //if brandName not equals all and modelName equals null return all models with brandName
+        } else return ResponseEntity.ok(modelService.getModelByBrandAndName(brandName, modelName));
     }
 
     @GetMapping("/find/brand/years/between")

@@ -36,13 +36,6 @@ public class OfferServiceImpl implements OfferService<String>, OfferInternalServ
         this.validationUtil = validationUtil;
     }
 
-    @Autowired
-    public OfferServiceImpl(OfferRepository offerRepository, ModelMapper modelMapper, ValidationUtilImpl validationUtil) {
-        this.offerRepository = offerRepository;
-        this.modelMapper = modelMapper;
-        this.validationUtil = validationUtil;
-    }
-
     @Override
     public Offer getOfferById(String offerId) {
         return offerRepository.findById(offerId).orElse(null);

@@ -45,5 +45,17 @@ public class ModelValidator implements Validator {
             errors.rejectValue("name", "CarModel.name.length", "Car model name must be between 2 and 50 characters");
         }
 
+        //startyear should be bigger than 1900 and endyear should be less then 2100
+        if (modelDTO.getStartYear() < 1900 || modelDTO.getEndYear() > 2100) {
+            errors.rejectValue("startYear||endYear", "CarModel.years.length", "Years should be between 1900 and 2100");
+        }
+
+        //brand dto should not be null
+        if (modelDTO.getBrandDTO() == null) {
+            errors.rejectValue("brand", "CarModel.brand.null", "Brand cant be null");
+        }
+
+
+
     }
 }
