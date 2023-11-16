@@ -6,17 +6,12 @@ import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import rut.miit.carservice.services.dtos.input.CarBrandDTO;
 import rut.miit.carservice.services.implementations.CarBrandServiceImpl;
-import rut.miit.carservice.services.interfaces.publicAPI.CarBrandService;
 import rut.miit.carservice.util.contollerValidators.BrandValidator;
 
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * todo Document type CarBrandController
- */
 @RestController
 @RequestMapping("/api/brand")
 public class BrandControllerAPI {
@@ -78,12 +73,5 @@ public class BrandControllerAPI {
         } else {
             return ResponseEntity.ok(brandService.updateBrandName(brandName, newBrandName));
         }
-    }
-
-    //fix error and no more deleting
-    @Deprecated
-    @DeleteMapping("/delete/{brandName}")
-    public void deleteBrand(@PathVariable String brandName){
-        brandService.deleteBrandByName(brandName);
     }
 }

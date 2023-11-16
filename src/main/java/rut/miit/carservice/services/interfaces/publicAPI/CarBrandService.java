@@ -9,6 +9,4 @@ public interface CarBrandService<ID>{
     List<CarBrandDTO> getAllBrands();
     CarBrandDTO addNewBrand(String brandName);
     CarBrandDTO updateBrandName(String brandName, String newBrandName);
-    @Deprecated
-    void deleteBrandByName(String brandName);
 }

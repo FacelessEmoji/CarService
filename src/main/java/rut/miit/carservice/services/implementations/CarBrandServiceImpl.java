@@ -82,12 +82,6 @@ public class CarBrandServiceImpl implements CarBrandService<String>, CarBrandInt
         return modelMapper.map(newCarBrand, CarBrandDTO.class);
     }
 
-    @Deprecated
-    @Override
-    public void deleteBrandByName(String brandName) {
-        brandRepository.deleteByName(brandName);
-    }
-
     @Override
     public void deleteBrandById(String brandId) {
         brandRepository.deleteById(brandId);
