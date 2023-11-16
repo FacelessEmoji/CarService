@@ -14,14 +14,4 @@ public enum UserRoleType {
     private UserRoleType(int userRoleTypeCode) {
         this.userRoleTypeCode = userRoleTypeCode;
     }
-
-//    @JsonValue
-//    public String toString() {
-//        return name();
-//    }
-//
-//    @JsonCreator
-//    public static UserRoleType fromString(String value) {
-//        return UserRoleType.valueOf(value);
-//    }
 }

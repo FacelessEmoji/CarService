@@ -1,4 +1,4 @@
-package rut.miit.carservice.contollers;
+package rut.miit.carservice.contollers.api;
 
 import jakarta.validation.*;
 import jakarta.validation.constraints.AssertFalse;
@@ -22,8 +22,8 @@ import java.util.Map;
  * todo add admin validation
  */
 @RestController
-@RequestMapping("/user")
-public class UserController {
+@RequestMapping("/api/user")
+public class UserControllerAPI {
     private UserServiceImpl userService;
 
     @Autowired

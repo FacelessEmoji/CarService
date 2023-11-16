@@ -1,4 +1,4 @@
-package rut.miit.carservice.contollers;
+package rut.miit.carservice.contollers.api;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +29,8 @@ import java.util.Map;
  * todo Document type CarModelController
  */
 @RestController
-@RequestMapping("/model")
-public class CarModelController {
+@RequestMapping("/api/model")
+public class ModelControllerAPI {
     private CarModelServiceImpl modelService;
     private CarBrandServiceImpl brandService;
 

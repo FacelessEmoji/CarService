@@ -1,4 +1,4 @@
-package rut.miit.carservice.contollers;
+package rut.miit.carservice.contollers.api;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +24,8 @@ import java.util.Map;
  * todo Document type OfferController
  */
 @RestController
-@RequestMapping("/offer")
-public class OfferController {
+@RequestMapping("/api/offer")
+public class OfferControllerAPI {
     private OfferServiceImpl offerService;
 
     @Autowired

@@ -1,4 +1,4 @@
-package rut.miit.carservice.contollers;
+package rut.miit.carservice.contollers.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +18,8 @@ import java.util.Map;
  * todo Document type CarBrandController
  */
 @RestController
-@RequestMapping("/brand")
-public class CarBrandController {   
+@RequestMapping("/api/brand")
+public class BrandControllerAPI {
     private CarBrandServiceImpl brandService;
     private BrandValidator brandValidator;
 
