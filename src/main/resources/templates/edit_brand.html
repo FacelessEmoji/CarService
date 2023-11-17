@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Brand</title>
+</head>
+<body>
+<h1>Edit Brand</h1>
+<!-- edit_brand.html -->
+<form th:action="@{/brands/update}" method="post">
+    <input type="hidden" name="oldName" th:value="${brand.name}" />
+    <input type="text" name="newName" placeholder="New Brand Name">
+    <button type="submit">Update</button>
+</form>
+
+</body>
+</html>
+
