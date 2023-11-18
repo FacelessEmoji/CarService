@@ -49,6 +49,8 @@ public class CarModelServiceImpl implements CarModelService<String>, CarModelInt
         return modelRepository.findById(modelId).orElse(null);
     }
 
+    //запрос для добавления в список запросов:
+    //Название: Поиск по позиции
     @Override
     public CarModelOutputDTO getModelByBrandAndName(String brandName, String modelName) {
         CarModel carModel = modelRepository.findByBrand_NameAndName(brandName, modelName);
@@ -58,45 +60,28 @@ public class CarModelServiceImpl implements CarModelService<String>, CarModelInt
         return modelMapper.map(carModel, CarModelOutputDTO.class);
     }
 
+    //запрос для вывода всего списка моделей
     @Override
     public List<CarModelOutputDTO> getAllModels() {
         return modelRepository.findAll().stream()
                 .map(m -> modelMapper.map(m, CarModelOutputDTO.class)).collect(Collectors.toList());
     }
 
+    //запрос для добавления в список запросов:
+    //Название: Поиск по характеристикам
     @Override
     public List<CarModelOutputDTO> getModelsByCriteria(ModelCategory category, EngineType engine, TransmissionType transmission, Integer maxMileage, BigDecimal maxPrice) {
         return modelRepository.findModelsByCriteria(category, engine, transmission, maxMileage, maxPrice).stream()
                 .map(m -> modelMapper.map(m, CarModelOutputDTO.class)).collect(Collectors.toList());
     }
 
+    //запрос для добавления в список запросов:
+    //Название: Поиск по бренду и годам выпуска
     @Override
     public List<CarModelOutputDTO> getModelsByBrandAndYears(String brandName, Integer startYear, Integer endYear) {
         return modelRepository.findAllByBrand_NameAndStartYearGreaterThanEqualAndEndYearLessThanEqualOrderByEndYearDesc(brandName, startYear, endYear).stream()
                 .map(m -> modelMapper.map(m, CarModelOutputDTO.class)).collect(Collectors.toList());
     }
-
-
-//    @Override
-//    public CarModelDTO addNewModel(String carBrandName, CarModelDTO model) {
-//        if (!this.validationUtil.isValid(model)) {
-//            this.validationUtil
-//                .violations(model)
-//                .stream()
-//                .map(ConstraintViolation::getMessage)
-//                .forEach(System.out::println);
-//        } else {
-//            try {
-//                CarBrandDTO brandDTO = modelMapper.map(brandRepository.findByName(carBrandName), CarBrandDTO.class);
-//                model.setBrandDTO(brandDTO);
-//                return modelMapper.map(modelRepository.saveAndFlush(modelMapper.map(model, CarModel.class)), CarModelDTO.class);
-//            } catch (Exception e) {
-//                System.out.println("Some thing went wrong!");
-//            }
-//        }
-//
-//        return null;
-//    }
 
     @Override
     public CarModelDTO addNewModel(CarModelDTO model) {
@@ -116,7 +101,6 @@ public class CarModelServiceImpl implements CarModelService<String>, CarModelInt
 
         return null;
     }
-
 
     @Override
     public CarModelDTO updateModelName(String modelId, String modelName) {

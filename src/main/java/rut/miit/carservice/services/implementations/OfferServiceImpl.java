@@ -41,18 +41,23 @@ public class OfferServiceImpl implements OfferService<String>, OfferInternalServ
         return offerRepository.findById(offerId).orElse(null);
     }
 
+    //запрос для вывода всего списка предложений
     @Override
     public List<OfferWithDetailsDTO> getAllOffers() {
         return offerRepository.findAll().stream()
                 .map(o -> modelMapper.map(o, OfferWithDetailsDTO.class)).collect(Collectors.toList());
     }
 
+    //запрос для добавления в список запросов:
+    //Название: Поиск по позиции
     @Override
     public List<OfferWithDetailsDTO> getOffersByBrandAndModel(String brandName, String modelName) {
         return offerRepository.findAllByModel_Brand_NameAndModel_Name(brandName, modelName).stream()
                 .map(o -> modelMapper.map(o, OfferWithDetailsDTO.class)).collect(Collectors.toList());
     }
 
+    //запрос для добавления в список запросов:
+    //Название: Поиск по юзернейму продавца
     @Override
     public List<OfferWithDetailsDTO> getOffersBySellerUsername(String username) {
         return offerRepository.findAllBySeller_UsernameAndSeller_IsActiveAndSeller_RoleRole(username, true, UserRoleType.USER).stream()
@@ -65,12 +70,16 @@ public class OfferServiceImpl implements OfferService<String>, OfferInternalServ
                 .map(o -> modelMapper.map(o, OfferWithDetailsDTO.class)).collect(Collectors.toList());
     }
 
+    //запрос для добавления в список запросов:
+    //Название: Поиск по цене
     @Override
     public List<OfferWithDetailsDTO> getOffersByPriceBetween(BigDecimal minPrice, BigDecimal maxPrice) {
         return offerRepository.findAllByPriceGreaterThanEqualAndPriceLessThanEqual(minPrice, maxPrice) .stream()
             .map(o -> modelMapper.map(o, OfferWithDetailsDTO.class)).collect(Collectors.toList());
     }
 
+    //запрос для добавления в список запросов:
+    //Название: Поиск позиции и цене
     @Override
     public List<OfferWithDetailsDTO> getOffersByPriceBetweenAndName(String brandName, String modelName, BigDecimal minPrice, BigDecimal maxPrice) {
         return offerRepository.

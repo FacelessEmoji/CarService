@@ -40,6 +40,8 @@ public class CarBrandServiceImpl implements CarBrandService<String>, CarBrandInt
         return brandRepository.findById(brandId).orElse(null);
     }
 
+    //запрос для добавления в список запросов:
+    //Название: Поиск по названию бренда
     @Override
     public CarBrandDTO getBrandByName(String brandName) {
         CarBrand carBrand = brandRepository.findByName(brandName);
@@ -49,6 +51,8 @@ public class CarBrandServiceImpl implements CarBrandService<String>, CarBrandInt
         return modelMapper.map(brandRepository.findByName(brandName), CarBrandDTO.class);
     }
 
+
+    //запрос для вывода всего списка брендов
     @Override
     public List<CarBrandDTO> getAllBrands() {
         return brandRepository.findAll().stream()

@@ -6,7 +6,7 @@
 <body>
 <h1>Brands</h1>
 
-<!-- Форма поиска -->
+<!-- Форма поиска с использованием Thymeleaf для динамического формирования URL -->
 <form th:action="@{/brands}" method="get">
     <input type="text" name="search" placeholder="Search Brand">
     <button type="submit">Search</button>
@@ -18,7 +18,7 @@
     <form th:action="@{/brands/add}" th:object="${newBrand}" method="post">
         <input type="text" th:field="*{name}" placeholder="Brand Name">
         <button type="submit">Add</button>
-        <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error Message</p>
+        <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error Message</p> <!-- Обработка ошибок -->
     </form>
 </div>
 
@@ -28,10 +28,9 @@
     <ul>
         <li th:each="brand : ${brands}">
             <span th:text="${brand.name}">Brand Name</span>
-            <a th:href="@{/brands/edit/{name}(name=${brand.name})}">Edit</a>
+            <a th:href="@{/brands/edit/{name}(name=${brand.name})}">Edit</a> <!-- Thymeleaf URL-выражения -->
         </li>
     </ul>
 </div>
 </body>
 </html>
-
