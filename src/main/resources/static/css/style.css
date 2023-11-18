@@ -1,0 +1,21 @@
+/* Сохраните этот код в src/main/resources/static/css/style.css */
+body {
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    width: 80%;
+    margin: auto;
+}
+
+header {
+    background-color: #f2f2f2;
+    padding: 10px 0;
+    text-align: center;
+}
+
+.search-section, .popular-brands, .popular-models {
+    margin-top: 20px;
+}
+
+/* Дополнительные стили */

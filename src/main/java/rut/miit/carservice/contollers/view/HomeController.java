@@ -28,7 +28,7 @@ public class HomeController {
         // Получаем списки популярных брендов и моделей и добавляем их в модель
         model.addAttribute("popularBrands", brandService.getAllBrands());
         model.addAttribute("popularModels", modelService.getAllModels());
-        return "home"; // Возвращает имя шаблона главной страницы
+        return "main/home"; // Возвращает имя шаблона главной страницы
     }
 }
 
