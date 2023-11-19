@@ -1,21 +1,115 @@
-/* Сохраните этот код в src/main/resources/static/css/style.css */
-body {
+/* Общие стили */
+body, h1, h2, button, input {
+    margin: 0;
+    padding: 0;
     font-family: Arial, sans-serif;
 }
 
 .container {
-    width: 80%;
-    margin: auto;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
 }
 
 header {
-    background-color: #f2f2f2;
+    background-color: #4CAF50;
+    color: white;
     padding: 10px 0;
     text-align: center;
+    margin-bottom: 30px;
+    position: relative; /* Для позиционирования кнопки входа */
 }
 
-.search-section, .popular-brands, .popular-models {
+button {
+    background-color: #f2f2f2;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #ddd;
+}
+
+/* Кнопка входа */
+.sign-in-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+/* Секция поиска */
+.search-section {
+    margin-bottom: 30px;
+}
+
+.search-section label,
+.search-section input,
+.search-section button {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.search-section input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+/* Стили для блоков с популярными брендами и моделями */
+.popular-brands, .popular-models {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 10px;
     margin-top: 20px;
+    margin-bottom: 20px; /* Добавлено для отступа от кнопки */
 }
 
-/* Дополнительные стили */
+.popular-brands .scrollable-list, .popular-models .scrollable-list {
+    height: 200px;
+    overflow-y: auto;
+}
+
+/* Стили для списков */
+.popular-brands ul, .popular-models ul {
+    padding: 0;
+    margin: 0; /* Сброс стандартных отступов */
+}
+
+.popular-brands li, .popular-models li {
+    background-color: #fff;
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 4px;
+    list-style-type: none;
+}
+
+/* Стили для заголовков блоков */
+.popular-brands h2, .popular-models h2 {
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+/* Кнопка 'Добавить предложение' */
+.add-offer-button {
+    display: block;
+    width: max-content;
+    margin: 20px auto; /* Центрирование кнопки */
+}
+
+/* Адаптивность */
+@media (min-width: 768px) {
+    .search-section label,
+    .search-section input,
+    .search-section button {
+        width: auto;
+        display: inline-block;
+        margin-right: 10px;
+    }
+
+    .search-section button {
+        margin-top: 25px;
+    }
+}

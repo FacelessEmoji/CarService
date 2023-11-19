@@ -10,7 +10,7 @@
 
 <header>
     <h1>Главная страница веб-приложения</h1>
-    <button onclick="location.href='/signin'">Войти</button>
+    <button class="sign-in-button" onclick="location.href='/signin'">Войти</button>
 </header>
 
 <div class="container">
@@ -22,31 +22,34 @@
         </form>
     </div>
 
+    <h2>Популярные бренды</h2>
     <div class="popular-brands">
-        <h2>Популярные бренды</h2>
-        <div id="brandsList">
+        <div id="brandsList" class="scrollable-list">
             <ul>
+                <!-- Список брендов будет здесь -->
                 <li th:each="brand : ${popularBrands}">
-                    <span th:text="${brand.name}"></span>
+                    <span th:text="${brand.name}">Brand Name</span>
                 </li>
             </ul>
         </div>
     </div>
 
+    <h2>Популярные модели</h2>
     <div class="popular-models">
-        <h2>Популярные модели</h2>
-        <div id="modelsList">
+        <div id="modelsList" class="scrollable-list">
             <ul>
+                <!-- Список моделей будет здесь -->
                 <li th:each="model : ${popularModels}">
-                    <span th:text="${model.name}"></span>
+                    <span th:text="${model.name}">Model Name</span>
                 </li>
             </ul>
         </div>
     </div>
 
-    <button onclick="location.href='/addoffer'">Добавить предложение</button>
+    <button class="add-offer-button" onclick="location.href='/addoffer'">Добавить предложение</button>
 </div>
 
 <script src="/js/script.js"></script>
 </body>
 </html>
+
