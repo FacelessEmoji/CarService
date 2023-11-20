@@ -6,9 +6,28 @@ body, h1, h2, button, input {
 }
 
 .container {
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 60px; /* Убедитесь, что блок поиска не перекрывает контент */
+    justify-content: space-between;
     max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
+    margin: 70px auto 20px; /* Отступ сверху, чтобы учесть фиксированный блок поиска */
+}
+
+.search-settings {
+    flex-basis: 20%; /* Или другое значение в зависимости от ширины экрана */
+    display: flex;
+    flex-direction: column;
+    margin-right: 20px; /* Отступ справа */
+}
+
+.search-block {
+    height: 150px; /* Установите высоту в соответствии с вашим макетом */
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 20px; /* Отступ между блоками */
+    padding: 10px;
+    background-color: #fff;
 }
 
 header {
@@ -87,12 +106,10 @@ button:hover {
 }
 
 .offers-section {
-    flex-basis: 55%;
+    flex-basis: calc(55% - 20px); /* Вычесть отступ справа */
     overflow-y: auto;
     height: 600px; /* Или другой размер в соответствии с макетом */
     border: 1px solid #ddd;
-    margin-bottom: 10px;
-    /* Добавьте другие стили по мере необходимости */
 }
 
 .offer {
@@ -112,7 +129,8 @@ button:hover {
 }
 
 .sidebar {
-    flex-basis: 20%;
+    flex-basis: 20%; /* Или другое значение в зависимости от ширины экрана */
+    height: fit-content;
 }
 
 .sign-in-button {

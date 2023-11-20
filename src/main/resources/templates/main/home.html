@@ -20,13 +20,12 @@
 
 
 <div class="container">
-    <!-- Блоки поисковых настроек -->
-<!--    <div class="search-settings">-->
-<!--        <div class="search-block">&lt;!&ndash; Заглушка для первого блока поисковых настроек &ndash;&gt;</div>-->
-<!--        <div class="search-block">&lt;!&ndash; Заглушка для второго блока поисковых настроек &ndash;&gt;</div>-->
-<!--    </div>-->
-
     <!-- Основной блок для вывода предложений -->
+    <div class="search-settings">
+        <h2>Search settings:</h2>
+        <div class="search-block"><!-- Заглушка для первого блока поисковых настроек --></div>
+        <div class="search-block"><!-- Заглушка для второго блока поисковых настроек --></div>
+    </div>
     <div class="offers-section">
         <!-- Итерация по списку предложений с использованием Thymeleaf -->
         <div th:each="offer : ${offers}" class="offer">
