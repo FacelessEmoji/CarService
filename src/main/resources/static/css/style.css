@@ -39,25 +39,6 @@ button:hover {
     right: 10px;
 }
 
-/* Секция поиска */
-.search-section {
-    margin-bottom: 30px;
-}
-
-.search-section label,
-.search-section input,
-.search-section button {
-    display: block;
-    width: 100%;
-    margin-bottom: 10px;
-}
-
-.search-section input {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
-
 /* Стили для блоков с популярными брендами и моделями */
 .popular-brands, .popular-models {
     border: 1px solid #ddd;
@@ -102,19 +83,7 @@ button:hover {
 .container {
     display: flex;
     justify-content: space-between;
-}
-
-.search-settings {
-    flex-basis: 20%;
-    display: flex;
-    flex-direction: column;
-}
-
-.search-block {
-    height: 150px; /* Или другой размер в соответствии с макетом */
-    border: 1px solid #ddd;
-    margin-bottom: 10px;
-    /* Добавьте другие стили по мере необходимости */
+    padding-top: 60px;
 }
 
 .offers-section {
@@ -156,6 +125,15 @@ button:hover {
     display: block;
     margin: 10px auto;
 }
+.search-container {
+    position: fixed; /* Фиксированное позиционирование */
+    top: 0; /* В верху страницы */
+    left: 50%; /* Отцентровка */
+    transform: translateX(-50%); /* Смещение назад на 50% ширины элемента */
+    z-index: 1000; /* Выше всех остальных элементов */
+    margin-top: 70px; /* Небольшой отступ сверху страницы */
+}
+
 
 /* Адаптивность */
 @media (min-width: 768px) {
