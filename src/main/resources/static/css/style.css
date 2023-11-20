@@ -99,6 +99,64 @@ button:hover {
     margin: 20px auto; /* Центрирование кнопки */
 }
 
+.container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.search-settings {
+    flex-basis: 20%;
+    display: flex;
+    flex-direction: column;
+}
+
+.search-block {
+    height: 150px; /* Или другой размер в соответствии с макетом */
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    /* Добавьте другие стили по мере необходимости */
+}
+
+.offers-section {
+    flex-basis: 55%;
+    overflow-y: auto;
+    height: 600px; /* Или другой размер в соответствии с макетом */
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    /* Добавьте другие стили по мере необходимости */
+}
+
+.offer {
+    border-bottom: 1px solid #ddd;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.offer-details {
+    margin-left: 10px;
+}
+
+.edit-offer {
+    margin-left: auto;
+    /* Добавьте другие стили по мере необходимости */
+}
+
+.sidebar {
+    flex-basis: 20%;
+}
+
+.sign-in-button {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
+.add-offer-button {
+    display: block;
+    margin: 10px auto;
+}
+
 /* Адаптивность */
 @media (min-width: 768px) {
     .search-section label,

@@ -16,19 +16,23 @@ public class HomeController {
 
     private final CarModelServiceImpl modelService;
     private final CarBrandServiceImpl brandService;
+    private final OfferServiceImpl offerService; // Добавлен сервис для работы с предложениями
 
     @Autowired
-    public HomeController(CarModelServiceImpl modelService, CarBrandServiceImpl brandService) {
+    public HomeController(CarModelServiceImpl modelService, CarBrandServiceImpl brandService, OfferServiceImpl offerService) {
         this.modelService = modelService;
         this.brandService = brandService;
+        this.offerService = offerService; // Инициализация сервиса предложений
     }
 
     @GetMapping("/")
     public String home(Model model) {
-        // Получаем списки популярных брендов и моделей и добавляем их в модель
+        // Получаем списки популярных брендов, моделей и всех предложений и добавляем их в модель
         model.addAttribute("popularBrands", brandService.getAllBrands());
         model.addAttribute("popularModels", modelService.getAllModels());
+        model.addAttribute("offers", offerService.getAllOffers()); // Добавляем предложения в модель
         return "main/home"; // Возвращает имя шаблона главной страницы
     }
 }
+
 

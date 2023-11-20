@@ -14,42 +14,65 @@
 </header>
 
 <div class="container">
-    <div class="search-section">
-        <form id="searchForm">
-            <label for="searchInput">Search settings:</label>
-            <input type="text" id="searchInput" name="query" placeholder="Введите запрос">
-            <button type="button" onclick="performSearch()">Search</button>
-        </form>
+    <!-- Блоки поисковых настроек -->
+    <div class="search-settings">
+        <div class="search-block"><!-- Заглушка для первого блока поисковых настроек --></div>
+        <div class="search-block"><!-- Заглушка для второго блока поисковых настроек --></div>
     </div>
 
-    <h2>Популярные бренды</h2>
-    <div class="popular-brands">
-        <div id="brandsList" class="scrollable-list">
-            <ul>
-                <!-- Список брендов будет здесь -->
-                <li th:each="brand : ${popularBrands}">
-                    <span th:text="${brand.name}">Brand Name</span>
-                </li>
-            </ul>
+    <!-- Основной блок для вывода предложений -->
+    <div class="offers-section">
+        <!-- Итерация по списку предложений с использованием Thymeleaf -->
+        <div th:each="offer : ${offers}" class="offer">
+            <!-- Контент предложения -->
+            <img th:src="${offer.imageUrl}" alt="Image of Car" th:alt="${'Image of ' + offer.modelName}">
+            <div class="offer-details">
+                <h3 th:text="${offer.brandName + ' ' + offer.modelName}">Brand Model</h3>
+                <p th:text="${offer.description}">Description</p>
+                <p>Engine: <span th:text="${offer.engine}">Engine Type</span></p>
+                <p>Mileage: <span th:text="${offer.mileage}">Mileage</span></p>
+                <p>Price: <span th:text="${offer.price}">Price</span></p>
+                <p>Transmission: <span th:text="${offer.transmission}">Transmission Type</span></p>
+                <p>Year: <span th:text="${offer.year}">Year</span></p>
+                <p>Seller: <span th:text="${offer.sellerUsername}">Seller Username</span> (Active: <span th:text="${offer.isActive}">Active Status</span>)</p>
+            </div>
+            <button class="edit-offer">Edit</button>
         </div>
     </div>
 
-    <h2>Популярные модели</h2>
-    <div class="popular-models">
-        <div id="modelsList" class="scrollable-list">
-            <ul>
-                <!-- Список моделей будет здесь -->
-                <li th:each="model : ${popularModels}">
-                    <span th:text="${model.name}">Model Name</span>
-                </li>
-            </ul>
+
+
+    <!-- Блоки для популярных брендов и моделей -->
+    <div class="sidebar">
+        <h2>Популярные бренды</h2>
+        <div class="popular-brands">
+            <div id="brandsList" class="scrollable-list">
+                <ul>
+                    <!-- Список брендов будет здесь -->
+                    <li th:each="brand : ${popularBrands}">
+                        <span th:text="${brand.name}">Brand Name</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <h2>Популярные модели</h2>
+        <div class="popular-models">
+            <div id="modelsList" class="scrollable-list">
+                <ul>
+                    <!-- Список моделей будет здесь -->
+                    <li th:each="model : ${popularModels}">
+                        <span th:text="${model.name}">Model Name</span>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 
-    <button class="add-offer-button" onclick="location.href='/addoffer'">Добавить предложение</button>
 </div>
-
+<button class="add-offer-button" onclick="location.href='/addoffer'">Добавить предложение</button>
 <script src="/js/script.js"></script>
 </body>
 </html>
+
 

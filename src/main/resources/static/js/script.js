@@ -1,5 +1,3 @@
-// Сохраните этот код в src/main/resources/static/js/script.js
-
 // Функция для тестирования загрузки файла
 function testScriptLoad() {
   console.log('script.js успешно загружен и работает!');
