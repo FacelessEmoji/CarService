@@ -102,7 +102,6 @@ button:hover {
 .container {
     display: flex;
     justify-content: space-between;
-    padding-top: 60px;
 }
 
 .offers-section {
@@ -144,12 +143,45 @@ button:hover {
     margin: 10px auto;
 }
 .search-container {
-    position: fixed; /* Фиксированное позиционирование */
-    top: 0; /* В верху страницы */
-    left: 50%; /* Отцентровка */
-    transform: translateX(-50%); /* Смещение назад на 50% ширины элемента */
-    z-index: 1000; /* Выше всех остальных элементов */
-    margin-top: 70px; /* Небольшой отступ сверху страницы */
+    width: 50%; /* Устанавливаем ширину контейнера */
+    margin: 10px auto; /* Вертикальные отступы и горизонтальное центрирование */
+    display: flex; /* Используем flexbox для выравнивания элементов внутри */
+    justify-content: center; /* Горизонтальное центрирование содержимого */
+    padding: 20px; /* Внутренние отступы для дополнительного пространства */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Небольшая тень для визуального отделения */
+    background: #fff; /* Белый фон для выделения на фоне других элементов */
+}
+
+.search-container input[type="text"],
+.search-container button {
+    padding: 15px; /* Увеличиваем внутренние отступы для увеличения элементов */
+    font-size: 1.2em; /* Увеличиваем размер шрифта */
+}
+
+.search-container button {
+    margin-left: 10px; /* Добавляем отступ слева от кнопки */
+}
+
+.search-block h3 {
+    margin-bottom: 10px; /* Отступ заголовка от радиокнопок */
+}
+
+.search-block label {
+    display: block; /* Каждая метка с новой строки */
+    margin-bottom: 5px; /* Отступ между метками */
+}
+
+.search-block input[type="radio"] {
+    margin-right: 5px; /* Отступ слева от текста */
+}
+
+.criteria {
+    display: none; /* Скрыть все критерии по умолчанию */
+}
+
+.criteria label {
+    display: block; /* Отображать каждый критерий на отдельной строке */
+    margin: 5px 0; /* Отступы для меток */
 }
 
 

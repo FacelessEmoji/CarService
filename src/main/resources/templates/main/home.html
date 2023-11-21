@@ -22,9 +22,30 @@
 <div class="container">
     <!-- Основной блок для вывода предложений -->
     <div class="search-settings">
-        <h2>Search settings:</h2>
-        <div class="search-block"><!-- Заглушка для первого блока поисковых настроек --></div>
-        <div class="search-block"><!-- Заглушка для второго блока поисковых настроек --></div>
+        <h2>Настройки поиска:</h2>
+        <div class="search-block">
+            <h3>Таблица для поиска:</h3>
+            <label><input type="radio" name="searchEntity" value="offer" checked> Предложения</label>
+            <label><input type="radio" name="searchEntity" value="brand"> Бренды</label>
+            <label><input type="radio" name="searchEntity" value="model"> Модели</label>
+        </div>
+        <div class="search-block" id="search-criteria">
+            <h3>Критерии поиска:</h3>
+            <div id="criteria-offer" class="criteria">
+                <label><input type="radio" name="searchCriteria" value="position"> Поиск по позиции</label>
+                <label><input type="radio" name="searchCriteria" value="username"> Поиск по юзернейму продавца</label>
+                <label><input type="radio" name="searchCriteria" value="price"> Поиск по цене</label>
+                <label><input type="radio" name="searchCriteria" value="positionPrice"> Поиск позиции и цене</label>
+            </div>
+            <div id="criteria-brand" class="criteria" style="display: none;">
+                <label><input type="radio" name="searchCriteria" value="brandName"> Поиск по названию бренда</label>
+            </div>
+            <div id="criteria-model" class="criteria" style="display: none;">
+                <label><input type="radio" name="searchCriteria" value="modelPosition"> Поиск по позиции</label>
+                <label><input type="radio" name="searchCriteria" value="characteristics"> Поиск по характеристикам</label>
+                <label><input type="radio" name="searchCriteria" value="brandYear"> Поиск по бренду и годам выпуска</label>
+            </div>
+        </div>
     </div>
     <div class="offers-section">
         <!-- Итерация по списку предложений с использованием Thymeleaf -->
