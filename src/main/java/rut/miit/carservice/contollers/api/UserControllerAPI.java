@@ -1,7 +1,6 @@
 package rut.miit.carservice.contollers.api;
 
 import jakarta.validation.*;
-import jakarta.validation.constraints.AssertFalse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -9,10 +8,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import rut.miit.carservice.services.dtos.input.UserDTO;
-import rut.miit.carservice.services.dtos.output.UserOutputDTO;
 import rut.miit.carservice.services.implementations.UserServiceImpl;
-import rut.miit.carservice.services.interfaces.publicAPI.UserService;
-import rut.miit.carservice.util.contollerValidators.AdminValidator;
 import rut.miit.carservice.util.contollerValidators.UserValidator;
 
 import java.util.HashMap;

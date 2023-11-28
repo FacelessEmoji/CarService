@@ -39,7 +39,7 @@ public class BrandController {
             : Collections.singletonList(brandService.getBrandByName(search));
         model.addAttribute("brands", brands);
         model.addAttribute("newBrand", new CarBrandDTO());
-        return "brands"; // Чистый и ясный код
+        return "test/brands"; // Чистый и ясный код
     }
 
     @PostMapping("/add")
@@ -50,7 +50,7 @@ public class BrandController {
             return "redirect:/brands";
         }
         model.addAttribute("brands", brandService.getAllBrands());
-        return "brands"; // Обработка ошибок
+        return "test/brands"; // Обработка ошибок
     }
 
     @GetMapping("/edit/{name}")
@@ -58,7 +58,7 @@ public class BrandController {
         CarBrandDTO brand = brandService.getBrandByName(name);
         if (brand != null) {
             model.addAttribute("brand", brand);
-            return "edit_brand"; // Чистый и ясный код
+            return "test/edit_brand"; // Чистый и ясный код
         } else {
             return "redirect:/brands"; // Обработка отсутствующего бренда
         }
@@ -68,19 +68,19 @@ public class BrandController {
     public String updateBrand(@RequestParam("oldName") String oldName, @RequestParam("newName") String newName, Model model) {
         if (oldName.equals(newName)) {
             model.addAttribute("error", "New brand name can't be the same as the old one");
-            return "edit_brand"; // Проверка на ошибку: новое имя не должно совпадать со старым
+            return "test/edit_brand"; // Проверка на ошибку: новое имя не должно совпадать со старым
         }
 
         // Проверка на уникальность нового имени
         if (brandService.getBrandByName(newName) != null) {
             model.addAttribute("error", "Brand name already exists");
-            return "edit_brand"; // Проверка на ошибку: новое имя уже существует
+            return "test/edit_brand"; // Проверка на ошибку: новое имя уже существует
         }
 
         CarBrandDTO updatedBrand = brandService.updateBrandName(oldName, newName);
         if (updatedBrand == null) {
             model.addAttribute("error", "Unable to update brand or brand not found");
-            return "edit_brand"; // Обработка ошибки обновления
+            return "test/edit_brand"; // Обработка ошибки обновления
         }
         return "redirect:/brands"; // Чистый и ясный код
     }
