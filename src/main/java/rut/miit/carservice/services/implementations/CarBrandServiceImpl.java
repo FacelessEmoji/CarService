@@ -1,6 +1,5 @@
 package rut.miit.carservice.services.implementations;
 
-import jakarta.validation.ConstraintViolation;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,7 +8,6 @@ import rut.miit.carservice.models.entities.CarBrand;
 import rut.miit.carservice.repositories.CarBrandRepository;
 import rut.miit.carservice.services.interfaces.internalAPI.CarBrandInternalService;
 import rut.miit.carservice.services.interfaces.publicAPI.CarBrandService;
-import rut.miit.carservice.util.serviceValidators.ValidationUtilImpl;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,7 +16,6 @@ import java.util.stream.Collectors;
 public class CarBrandServiceImpl implements CarBrandService<String>, CarBrandInternalService<String> {
     private CarBrandRepository brandRepository;
     private ModelMapper modelMapper;
-    private ValidationUtilImpl validationUtil;
 
     @Autowired
     public void setBrandRepository(CarBrandRepository brandRepository) {
@@ -28,11 +25,6 @@ public class CarBrandServiceImpl implements CarBrandService<String>, CarBrandInt
     @Autowired
     public void setModelMapper(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
-    }
-
-    @Autowired
-    public void setValidationUtil(ValidationUtilImpl validationUtil) {
-        this.validationUtil = validationUtil;
     }
 
     @Override
@@ -58,20 +50,7 @@ public class CarBrandServiceImpl implements CarBrandService<String>, CarBrandInt
     @Override
     public CarBrandDTO addNewBrand(String brandName) {
         CarBrandDTO brand = new CarBrandDTO(brandName);
-        if (!this.validationUtil.isValid(brand)) {
-            this.validationUtil
-                .violations(brand)
-                .stream()
-                .map(ConstraintViolation::getMessage)
-                .forEach(System.out::println);
-        } else {
-            try {
-                return modelMapper.map(brandRepository.saveAndFlush(modelMapper.map(brand,CarBrand.class)),CarBrandDTO.class);
-            } catch (Exception e) {
-                System.out.println("Some thing went wrong!");
-            }
-        }
-        return null;
+        return modelMapper.map(brandRepository.saveAndFlush(modelMapper.map(brand,CarBrand.class)),CarBrandDTO.class);
     }
 
     @Override

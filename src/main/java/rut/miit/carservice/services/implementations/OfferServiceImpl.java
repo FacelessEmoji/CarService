@@ -1,5 +1,5 @@
 package rut.miit.carservice.services.implementations;
-import jakarta.validation.ConstraintViolation;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,7 +10,6 @@ import rut.miit.carservice.models.enums.UserRoleType;
 import rut.miit.carservice.repositories.OfferRepository;
 import rut.miit.carservice.services.interfaces.internalAPI.OfferInternalService;
 import rut.miit.carservice.services.interfaces.publicAPI.OfferService;
-import rut.miit.carservice.util.serviceValidators.ValidationUtilImpl;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -21,7 +20,6 @@ import java.util.stream.Collectors;
 public class OfferServiceImpl implements OfferService<String>, OfferInternalService<String> {
     private OfferRepository offerRepository;
     private ModelMapper modelMapper;
-    private ValidationUtilImpl validationUtil;
 
     @Autowired
     public void setOfferRepository(OfferRepository offerRepository) {
@@ -31,10 +29,7 @@ public class OfferServiceImpl implements OfferService<String>, OfferInternalServ
     public void setModelMapper(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
     }
-    @Autowired
-    public void setValidationUtil(ValidationUtilImpl validationUtil) {
-        this.validationUtil = validationUtil;
-    }
+
 
     @Override
     public Offer getOfferById(String offerId) {
@@ -80,21 +75,7 @@ public class OfferServiceImpl implements OfferService<String>, OfferInternalServ
 
     @Override
     public OfferDTO addNewOffer(OfferDTO offer) {
-        if (!this.validationUtil.isValid(offer)) {
-            this.validationUtil
-                .violations(offer)
-                .stream()
-                .map(ConstraintViolation::getMessage)
-                .forEach(System.out::println);
-
-        } else {
-            try {
-                return modelMapper.map(offerRepository.saveAndFlush(modelMapper.map(offer, Offer.class)), OfferDTO.class);
-            } catch (Exception e) {
-                System.out.println("Some thing went wrong!");
-            }
-        }
-        return null;
+        return modelMapper.map(offerRepository.saveAndFlush(modelMapper.map(offer, Offer.class)), OfferDTO.class);
     }
     @Override
     public OfferDTO updateOfferDescription(String offerId, String description) {

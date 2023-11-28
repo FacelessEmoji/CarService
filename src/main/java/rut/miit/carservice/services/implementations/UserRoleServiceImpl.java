@@ -1,6 +1,5 @@
 package rut.miit.carservice.services.implementations;
 
-import jakarta.validation.ConstraintViolation;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,7 +9,6 @@ import rut.miit.carservice.models.enums.UserRoleType;
 import rut.miit.carservice.repositories.UserRoleRepository;
 import rut.miit.carservice.services.interfaces.internalAPI.UserRoleInternalService;
 import rut.miit.carservice.services.interfaces.publicAPI.UserRoleService;
-import rut.miit.carservice.util.serviceValidators.ValidationUtilImpl;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,7 +17,6 @@ import java.util.stream.Collectors;
 public class UserRoleServiceImpl implements UserRoleService<String>, UserRoleInternalService<String> {
     private UserRoleRepository roleRepository;
     private ModelMapper modelMapper;
-    private ValidationUtilImpl validationUtil;
 
     @Autowired
     public void setRoleRepository(UserRoleRepository roleRepository) {
@@ -28,10 +25,6 @@ public class UserRoleServiceImpl implements UserRoleService<String>, UserRoleInt
     @Autowired
     public void setModelMapper(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
-    }
-    @Autowired
-    public void setValidationUtil(ValidationUtilImpl validationUtil) {
-        this.validationUtil = validationUtil;
     }
 
     @Override
@@ -52,20 +45,7 @@ public class UserRoleServiceImpl implements UserRoleService<String>, UserRoleInt
 
     @Override
     public UserRoleDTO addNewRole(UserRoleDTO userRole) {
-        if (!this.validationUtil.isValid(userRole)) {
-            this.validationUtil
-                .violations(userRole)
-                .stream()
-                .map(ConstraintViolation::getMessage)
-                .forEach(System.out::println);
-        } else {
-            try {
-                return modelMapper.map(roleRepository.saveAndFlush(modelMapper.map(userRole, UserRole.class)), UserRoleDTO.class);
-            } catch (Exception e) {
-                System.out.println("Some thing went wrong!");
-            }
-        }
-        return null;
+        return modelMapper.map(roleRepository.saveAndFlush(modelMapper.map(userRole, UserRole.class)), UserRoleDTO.class);
     }
 
     @Override

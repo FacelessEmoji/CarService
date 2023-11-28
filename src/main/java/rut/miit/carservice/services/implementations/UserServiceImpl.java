@@ -1,6 +1,5 @@
 package rut.miit.carservice.services.implementations;
 
-import jakarta.validation.ConstraintViolation;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +12,6 @@ import rut.miit.carservice.services.dtos.input.UserRoleDTO;
 import rut.miit.carservice.services.dtos.output.UserOutputDTO;
 import rut.miit.carservice.services.interfaces.internalAPI.UserInternalService;
 import rut.miit.carservice.services.interfaces.publicAPI.UserService;
-import rut.miit.carservice.util.serviceValidators.ValidationUtilImpl;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,7 +21,6 @@ public class UserServiceImpl implements UserService<String>, UserInternalService
     private UserRepository userRepository;
     private UserRoleRepository roleRepository;
     private ModelMapper modelMapper;
-    private ValidationUtilImpl validationUtil;
 
     @Autowired
     public void setUserRepository(UserRepository userRepository) {
@@ -36,10 +33,6 @@ public class UserServiceImpl implements UserService<String>, UserInternalService
     @Autowired
     public void setModelMapper(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
-    }
-    @Autowired
-    public void setValidationUtil(ValidationUtilImpl validationUtil) {
-        this.validationUtil = validationUtil;
     }
 
     @Override
@@ -64,20 +57,7 @@ public class UserServiceImpl implements UserService<String>, UserInternalService
 
     @Override
     public UserDTO addNewUser(UserDTO user) {
-        if (!this.validationUtil.isValid(user)) {
-            this.validationUtil
-                .violations(user)
-                .stream()
-                .map(ConstraintViolation::getMessage)
-                .forEach(System.out::println);
-        } else {
-            try {
-                return modelMapper.map(userRepository.saveAndFlush(modelMapper.map(user, User.class)), UserDTO.class);
-            } catch (Exception e) {
-                System.out.println("Some thing went wrong!");
-            }
-        }
-        return null;
+        return modelMapper.map(userRepository.saveAndFlush(modelMapper.map(user, User.class)), UserDTO.class);
     }
 
     @Override
