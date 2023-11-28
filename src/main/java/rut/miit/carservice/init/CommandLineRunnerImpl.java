@@ -59,21 +59,21 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
         carBrandService.addNewBrand("Mercedes");
         carBrandService.addNewBrand("Audi");
 
-        carModelService.addNewModel(new CarModelDTO("Model X", "CAR","https://82.146.59.6:80",2015,2023,carBrandService.getBrandByName("Tesla")));
-        carModelService.addNewModel(new CarModelDTO("3 Series", ModelCategory.CAR,"https://82.146.59.6:81",2010,2023,carBrandService.getBrandByName("BMW")));
-        carModelService.addNewModel(new CarModelDTO("A4", ModelCategory.CAR,"https://82.146.59.6:82",2012,2023,carBrandService.getBrandByName("Audi")));
-        carModelService.addNewModel(new CarModelDTO("Model S", ModelCategory.CAR,"https://82.146.59.6:83",2014,2023,carBrandService.getBrandByName("Tesla")));
-        carModelService.addNewModel(new CarModelDTO("Model 3", ModelCategory.CAR,"https://82.146.59.6:84",2017,2023,carBrandService.getBrandByName("Tesla")));
-        carModelService.addNewModel(new CarModelDTO("C-Class", ModelCategory.CAR,"https://82.146.59.6:85",2008,2023,carBrandService.getBrandByName("Mercedes")));
-        carModelService.addNewModel(new CarModelDTO("Camry", ModelCategory.CAR,"https://82.146.59.6:86",2005,2023,carBrandService.getBrandByName("Toyota")));
-        carModelService.addNewModel(new CarModelDTO("Model Y", ModelCategory.CAR,"https://82.146.59.6:87",2019,2023,carBrandService.getBrandByName("Tesla")));
-        carModelService.addNewModel(new CarModelDTO("E-Class", ModelCategory.CAR,"https://82.146.59.6:88",2007,2023,carBrandService.getBrandByName("Mercedes")));
-        carModelService.addNewModel(new CarModelDTO("A3", ModelCategory.CAR,"https://82.146.59.6:89",2015,2023,carBrandService.getBrandByName("Audi")));
-        carModelService.addNewModel(new CarModelDTO("Corolla", ModelCategory.CAR,"https://82.146.59.6:90",2003,2023,carBrandService.getBrandByName("Toyota")));
-        carModelService.addNewModel(new CarModelDTO("A6", ModelCategory.CAR,"https://82.146.59.6:91",2009,2023,carBrandService.getBrandByName("Audi")));
-        carModelService.addNewModel(new CarModelDTO("5 Series", ModelCategory.CAR,"https://82.146.59.6:92",2011,2023,carBrandService.getBrandByName("BMW")));
-        carModelService.addNewModel(new CarModelDTO("Land Cruiser", ModelCategory.TRUCK,"https://82.146.59.6:93",2002,2023,carBrandService.getBrandByName("Toyota")));
-        carModelService.addNewModel(new CarModelDTO("Model Roadster", ModelCategory.CAR,"https://82.146.59.6:94",2010,2015,carBrandService.getBrandByName("Tesla")));
+        carModelService.addNewModel(new CarModelDTO("Model X", "CAR","https://82.146.59.6:80",2015,2023,carBrandService.getBrandByName("Tesla").getId()));
+        carModelService.addNewModel(new CarModelDTO("3 Series", ModelCategory.CAR,"https://82.146.59.6:81",2010,2023,carBrandService.getBrandByName("BMW").getId()));
+        carModelService.addNewModel(new CarModelDTO("A4", ModelCategory.CAR,"https://82.146.59.6:82",2012,2023,carBrandService.getBrandByName("Audi").getId()));
+        carModelService.addNewModel(new CarModelDTO("Model S", ModelCategory.CAR,"https://82.146.59.6:83",2014,2023,carBrandService.getBrandByName("Tesla").getId()));
+        carModelService.addNewModel(new CarModelDTO("Model 3", ModelCategory.CAR,"https://82.146.59.6:84",2017,2023,carBrandService.getBrandByName("Tesla").getId()));
+        carModelService.addNewModel(new CarModelDTO("C-Class", ModelCategory.CAR,"https://82.146.59.6:85",2008,2023,carBrandService.getBrandByName("Mercedes").getId()));
+        carModelService.addNewModel(new CarModelDTO("Camry", ModelCategory.CAR,"https://82.146.59.6:86",2005,2023,carBrandService.getBrandByName("Toyota").getId()));
+        carModelService.addNewModel(new CarModelDTO("Model Y", ModelCategory.CAR,"https://82.146.59.6:87",2019,2023,carBrandService.getBrandByName("Tesla").getId()));
+        carModelService.addNewModel(new CarModelDTO("E-Class", ModelCategory.CAR,"https://82.146.59.6:88",2007,2023,carBrandService.getBrandByName("Mercedes").getId()));
+        carModelService.addNewModel(new CarModelDTO("A3", ModelCategory.CAR,"https://82.146.59.6:89",2015,2023,carBrandService.getBrandByName("Audi").getId()));
+        carModelService.addNewModel(new CarModelDTO("Corolla", ModelCategory.CAR,"https://82.146.59.6:90",2003,2023,carBrandService.getBrandByName("Toyota").getId()));
+        carModelService.addNewModel(new CarModelDTO("A6", ModelCategory.CAR,"https://82.146.59.6:91",2009,2023,carBrandService.getBrandByName("Audi").getId()));
+        carModelService.addNewModel(new CarModelDTO("5 Series", ModelCategory.CAR,"https://82.146.59.6:92",2011,2023,carBrandService.getBrandByName("BMW").getId()));
+        carModelService.addNewModel(new CarModelDTO("Land Cruiser", ModelCategory.TRUCK,"https://82.146.59.6:93",2002,2023,carBrandService.getBrandByName("Toyota").getId()));
+        carModelService.addNewModel(new CarModelDTO("Model Roadster", ModelCategory.CAR,"https://82.146.59.6:94",2010,2015,carBrandService.getBrandByName("Tesla").getId()));
 
         offerService.addNewOffer(new OfferDTO("Test Description", EngineType.ELECTRIC,
                 "https://82.146.90.6:80",13744, new BigDecimal("45700"), TransmissionType.AUTOMATIC,

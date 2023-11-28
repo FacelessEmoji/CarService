@@ -3,6 +3,7 @@ package rut.miit.carservice.services.implementations;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import rut.miit.carservice.repositories.CarBrandRepository;
 import rut.miit.carservice.services.dtos.input.CarModelDTO;
 import rut.miit.carservice.models.entities.CarModel;
 import rut.miit.carservice.models.enums.*;
@@ -18,8 +19,13 @@ import java.util.stream.Collectors;
 @Service
 public class CarModelServiceImpl implements CarModelService<String>, CarModelInternalService<String>{
     private CarModelRepository modelRepository;
+    private CarBrandRepository brandRepository;
     private ModelMapper modelMapper;
 
+    @Autowired
+    public void setBrandRepository(CarBrandRepository brandRepository) {
+        this.brandRepository = brandRepository;
+    }
     @Autowired
     public void setModelRepository(CarModelRepository modelRepository) {
         this.modelRepository = modelRepository;
@@ -62,8 +68,10 @@ public class CarModelServiceImpl implements CarModelService<String>, CarModelInt
     }
 
     @Override
-    public CarModelDTO addNewModel(CarModelDTO model) {
-        return modelMapper.map(modelRepository.saveAndFlush(modelMapper.map(model, CarModel.class)), CarModelDTO.class);
+    public CarModelDTO addNewModel(CarModelDTO carModelDTO) {
+        CarModel carModel = modelMapper.map(carModelDTO, CarModel.class);
+        carModel.setBrand(brandRepository.findById(carModelDTO.getBrandId()).orElse(null));
+        return modelMapper.map(modelRepository.saveAndFlush(modelMapper.map(carModel, CarModel.class)), CarModelDTO.class);
     }
 
 

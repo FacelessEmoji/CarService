@@ -54,6 +54,11 @@ public class CarBrandServiceImpl implements CarBrandService<String>, CarBrandInt
     }
 
     @Override
+    public CarBrandDTO addNewBrandDTO(CarBrandDTO brand) {
+        return modelMapper.map(brandRepository.saveAndFlush(modelMapper.map(brand,CarBrand.class)),CarBrandDTO.class);
+    }
+
+    @Override
     public CarBrandDTO updateBrandName(String brandName, String newBrandName) {
         CarBrand newCarBrand = brandRepository.findByName(brandName);
         newCarBrand.setName(newBrandName);

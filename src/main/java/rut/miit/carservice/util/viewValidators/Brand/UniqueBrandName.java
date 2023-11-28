@@ -2,6 +2,7 @@ package rut.miit.carservice.util.viewValidators.Brand;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
+import org.springframework.stereotype.Component;
 
 import java.lang.annotation.*;
 

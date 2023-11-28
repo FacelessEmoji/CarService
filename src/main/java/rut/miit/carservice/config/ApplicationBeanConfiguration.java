@@ -4,20 +4,18 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeMap;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import jakarta.validation.Validation;
-import jakarta.validation.Validator;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import rut.miit.carservice.models.entities.*;
+import rut.miit.carservice.services.dtos.input.CarModelDTO;
 import rut.miit.carservice.services.dtos.output.*;
 
 @Configuration
 public class ApplicationBeanConfiguration {
 
     @Bean
-    @Deprecated
-    public Validator validator(){
-        return Validation
-            .buildDefaultValidatorFactory()
-            .getValidator();
+    public LocalValidatorFactoryBean validator() {
+        LocalValidatorFactoryBean validatorFactoryBean = new LocalValidatorFactoryBean();
+        return validatorFactoryBean;
     }
 
     @Bean
@@ -39,9 +37,15 @@ public class ApplicationBeanConfiguration {
         TypeMap<CarModel, CarModelOutputDTO> carModelToOutputDTO = modelMapper.createTypeMap(CarModel.class, CarModelOutputDTO.class);
         carModelToOutputDTO.addMappings(m -> m.map(src -> src.getBrand().getName(), CarModelOutputDTO::setCarBrandName));
 
+        //Mapping from CarModel to CarModelDTO
+        TypeMap<CarModel, CarModelDTO> carModelToDTO = modelMapper.createTypeMap(CarModel.class, CarModelDTO.class);
+        carModelToDTO.addMappings(m -> m.map(src -> src.getBrand().getId(), CarModelDTO::setBrandId));
+
         // Mapping from User to UserOutputDTO
         TypeMap<User, UserOutputDTO> userToOutputDTO = modelMapper.createTypeMap(User.class, UserOutputDTO.class);
         userToOutputDTO.addMappings(m -> m.map(src -> src.getRole().getRole(), UserOutputDTO::setRole));
+
+
         return modelMapper;
     }
 }
