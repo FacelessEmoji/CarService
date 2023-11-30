@@ -60,6 +60,7 @@ public class CarModelDTO extends BaseDTO {
         return endYear;
     }
 
+    @NotNull(message = "Brand ID can't be null!")
     public String getBrandId() {
         return brandId;
     }

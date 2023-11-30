@@ -16,7 +16,6 @@ import rut.miit.carservice.services.implementations.CarBrandServiceImpl;
 @Controller
 @RequestMapping("/brands")
 public class BrandController {
-
     private CarBrandServiceImpl brandService;
 
     @Autowired
@@ -24,14 +23,14 @@ public class BrandController {
         this.brandService = brandService;
     }
 
-    @GetMapping("/add")
-    public String addBrand() {
-        return "brands/brand-add";
-    }
-
     @ModelAttribute("brandDTO")
     public CarBrandDTO initBrand() {
         return new CarBrandDTO();
+    }
+
+    @GetMapping("/add")
+    public String addBrand() {
+        return "brands/brand-add";
     }
 
     @PostMapping("/add")
@@ -39,19 +38,34 @@ public class BrandController {
         if (bindingResult.hasErrors()) {
             // Исправленные имена атрибутов для соответствия DTO
             redirectAttributes.addFlashAttribute("brandDTO", brandDTO);
-            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.brandDTO",
-                bindingResult);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.brandDTO", bindingResult);
             return "redirect:/brands/add";
         }
-        brandService.addNewBrandDTO(brandDTO); // Убедитесь, что у вашего сервиса правильный метод
+        brandService.addNewBrandDTO(brandDTO);
 
         return "redirect:/";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String editBrand(@PathVariable("id")  String id, Model model) {
+        model.addAttribute("brandDTO", brandService.getBrandById(id));
+        return "brands/brand-edit";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String editBrand(@PathVariable String id, @Valid CarBrandDTO brandDTO, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("brandDTO", brandDTO);
+            model.addAttribute("org.springframework.validation.BindingResult.brandDTO", bindingResult);
+            return "brands/brand-edit";
+        }
+        brandService.updateBrandNameByID(id, brandDTO.getName());
+        return "redirect:/brands/all";
     }
 
 
     @GetMapping("/all")
     public String showAllBrands(Model model) {
-        //model.addAttribute("companyInfos", companyService.allCompanies());
         model.addAttribute("allBrands", brandService.getAllBrands());
         return "brands/brand-all";
     }

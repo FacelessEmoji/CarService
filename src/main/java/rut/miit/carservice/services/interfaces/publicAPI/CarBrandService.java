@@ -10,4 +10,5 @@ public interface CarBrandService<ID>{
     CarBrandDTO addNewBrandDTO(CarBrandDTO brand);
     CarBrandDTO addNewBrand(String brandName);
     CarBrandDTO updateBrandName(String brandName, String newBrandName);
+    CarBrandDTO updateBrandNameByID(ID brandId, String newBrandName);
 }
