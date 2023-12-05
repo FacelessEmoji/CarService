@@ -5,7 +5,7 @@ import lombok.Getter;
 @Getter
 public enum ModelCategory {
     CAR(1),
-    BUSS(2),
+    BUS(2),
     TRUCK(3),
     MOTORCYCLE(4);
 

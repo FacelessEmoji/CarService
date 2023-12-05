@@ -17,6 +17,7 @@ public interface CarModelService<ID>{
                                        TransmissionType transmission, Integer maxMileage, BigDecimal maxPrice);
 //    CarModelDTO addNewModel(String carBrandName, CarModelDTO modelDTO);
     CarModelDTO addNewModel(CarModelDTO modelDTO);
+    CarModelDTO updateModel(ID modelId, CarModelDTO modelDTO);
     CarModelDTO updateModelName(ID modelId, String modelName);
     CarModelDTO updateModelImageUrl(ID modelId, String imageUrl);
     CarModelDTO updateModelEndYear(ID modelId, int endYear);

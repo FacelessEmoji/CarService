@@ -39,7 +39,7 @@ public class ApplicationBeanConfiguration {
 
         //Mapping from CarModel to CarModelDTO
         TypeMap<CarModel, CarModelDTO> carModelToDTO = modelMapper.createTypeMap(CarModel.class, CarModelDTO.class);
-        carModelToDTO.addMappings(m -> m.map(src -> src.getBrand().getId(), CarModelDTO::setBrandId));
+        carModelToDTO.addMappings(m -> m.map(src -> src.getBrand().getId(), CarModelDTO::setBrand));
 
         // Mapping from User to UserOutputDTO
         TypeMap<User, UserOutputDTO> userToOutputDTO = modelMapper.createTypeMap(User.class, UserOutputDTO.class);

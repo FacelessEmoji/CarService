@@ -21,8 +21,11 @@
                                th:errorclass="is-invalid"
                                type="text" class="form-control text-center" id="name" aria-describedby="nameHelp"
                                name="name"/>
-                        <small th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger">Error
-                            message</small>
+                        <small th:if="${#fields.hasErrors('name')}"
+                               th:errors="*{name}"
+                               class="text-danger">
+                            Error message
+                        </small>
                     </div>
                     <button type="submit" class="btn btn-secondary">Add Brand</button>
                 </form>

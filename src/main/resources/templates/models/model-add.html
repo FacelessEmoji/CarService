@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head"/>
+<body class="d-flex flex-column h-100">
+<div th:replace="fragments/navbar">Navbar</div>
+<main class="flex-shrink-0">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="jumbotron text-center rounded col-md-8 align-self-center pt-5">
+
+                <div class="justify-content-center">
+                    <h1>Add Model</h1>
+                </div>
+
+                <form th:action="@{/models/add}"
+                      th:method="post"
+                      th:object="${modelDTO}"
+                      class="m-md-auto w-50 pb-3">
+
+                    <div class="mb-3">
+                        <label class="form-label" for="name">Name</label>
+                        <input th:field="*{name}" type="text" class="form-control text-center" id="name"/>
+                        <div th:each="error : ${errors}" th:if="${error.field == 'name'}">
+                            <small class="text-danger" th:text="${error.defaultMessage}"></small>
+                        </div>
+                    </div>
+
+
+                    <div class="mb-3">
+                        <label class="form-label" for="category">Category</label>
+                        <select th:field="*{category}" class="form-control text-center" id="category">
+                            <option value="CAR">CAR</option>
+                            <option value="BUS">BUS</option>
+                            <option value="TRUCK">TRUCK</option>
+                            <option value="MOTORCYCLE">MOTORCYCLE</option>
+                        </select>
+                        <div th:each="error : ${errors}" th:if="${error.field == 'category'}">
+                            <small class="text-danger" th:text="${error.defaultMessage}"></small>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="imageUrl">Image URL</label>
+                        <input th:field="*{imageUrl}"
+                               th:errorclass="is-invalid"
+                               type="text" class="form-control text-center"
+                               id="imageUrl" aria-describedby="imageUrl"/>
+                        <div th:each="error : ${errors}" th:if="${error.field == 'imageUrl'}">
+                            <small class="text-danger" th:text="${error.defaultMessage}"></small>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="startYear">Start Year</label>
+                        <input th:field="*{startYear}"
+                               th:errorclass="is-invalid"
+                               type="number" class="form-control text-center"
+                               id="startYear" aria-describedby="startYear"/>
+                        <div th:each="error : ${errors}" th:if="${error.field == 'startYear'}">
+                            <small class="text-danger" th:text="${error.defaultMessage}"></small>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="endYear">End Year</label>
+                        <input th:field="*{endYear}"
+                               th:errorclass="is-invalid"
+                               type="number" class="form-control text-center"
+                               id="endYear" aria-describedby="endYear"/>
+                        <div th:each="error : ${errors}" th:if="${error.field == 'endYear'}">
+                            <small class="text-danger" th:text="${error.defaultMessage}"></small>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="brand">Brand</label>
+                        <select th:field="*{brand}" class="form-control" id="brand">
+                            <option th:each="brand : ${brands}" th:value="${brand.id}" th:text="${brand.name}"></option>
+                        </select>
+                    </div>
+
+
+                    <button type="submit" class="btn btn-secondary">Add Model</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+<footer th:replace="fragments/footer"/>
+</body>
+</html>

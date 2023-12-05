@@ -70,10 +70,20 @@ public class CarModelServiceImpl implements CarModelService<String>, CarModelInt
     @Override
     public CarModelDTO addNewModel(CarModelDTO carModelDTO) {
         CarModel carModel = modelMapper.map(carModelDTO, CarModel.class);
-        carModel.setBrand(brandRepository.findById(carModelDTO.getBrandId()).orElse(null));
+        carModel.setBrand(brandRepository.findById(carModelDTO.getBrand()).orElse(null));
         return modelMapper.map(modelRepository.saveAndFlush(modelMapper.map(carModel, CarModel.class)), CarModelDTO.class);
     }
 
+    @Override
+    public CarModelDTO updateModel(String modelId, CarModelDTO modelDTO) {
+        CarModel carModel = modelRepository.findById(modelId).orElseThrow();
+        carModel.setName(modelDTO.getName());
+        carModel.setStartYear(modelDTO.getStartYear());
+        carModel.setEndYear(modelDTO.getEndYear());
+        carModel.setCategory(modelDTO.getCategory());
+        carModel.setBrand(brandRepository.findById(modelDTO.getBrand()).orElse(null));
+        return modelMapper.map(modelRepository.saveAndFlush(carModel), CarModelDTO.class);
+    }
 
     @Override
     public CarModelDTO updateModelName(String modelId, String modelName) {

@@ -30,7 +30,7 @@ public class ModelValidator implements Validator {
 
         // Проверяем, что name в пределах бренда уникален
         if (modelService.getModelByBrandAndName(
-            modelDTO.getBrandId(),
+            modelDTO.getBrand(),
             modelDTO.getName())
             != null) {
             errors.rejectValue("name", "Name.unique", "The names of models of the same brand must be unique");
@@ -51,7 +51,7 @@ public class ModelValidator implements Validator {
         }
 
         //brand dto should not be null
-        if (modelDTO.getBrandId() == null) {
+        if (modelDTO.getBrand() == null) {
             errors.rejectValue("brand", "CarModel.brand.null", "Brand cant be null");
         }
 

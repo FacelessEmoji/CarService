@@ -4,13 +4,18 @@ import jakarta.validation.constraints.*;
 import lombok.*;
 import rut.miit.carservice.models.enums.ModelCategory;
 import rut.miit.carservice.services.dtos.base.BaseDTO;
+import rut.miit.carservice.util.viewValidators.Model.NotAllName;
+import rut.miit.carservice.util.viewValidators.Model.UniqueModelNameWithinBrand;
+import rut.miit.carservice.util.viewValidators.Model.ValidYearRange;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @ToString
+//@ValidYearRange
 public class CarModelDTO extends BaseDTO {
-
+    @UniqueModelNameWithinBrand
+    @NotAllName
     private String name;
 
     private ModelCategory category;
@@ -21,15 +26,15 @@ public class CarModelDTO extends BaseDTO {
 
     private Integer endYear;
 
-    private String brandId;
+    private String brand;
 
-    public CarModelDTO(String name, String category, String imageUrl, Integer startYear, Integer endYear, String brandId) {
+    public CarModelDTO(String name, String category, String imageUrl, Integer startYear, Integer endYear, String brand) {
         this.name = name;
         this.category = ModelCategory.valueOf(category);
         this.imageUrl = imageUrl;
         this.startYear = startYear;
         this.endYear = endYear;
-        this.brandId = brandId;
+        this.brand = brand;
     }
 
     @NotBlank(message = "Model name can't be blank!")
@@ -61,7 +66,7 @@ public class CarModelDTO extends BaseDTO {
     }
 
     @NotNull(message = "Brand ID can't be null!")
-    public String getBrandId() {
-        return brandId;
+    public String getBrand() {
+        return brand;
     }
 }
