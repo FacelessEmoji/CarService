@@ -40,11 +40,11 @@ public class OfferValidator implements Validator {
         if (offerDTO.getPrice().compareTo(BigDecimal.valueOf(10)) < 0 || offerDTO.getPrice().compareTo(BigDecimal.valueOf(1000000000)) > 0) {
             errors.rejectValue("price", "Offer.price.length", "Price should be between 10 and 1 000 000 000");
         }
-
-        //year must be between model start year and end year
-        if (offerDTO.getYear() < offerDTO.getModel().getStartYear() || offerDTO.getYear() > offerDTO.getModel().getEndYear()) {
-            errors.rejectValue("year", "Offer.year.length", "Year must be between model start year and end year");
-        }
+//
+//        //year must be between model start year and end year
+//        if (offerDTO.getYear() < offerDTO.getModel().getStartYear() || offerDTO.getYear() > offerDTO.getModel().getEndYear()) {
+//            errors.rejectValue("year", "Offer.year.length", "Year must be between model start year and end year");
+//        }
 
         //user and model cant be null
         if (offerDTO.getSeller() == null) {

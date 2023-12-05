@@ -3,6 +3,8 @@ package rut.miit.carservice.services.implementations;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import rut.miit.carservice.repositories.CarModelRepository;
+import rut.miit.carservice.repositories.UserRepository;
 import rut.miit.carservice.services.dtos.output.OfferWithDetailsDTO;
 import rut.miit.carservice.services.dtos.input.OfferDTO;
 import rut.miit.carservice.models.entities.Offer;
@@ -18,18 +20,30 @@ import java.util.stream.Collectors;
 
 @Service
 public class OfferServiceImpl implements OfferService<String>, OfferInternalService<String> {
+    private CarModelRepository modelRepository;
+    private UserRepository userRepository;
     private OfferRepository offerRepository;
     private ModelMapper modelMapper;
+
+    @Autowired
+    public void setModelRepository(CarModelRepository modelRepository) {
+        this.modelRepository = modelRepository;
+    }
+
+    @Autowired
+    public void setUserRepository(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Autowired
     public void setOfferRepository(OfferRepository offerRepository) {
         this.offerRepository = offerRepository;
     }
+
     @Autowired
     public void setModelMapper(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
     }
-
 
     @Override
     public Offer getOfferById(String offerId) {
@@ -74,9 +88,13 @@ public class OfferServiceImpl implements OfferService<String>, OfferInternalServ
     }
 
     @Override
-    public OfferDTO addNewOffer(OfferDTO offer) {
+    public OfferDTO addNewOffer(OfferDTO offerDTO) {
+        Offer offer = modelMapper.map(offerDTO, Offer.class);
+        offer.setModel(modelRepository.findById(offerDTO.getModel()).orElse(null));
+        offer.setSeller(userRepository.findById(offerDTO.getSeller()).orElse(null));
         return modelMapper.map(offerRepository.saveAndFlush(modelMapper.map(offer, Offer.class)), OfferDTO.class);
     }
+
     @Override
     public OfferDTO updateOfferDescription(String offerId, String description) {
         Offer offer = offerRepository.findById(offerId).orElseThrow();

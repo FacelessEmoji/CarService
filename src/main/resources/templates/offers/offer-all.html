@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" class="h-100" xmlns:th="http://thymeleaf.org">
 <head th:replace="fragments/head"/>
 <body class="d-flex flex-column h-100">
 <div th:replace="fragments/navbar">Navbar</div>
@@ -8,7 +8,7 @@
         <div class="row">
             <div class="col-md-2"></div>
             <div class="jumbotron text-center rounded col-md-8 align-self-center pt-5">
-                <h1 class="text-center text-dark mt-5">All Brands:</h1>
+                <h1 class="text-center text-dark mt-5">All Offers:</h1>
                 <div th:each="o : ${allOffers}" class="d-flex flex-column bg-text mb-3">
                     <h2 th:text="'' + ${o.brandName}"></h2>
                     <h2 th:text="'' + ${o.modelName}"></h2>
@@ -18,7 +18,7 @@
                     <h4 th:text="'' + ${o.year}"></h4>
                     <h4 th:text="'' + ${o.price}"></h4>
                     <h4 th:text="'Seller:' + ${o.sellerUsername}"></h4>
-                    <h6><a class="btn-block" th:href="@{/brands/edit/{name}(name=${m.name})}">Update</a></h6>
+                    <h6><a class="btn-block" th:href="@{/offers/edit/{id}(id=${o.id})}">Update</a></h6>
                 </div>
             </div>
         </div>

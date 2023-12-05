@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" class="h-100" xmlns:th="http://thymeleaf.org">
 <head th:replace="fragments/head"/>
 <body class="d-flex flex-column h-100">
 <div th:replace="fragments/navbar">Navbar</div>
@@ -21,8 +21,11 @@
                     <div class="mb-3">
                         <label class="form-label" for="name">Name</label>
                         <input th:field="*{name}" type="text" class="form-control text-center" id="name"/>
-                        <div th:each="error : ${errors}" th:if="${error.field == 'name'}">
-                            <small class="text-danger" th:text="${error.defaultMessage}"></small>
+                        <div th:each="error : ${errors}"
+                             th:if="${error.field == 'name'}">
+                            <small class="text-danger"
+                                   th:text="${error.defaultMessage}"
+                            ></small>
                         </div>
                     </div>
 

@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import rut.miit.carservice.models.entities.*;
 import rut.miit.carservice.services.dtos.input.CarModelDTO;
+import rut.miit.carservice.services.dtos.input.OfferDTO;
 import rut.miit.carservice.services.dtos.output.*;
 
 @Configuration
@@ -32,6 +33,11 @@ public class ApplicationBeanConfiguration {
         offerToDTO.addMappings(m -> m.map(src -> src.getModel().getName(), OfferWithDetailsDTO::setModelName));
         offerToDTO.addMappings(m -> m.map(src -> src.getSeller().getUsername(), OfferWithDetailsDTO::setSellerUsername));
         offerToDTO.addMappings(m -> m.map(src -> src.getSeller().getActive(), OfferWithDetailsDTO::setIsActive));
+
+        // Mapping from Offer to OfferDTO
+        TypeMap<Offer, OfferDTO> offerToInputDTO = modelMapper.createTypeMap(Offer.class, OfferDTO.class);
+        offerToInputDTO.addMappings(m -> m.map(src -> src.getModel().getId(), OfferDTO::setModel));
+        offerToInputDTO.addMappings(m -> m.map(src -> src.getSeller().getId(), OfferDTO::setSeller));
 
         // Mapping from CarModel to CarModelOutputDTO
         TypeMap<CarModel, CarModelOutputDTO> carModelToOutputDTO = modelMapper.createTypeMap(CarModel.class, CarModelOutputDTO.class);

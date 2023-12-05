@@ -6,13 +6,11 @@ import rut.miit.carservice.models.enums.ModelCategory;
 import rut.miit.carservice.services.dtos.base.BaseDTO;
 import rut.miit.carservice.util.viewValidators.Model.NotAllName;
 import rut.miit.carservice.util.viewValidators.Model.UniqueModelNameWithinBrand;
-import rut.miit.carservice.util.viewValidators.Model.ValidYearRange;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @ToString
-//@ValidYearRange
 public class CarModelDTO extends BaseDTO {
     @UniqueModelNameWithinBrand
     @NotAllName
@@ -53,14 +51,14 @@ public class CarModelDTO extends BaseDTO {
         return imageUrl;
     }
 
+    @DecimalMin(value = "1900", message = "End year should be more than 1900!")
     @NotNull(message = "Start year can't be null!")
-    @Positive(message = "Start year should be a positive number!")
     public Integer getStartYear() {
         return startYear;
     }
 
+    @DecimalMax(value = "2100", message = "Start year should be less than 2100!")
     @NotNull(message = "End year can't be null!")
-    @Positive(message = "End year should be a positive number!")
     public Integer getEndYear() {
         return endYear;
     }
