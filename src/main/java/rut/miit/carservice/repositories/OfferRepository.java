@@ -23,4 +23,7 @@ public interface OfferRepository extends JpaRepository<Offer, String> {
 
     List<Offer> findAllByModel_Brand_NameAndModel_NameAndPriceGreaterThanEqualAndPriceLessThanEqual
             (String brandName, String modelName, BigDecimal minPrice, BigDecimal maxPrice);
+
+    List<Offer> findAllByModel_Brand_NameAndPriceGreaterThanEqualAndPriceLessThanEqual
+        (String brandName, BigDecimal minPrice, BigDecimal maxPrice);
  }

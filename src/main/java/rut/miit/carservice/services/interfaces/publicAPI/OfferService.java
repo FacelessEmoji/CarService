@@ -13,6 +13,7 @@ public interface OfferService<ID>{
     List<OfferWithDetailsDTO> getOffersBySellerUsername(String username);
     List<OfferWithDetailsDTO> getOffersCreatedBetweenDates(LocalDateTime startTime, LocalDateTime endTime);
     List<OfferWithDetailsDTO> getOffersByPriceBetween(BigDecimal minPrice, BigDecimal maxPrice);
+    List<OfferWithDetailsDTO> getOffersByPriceBetweenAndBrand(String brandName, BigDecimal minPrice, BigDecimal maxPrice);
     List<OfferWithDetailsDTO> getOffersByPriceBetweenAndName(String brandName, String modelName, BigDecimal minPrice, BigDecimal maxPrice);
     OfferDTO addNewOffer(OfferDTO offerDTO);
     OfferDTO updateOfferDescription(ID offerId, String description);

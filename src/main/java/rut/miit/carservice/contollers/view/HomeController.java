@@ -50,15 +50,17 @@ public class HomeController {
 
 
     @GetMapping("/")
-    public String homePage(@RequestParam(required = false) String brandName,
+    public String homePage(
+        @RequestParam(required = false) String brandName,
         @RequestParam(required = false) String modelName,
         @RequestParam(required = false) BigDecimal minPrice,
         @RequestParam(required = false) BigDecimal maxPrice,
         Model model) {
+
         model.addAttribute("brands", brandService.getAllBrands());
         model.addAttribute("models", modelService.getAllModels());
 
-        // Установка значений по умолчанию, если параметры не заданы
+        // Установка значений по умолчанию
         if (minPrice == null) {
             minPrice = BigDecimal.ZERO;
         }
@@ -66,13 +68,15 @@ public class HomeController {
             maxPrice = new BigDecimal("100000000");
         }
 
-        // Поиск предложений, если заданы brandName и modelName
-        if (brandName != null && modelName != null) {
+        // Проверка на "All"
+        if ("All".equals(modelName)) {
+            List<OfferWithDetailsDTO> offers = offerService.getOffersByPriceBetweenAndBrand(brandName, minPrice, maxPrice);
+            model.addAttribute("offers", offers);
+        } else if (brandName != null && modelName != null) {
             List<OfferWithDetailsDTO> offers = offerService.getOffersByPriceBetweenAndName(brandName, modelName, minPrice, maxPrice);
             model.addAttribute("offers", offers);
         }
 
         return "home/index";
     }
-
 }

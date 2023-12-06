@@ -88,6 +88,13 @@ public class OfferServiceImpl implements OfferService<String>, OfferInternalServ
     }
 
     @Override
+    public List<OfferWithDetailsDTO> getOffersByPriceBetweenAndBrand(String brandName, BigDecimal minPrice, BigDecimal maxPrice) {
+        return offerRepository.
+            findAllByModel_Brand_NameAndPriceGreaterThanEqualAndPriceLessThanEqual(brandName, minPrice, maxPrice).stream()
+            .map(o -> modelMapper.map(o, OfferWithDetailsDTO.class)).collect(Collectors.toList());
+    }
+
+    @Override
     public OfferDTO addNewOffer(OfferDTO offerDTO) {
         Offer offer = modelMapper.map(offerDTO, Offer.class);
         offer.setModel(modelRepository.findById(offerDTO.getModel()).orElse(null));
