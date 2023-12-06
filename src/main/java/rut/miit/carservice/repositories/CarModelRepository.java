@@ -28,6 +28,8 @@ public interface CarModelRepository extends JpaRepository<CarModel, String>{
 
     CarModel findByBrand_NameAndName(String brandName, String modelName);
 
+    List<CarModel> findAllByBrand_Name(String brandName);
+
     List<CarModel> findAllByBrand_NameAndStartYearGreaterThanEqualAndEndYearLessThanEqualOrderByEndYearDesc
             (String brandName, Integer startYear, Integer endYear);
 }

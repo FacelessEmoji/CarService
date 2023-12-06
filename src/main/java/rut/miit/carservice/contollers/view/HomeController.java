@@ -5,6 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import rut.miit.carservice.services.dtos.output.CarModelOutputDTO;
 import rut.miit.carservice.services.dtos.output.OfferWithDetailsDTO;
 import rut.miit.carservice.services.implementations.CarBrandServiceImpl;
 import rut.miit.carservice.services.implementations.CarModelServiceImpl;
@@ -40,21 +42,37 @@ public class HomeController {
         this.modelService = modelService;
     }
 
+    @GetMapping("/get-models")
+    @ResponseBody
+    public List<CarModelOutputDTO> getModelsByBrand(@RequestParam String brandName) {
+        return modelService.getAllModelsByBrand(brandName);
+    }
+
+
     @GetMapping("/")
-    public String homePage(Model model) {
-        model.addAttribute("brands", brandService.getAllBrands()); // Добавляем список брендов
-        model.addAttribute("models", modelService.getAllModels()); // Добавляем список моделей
+    public String homePage(@RequestParam(required = false) String brandName,
+        @RequestParam(required = false) String modelName,
+        @RequestParam(required = false) BigDecimal minPrice,
+        @RequestParam(required = false) BigDecimal maxPrice,
+        Model model) {
+        model.addAttribute("brands", brandService.getAllBrands());
+        model.addAttribute("models", modelService.getAllModels());
+
+        // Установка значений по умолчанию, если параметры не заданы
+        if (minPrice == null) {
+            minPrice = BigDecimal.ZERO;
+        }
+        if (maxPrice == null) {
+            maxPrice = new BigDecimal("100000000");
+        }
+
+        // Поиск предложений, если заданы brandName и modelName
+        if (brandName != null && modelName != null) {
+            List<OfferWithDetailsDTO> offers = offerService.getOffersByPriceBetweenAndName(brandName, modelName, minPrice, maxPrice);
+            model.addAttribute("offers", offers);
+        }
+
         return "home/index";
     }
 
-    @GetMapping("/search")
-    public String searchOffers(@RequestParam String brandName,
-        @RequestParam String modelName,
-        @RequestParam(defaultValue = "0") BigDecimal minPrice,
-        @RequestParam(defaultValue = "10000000") BigDecimal maxPrice,
-        Model model) {
-        List<OfferWithDetailsDTO> offers = offerService.getOffersByPriceBetweenAndName(brandName, modelName, minPrice, maxPrice);
-        model.addAttribute("offers", offers);
-        return "home/search-results";
-    }
 }

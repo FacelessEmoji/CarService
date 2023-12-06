@@ -12,6 +12,7 @@ import java.util.List;
 public interface CarModelService<ID>{
     CarModelOutputDTO getModelByBrandAndName(String brandName, String modelName);
     List<CarModelOutputDTO> getAllModels();
+    List<CarModelOutputDTO> getAllModelsByBrand(String brandName);
     List<CarModelOutputDTO> getModelsByBrandAndYears(String brandName, Integer startYear, Integer endYear);
     List<CarModelOutputDTO> getModelsByCriteria(ModelCategory category, EngineType engine,
                                        TransmissionType transmission, Integer maxMileage, BigDecimal maxPrice);

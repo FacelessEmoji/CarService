@@ -56,6 +56,12 @@ public class CarModelServiceImpl implements CarModelService<String>, CarModelInt
     }
 
     @Override
+    public List<CarModelOutputDTO> getAllModelsByBrand(String brandName) {
+        return modelRepository.findAllByBrand_Name(brandName).stream()
+            .map(m -> modelMapper.map(m, CarModelOutputDTO.class)).collect(Collectors.toList());
+    }
+
+    @Override
     public List<CarModelOutputDTO> getModelsByCriteria(ModelCategory category, EngineType engine, TransmissionType transmission, Integer maxMileage, BigDecimal maxPrice) {
         return modelRepository.findModelsByCriteria(category, engine, transmission, maxMileage, maxPrice).stream()
                 .map(m -> modelMapper.map(m, CarModelOutputDTO.class)).collect(Collectors.toList());

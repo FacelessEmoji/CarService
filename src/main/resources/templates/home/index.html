@@ -11,10 +11,10 @@
                 <div class="justify-content-center">
                     <h1>Welcome to Car Service!</h1>
                 </div>
-                <form th:action="@{/search}" th:method="get">
+                <form th:action="@{/}" th:method="get">
                     <div class="mb-3">
                         <label for="brand">Brand</label>
-                        <select class="form-control" id="brand" name="brandName">
+                        <select class="form-control" id="brand" name="brandName" onchange="updateModels()">
                             <option th:each="brand : ${brands}" th:value="${brand.name}" th:text="${brand.name}"></option>
                         </select>
                     </div>
@@ -34,10 +34,30 @@
                     </div>
                     <button type="submit" class="btn btn-primary">Search</button>
                 </form>
+
+                <!-- Результаты поиска -->
+                <div th:if="${offers}">
+                    <h2 class="mt-4">Search Results:</h2>
+                    <div th:each="o : ${offers}" class="d-flex flex-column bg-text mb-3">
+                        <h2 th:text="'Offer: ' + ${o.brandName} + ' ' + ${o.modelName}"></h2>
+                        <h4 th:text="'Engine: ' + ${o.engine}"></h4>
+                        <h4 th:text="'Transmission: ' + ${o.transmission}"></h4>
+                        <h4 th:text="'Mileage: ' + ${o.mileage} + ' km'"></h4>
+                        <h4 th:text="'Year: ' + ${o.year}"></h4>
+                        <h4 th:text="'Price: ' + ${o.price} + ' $'"></h4>
+                        <h4 th:text="'Seller: ' + ${o.sellerUsername} + ( ${o.isActive} ? ' (Active)' : ' (Inactive)' )"></h4>
+                        <p th:text="${o.description}"></p>
+                        <div class="d-flex justify-content-center">
+                            <img th:src="${o.imageUrl}" alt="Car Image" style="max-width: 200px; max-height: 150px; border: 1px solid black;"/>
+                        </div>
+                        <h6><a class="btn-block" th:href="@{/offers/edit/{id}(id=${o.id})}">Update</a></h6>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </main>
 <footer th:replace="fragments/footer"></footer>
+<script src="/js/script.js"></script>
 </body>
 </html>

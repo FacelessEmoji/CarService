@@ -117,7 +117,7 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
         LocalDateTime endTime = LocalDateTime.of(2024, Month.JANUARY, 1, 0, 0);
         offerService.getOffersCreatedBetweenDates(startTime, endTime).forEach(System.out::println);
         System.out.println("-----");
-//        offerService.getOffersByPriceBetweenAndName("Tesla", "Model X")
+        carModelService.getAllModelsByBrand("Tesla").forEach(System.out::println);
         System.out.println("-----");
         offerService.getOffersByBrandAndModel("Audi", "A4").forEach(System.out::println);
         System.out.println("-----");
