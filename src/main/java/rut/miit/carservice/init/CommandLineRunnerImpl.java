@@ -75,36 +75,36 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
         carModelService.addNewModel(new CarModelDTO("Land Cruiser", ModelCategory.TRUCK,"https://82.146.59.6:93",2002,2023,carBrandService.getBrandByName("Toyota").getId()));
         carModelService.addNewModel(new CarModelDTO("Model Roadster", ModelCategory.CAR,"https://82.146.59.6:94",2010,2015,carBrandService.getBrandByName("Tesla").getId()));
 
-//        offerService.addNewOffer(new OfferDTO("Test Description", EngineType.ELECTRIC,
-//                "https://82.146.90.6:80",13744, new BigDecimal("45700"), TransmissionType.AUTOMATIC,
-//                2022,carModelService.getModelByBrandAndName("Tesla","Model X").getId(),
-//            userService.getUserByUsername("test1").getId()));
+        offerService.addNewOffer(new OfferDTO("Test Description", EngineType.ELECTRIC,
+                "https://images.drive.ru/i/0/560bf76695a656abb700000a.jpg",13744, new BigDecimal("45700"), TransmissionType.AUTOMATIC,
+                2022,carModelService.getModelByBrandAndName("Tesla","Model X").getId(),
+            userService.getUserByUsername("test1").getId()));
         offerService.addNewOffer(new OfferDTO("Brand New BMW", EngineType.GASOLINE,
-                "https://82.146.90.6:81",5000, new BigDecimal("50200"), TransmissionType.AUTOMATIC,
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR16ecpWZwF2q-_J2n4Wlk-iKVUWN01gaXIgED0E0_dcA&s",5000, new BigDecimal("50200"), TransmissionType.AUTOMATIC,
                 2021, carModelService.getModelByBrandAndName("BMW","3 Series").getId(),
             userService.getUserByUsername("test1").getId()));
         offerService.addNewOffer(new OfferDTO("Elegant Mercedes", EngineType.DIESEL,
-                "https://82.146.90.6:82",8000, new BigDecimal("56000"), TransmissionType.AUTOMATIC,
+                "https://s.auto.drom.ru/i24276/c/photos/fullsize/mercedes-benz/c-class/mercedes-benz_c-class_1105904.jpg",8000, new BigDecimal("56000"), TransmissionType.AUTOMATIC,
                 2021, carModelService.getModelByBrandAndName("Mercedes","C-Class").getId(),
             userService.getUserByUsername("julia45").getId()));
         offerService.addNewOffer(new OfferDTO("Sleek Tesla Model S", EngineType.ELECTRIC,
-                "https://82.146.90.6:83",7000, new BigDecimal("80000"), TransmissionType.AUTOMATIC,
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4b1wAzdzYAUDEWjGCAVw47qU-dxaD2FagCw&usqp=CAU",7000, new BigDecimal("80000"), TransmissionType.AUTOMATIC,
                 2020, carModelService.getModelByBrandAndName("Tesla", "Model S").getId(),
             userService.getUserByUsername("andrew76").getId()));
         offerService.addNewOffer(new OfferDTO("Reliable Toyota Camry", EngineType.GASOLINE,
-                "https://82.146.90.6:84",12000, new BigDecimal("28000"), TransmissionType.AUTOMATIC,
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQh0XRyM8NfBPn6d1f_Pvq36BQpslyQExF6Q&usqp=CAU",12000, new BigDecimal("28000"), TransmissionType.AUTOMATIC,
                 2018, carModelService.getModelByBrandAndName("Toyota", "Camry").getId(),
             userService.getUserByUsername("samuel89").getId()));
         offerService.addNewOffer(new OfferDTO("Stylish Audi A4", EngineType.DIESEL,
-                "https://82.146.90.6:85",9000, new BigDecimal("45000"), TransmissionType.AUTOMATIC,
+                "https://motor.ru/thumb/1500x0/filters:quality(75):no_upscale()/imgs/2021/05/25/14/4682997/113d19fdb9ebef57fae72c796ea0fffc9cee0585.jpg",9000, new BigDecimal("45000"), TransmissionType.AUTOMATIC,
                 2019, carModelService.getModelByBrandAndName("Audi", "A4").getId(),
             userService.getUserByUsername("diana01").getId()));
         offerService.addNewOffer(new OfferDTO("Powerful Tesla Model 3", EngineType.ELECTRIC,
-                "https://82.146.90.6:86",5000, new BigDecimal("49000"), TransmissionType.AUTOMATIC,
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT47V7a_A44XEzvMhQ7B3DpT8lR0DTJVxJhdg&usqp=CAU",5000, new BigDecimal("49000"), TransmissionType.AUTOMATIC,
                 2022, carModelService.getModelByBrandAndName("Tesla", "Model 3").getId(),
             userService.getUserByUsername("oliver55").getId()));
         offerService.addNewOffer(new OfferDTO("Comfortable Audi A6", EngineType.GASOLINE,
-                "https://82.146.90.6:87",13000, new BigDecimal("58000"), TransmissionType.AUTOMATIC,
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFmwDrcOb23StsuiV7_3Rf4RxbyquqUraYCQ&usqp=CAU",13000, new BigDecimal("58000"), TransmissionType.AUTOMATIC,
                 2017, carModelService.getModelByBrandAndName("Audi", "A6").getId(),
             userService.getUserByUsername("isabella99").getId()));
     }
@@ -116,6 +116,8 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
         LocalDateTime startTime = LocalDateTime.of(2023, Month.JANUARY, 1, 0, 0);
         LocalDateTime endTime = LocalDateTime.of(2024, Month.JANUARY, 1, 0, 0);
         offerService.getOffersCreatedBetweenDates(startTime, endTime).forEach(System.out::println);
+        System.out.println("-----");
+//        offerService.getOffersByPriceBetweenAndName("Tesla", "Model X")
         System.out.println("-----");
         offerService.getOffersByBrandAndModel("Audi", "A4").forEach(System.out::println);
         System.out.println("-----");

@@ -50,6 +50,15 @@ public class UserServiceImpl implements UserService<String>, UserInternalService
     }
 
     @Override
+    public UserDTO getBaseUserByUsername(String username) {
+        User user = userRepository.findByUsername(username);
+        if (user == null) {
+            return null;
+        }
+        return modelMapper.map(user, UserDTO.class);
+    }
+
+    @Override
     public List<UserOutputDTO> getAllUsers() {
         return userRepository.findAll().stream()
                 .map(u -> modelMapper.map(u, UserOutputDTO.class)).collect(Collectors.toList());

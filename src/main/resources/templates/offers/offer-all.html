@@ -10,17 +10,21 @@
             <div class="jumbotron text-center rounded col-md-8 align-self-center pt-5">
                 <h1 class="text-center text-dark mt-5">All Offers:</h1>
                 <div th:each="o : ${allOffers}" class="d-flex flex-column bg-text mb-3">
-                    <h2 th:text="'' + ${o.brandName}"></h2>
-                    <h2 th:text="'' + ${o.modelName}"></h2>
-                    <h4 th:text="'' + ${o.engine}"></h4>
-                    <h4 th:text="'' + ${o.transmission}"></h4>
-                    <h4 th:text="'' + ${o.mileage}"></h4>
-                    <h4 th:text="'' + ${o.year}"></h4>
-                    <h4 th:text="'' + ${o.price}"></h4>
-                    <h4 th:text="'Seller:' + ${o.sellerUsername}"></h4>
+                    <h2 th:text="'Offer: ' + ${o.brandName} + ' ' + ${o.modelName}"></h2>
+                    <h4 th:text="'Engine: ' + ${o.engine}"></h4>
+                    <h4 th:text="'Transmission: ' + ${o.transmission}"></h4>
+                    <h4 th:text="'Mileage: ' + ${o.mileage} + ' km'"></h4>
+                    <h4 th:text="'Year: ' + ${o.year}"></h4>
+                    <h4 th:text="'Price: ' + ${o.price} + ' $'"></h4>
+                    <h4 th:text="'Seller: ' + ${o.sellerUsername} + ( ${o.isActive} ? ' (Active)' : ' (Inactive)' )"></h4>
+                    <p th:text="${o.description}"></p>
+                    <div class="d-flex justify-content-center">
+                        <img th:src="${o.imageUrl}" alt="Car Image" style="max-width: 200px; max-height: 150px; border: 1px solid black;"/>
+                    </div>
                     <h6><a class="btn-block" th:href="@{/offers/edit/{id}(id=${o.id})}">Update</a></h6>
                 </div>
             </div>
+
         </div>
     </div>
 </main>

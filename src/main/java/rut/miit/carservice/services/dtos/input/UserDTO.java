@@ -7,26 +7,19 @@ import rut.miit.carservice.services.dtos.base.BaseDTO;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
 @Setter
 @ToString
 public class UserDTO extends BaseDTO {
-    @NotBlank(message = "Username can't be blank!")
     private String username;
 
-    @NotBlank(message = "Password can't be blank!")
     private String password;
 
-    @NotBlank(message = "First name can't be blank!")
     private String firstName;
 
-    @NotBlank(message = "Last name can't be blank!")
     private String lastName;
 
-    @NotNull(message = "isActive can't be null!")
     private Boolean isActive;
 
-    @NotBlank(message = "Image URL can't be blank!")
     private String imageUrl;
 
     private UserRoleDTO role; // Вторичный ключ, валидацию не добавляем
@@ -38,5 +31,41 @@ public class UserDTO extends BaseDTO {
         this.lastName = lastName;
         this.isActive = isActive;
         this.imageUrl = imageUrl;
+    }
+
+    @NotEmpty(message = "Username can't be blank!")
+    @Size(min = 3,message = "Username must be at least 3 characters long")
+    public String getUsername() {
+        return username;
+    }
+
+    @NotEmpty(message = "Password can't be blank!")
+    public String getPassword() {
+        return password;
+    }
+
+    @NotEmpty(message = "First name can't be blank!")
+    public String getFirstName() {
+        return firstName;
+    }
+
+
+    @NotEmpty(message = "Last name can't be blank!")
+    public String getLastName() {
+        return lastName;
+    }
+
+//    @NotNull(message = "isActive can't be null!")
+    public Boolean getActive() {
+        return isActive;
+    }
+
+    @NotEmpty(message = "Image URL can't be blank!")
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public UserRoleDTO getRole() {
+        return role;
     }
 }

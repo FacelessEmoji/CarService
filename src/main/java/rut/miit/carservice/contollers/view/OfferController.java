@@ -14,6 +14,8 @@ import rut.miit.carservice.services.implementations.CarBrandServiceImpl;
 import rut.miit.carservice.services.implementations.CarModelServiceImpl;
 import rut.miit.carservice.services.implementations.OfferServiceImpl;
 
+import java.util.Objects;
+
 /**
  * todo Document type OfferController
  */

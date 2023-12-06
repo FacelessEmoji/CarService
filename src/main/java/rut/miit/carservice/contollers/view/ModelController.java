@@ -51,6 +51,7 @@ public class ModelController {
         carModelService.addNewModel(modelDTO);
         return "redirect:/";
     }
+
     @GetMapping("/edit/{id}")
     public String editModel(@PathVariable("id")  String id, Model model) {
         model.addAttribute("modelDTO", carModelService.getModelById(id));
