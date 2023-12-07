@@ -15,9 +15,6 @@ import rut.miit.carservice.services.implementations.OfferServiceImpl;
 import java.math.BigDecimal;
 import java.util.List;
 
-/**
- * todo Document type HomeContollers
- */
 @Controller
 public class HomeController {
 

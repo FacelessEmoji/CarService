@@ -4,18 +4,28 @@ import lombok.*;
 import jakarta.validation.constraints.*;
 import rut.miit.carservice.models.enums.UserRoleType;
 import rut.miit.carservice.services.dtos.base.BaseDTO;
+import rut.miit.carservice.util.viewValidators.User.NotAllUsername;
+import rut.miit.carservice.util.viewValidators.User.UniqueUsername;
+import rut.miit.carservice.util.viewValidators.User.ValidName;
+import rut.miit.carservice.util.viewValidators.User.ValidPassword;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @ToString
 public class UserDTO extends BaseDTO {
+
+    @UniqueUsername
+    @NotAllUsername
     private String username;
 
+    @ValidPassword
     private String password;
 
+    @ValidName
     private String firstName;
 
+    @ValidName
     private String lastName;
 
     private Boolean isActive;
@@ -24,43 +34,36 @@ public class UserDTO extends BaseDTO {
 
     private UserRoleDTO role; // Вторичный ключ, валидацию не добавляем
 
-    public UserDTO(String username, String password, String firstName, String lastName, Boolean isActive, String imageUrl) {
-        this.username = username;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.isActive = isActive;
-        this.imageUrl = imageUrl;
-    }
 
-    @NotEmpty(message = "Username can't be blank!")
-    @Size(min = 3,message = "Username must be at least 3 characters long")
+    @NotNull(message = "Username can't be blank!")
+    @Size(min = 3,message = "Username must be at least 3 characters long!")
     public String getUsername() {
         return username;
     }
 
-    @NotEmpty(message = "Password can't be blank!")
+    @NotNull(message = "Password can't be blank!")
+    @Size(min = 8, max = 20, message = "Password must be from 8 to 20 characters long!")
     public String getPassword() {
         return password;
     }
 
-    @NotEmpty(message = "First name can't be blank!")
+    @NotNull(message = "First name can't be blank!")
     public String getFirstName() {
         return firstName;
     }
 
 
-    @NotEmpty(message = "Last name can't be blank!")
+    @NotNull(message = "Last name can't be blank!")
     public String getLastName() {
         return lastName;
     }
 
-//    @NotNull(message = "isActive can't be null!")
+    @NotNull(message = "isActive can't be null!")
     public Boolean getActive() {
         return isActive;
     }
 
-    @NotEmpty(message = "Image URL can't be blank!")
+    @NotNull(message = "Image URL can't be blank!")
     public String getImageUrl() {
         return imageUrl;
     }

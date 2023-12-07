@@ -1,5 +1,6 @@
 package rut.miit.carservice.contollers.view;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,6 +10,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import rut.miit.carservice.services.dtos.input.UserDTO;
 import rut.miit.carservice.services.implementations.UserServiceImpl;
 
+//todo custom validators
 @Controller
 public class UserController {
 
@@ -21,7 +23,18 @@ public class UserController {
 
     @ModelAttribute("userDTO")
     public UserDTO initUser() {
-        return new UserDTO();
+        UserDTO user = new UserDTO();
+        user.setIsActive(Boolean.TRUE);
+        userService.setUser(user);
+        return user;
+    }
+
+    @ModelAttribute("adminDTO")
+    public UserDTO initAdmin() {
+        UserDTO user = new UserDTO();
+        user.setIsActive(Boolean.TRUE);
+        userService.setAdmin(user);
+        return user;
     }
 
     @GetMapping("/sign/in")
@@ -48,15 +61,14 @@ public class UserController {
 
     //todo pass validation and check adding
     @PostMapping("/sign/up")
-    public String signIn(@ModelAttribute("userDTO") UserDTO userDTO, Model model, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String signIn(@Valid @ModelAttribute("userDTO") UserDTO userDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             // Исправленные имена атрибутов для соответствия DTO
             redirectAttributes.addFlashAttribute("userDTO", userDTO);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userDTO", bindingResult);
-            return "redirect://sign/up";
+            return "redirect:/sign/up";
         }
-        userDTO.setIsActive(Boolean.TRUE);
-        userService.addNewUser(userService.setUser(userDTO));
+        userService.addNewUser(userDTO);
         return "redirect:/";
     }
 
