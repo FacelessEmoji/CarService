@@ -82,6 +82,17 @@ public class UserServiceImpl implements UserService<String>, UserInternalService
     }
 
     @Override
+    public UserDTO updateUser(String userId, UserDTO userDTO) {
+        User user = userRepository.findById(userId).orElseThrow();
+        user.setUsername(userDTO.getUsername());
+        user.setPassword(userDTO.getPassword());
+        user.setFirstName(userDTO.getFirstName());
+        user.setLastName(userDTO.getLastName());
+        user.setImageUrl(userDTO.getImageUrl());
+        return modelMapper.map(userRepository.saveAndFlush(user), UserDTO.class);
+    }
+
+    @Override
     public UserDTO updateUsername(String userId, String username) {
         User user = userRepository.findById(userId).orElseThrow();
         user.setUsername(username);

@@ -103,6 +103,20 @@ public class OfferServiceImpl implements OfferService<String>, OfferInternalServ
     }
 
     @Override
+    public OfferDTO updateOffer(String offerId, OfferDTO offerDTO) {
+        Offer offer = offerRepository.findById(offerId).orElseThrow();
+        offer.setModel(modelRepository.findById(offerDTO.getModel()).orElse(null));
+        offer.setDescription(offerDTO.getDescription());
+        offer.setImageUrl(offerDTO.getImageUrl());
+        offer.setPrice(offerDTO.getPrice());
+        offer.setEngine(offerDTO.getEngine());
+        offer.setTransmission(offerDTO.getTransmission());
+        offer.setMileage(offerDTO.getMileage());
+        offer.setYear(offerDTO.getYear());
+        return modelMapper.map(offerRepository.saveAndFlush(modelMapper.map(offer, Offer.class)), OfferDTO.class);
+    }
+
+    @Override
     public OfferDTO updateOfferDescription(String offerId, String description) {
         Offer offer = offerRepository.findById(offerId).orElseThrow();
         offer.setDescription(description);

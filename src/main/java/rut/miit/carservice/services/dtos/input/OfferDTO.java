@@ -30,19 +30,6 @@ public class OfferDTO extends BaseDTO {
     private String model; // Вторичный ключ, валидацию не добавляем
     private String seller; // Вторичный ключ, валидацию не добавляем
 
-    public OfferDTO(String description, String engine, String imageUrl, Integer mileage, BigDecimal price,
-        String transmission, Integer year, String model, String seller) {
-        this.description = description;
-        this.engine = EngineType.valueOf(engine);
-        this.imageUrl = imageUrl;
-        this.mileage = mileage;
-        this.price = price;
-        this.transmission = TransmissionType.valueOf(transmission);
-        this.year = year;
-        this.model = model;
-        this.seller = seller;
-    }
-
     @NotBlank(message = "Description can't be blank!")
     @Size(min = 10, max = 1000,message = "Description need to be from 10 to 1000 symbols long!")
     public String getDescription() {
@@ -88,7 +75,6 @@ public class OfferDTO extends BaseDTO {
         return model;
     }
 
-    @NotNull(message = "Seller id can't be null!")
     public String getSeller() {
         return seller;
     }

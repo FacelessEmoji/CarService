@@ -16,6 +16,7 @@ public interface OfferService<ID>{
     List<OfferWithDetailsDTO> getOffersByPriceBetweenAndBrand(String brandName, BigDecimal minPrice, BigDecimal maxPrice);
     List<OfferWithDetailsDTO> getOffersByPriceBetweenAndName(String brandName, String modelName, BigDecimal minPrice, BigDecimal maxPrice);
     OfferDTO addNewOffer(OfferDTO offerDTO);
+    OfferDTO updateOffer(ID offerId, OfferDTO offerDTO);
     OfferDTO updateOfferDescription(ID offerId, String description);
     OfferDTO updateOfferImageUrl(ID offerId, String imageUrl);
     OfferDTO updateOfferPrice(ID offerId, BigDecimal price);

@@ -6,23 +6,35 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import rut.miit.carservice.services.dtos.input.CarBrandDTO;
-import rut.miit.carservice.services.dtos.input.CarModelDTO;
 import rut.miit.carservice.services.dtos.input.OfferDTO;
+import rut.miit.carservice.services.dtos.input.UserDTO;
 import rut.miit.carservice.services.implementations.CarBrandServiceImpl;
 import rut.miit.carservice.services.implementations.CarModelServiceImpl;
 import rut.miit.carservice.services.implementations.OfferServiceImpl;
+import rut.miit.carservice.services.implementations.UserServiceImpl;
 
-import java.util.Objects;
-
-/**
- * todo Document type OfferController
- */
 @Controller
 @RequestMapping("/offers")
 public class OfferController {
     private OfferServiceImpl offerService;
+    private UserServiceImpl userService;
+    private CarModelServiceImpl modelService;
+    private CarBrandServiceImpl brandService;
+
+    @Autowired
+    public void setUserService(UserServiceImpl userService) {
+        this.userService = userService;
+    }
+
+    @Autowired
+    public void setModelService(CarModelServiceImpl modelService) {
+        this.modelService = modelService;
+    }
+
+    @Autowired
+    public void setBrandService(CarBrandServiceImpl brandService) {
+        this.brandService = brandService;
+    }
 
     @Autowired
     public void setOfferService(OfferServiceImpl offerService) {
@@ -35,45 +47,51 @@ public class OfferController {
     }
 
     @GetMapping("/add")
-    public String addOffer() {
+    public String addOffer(Model model) {
+        model.addAttribute("models", modelService.getAllModels());
         return "offers/offer-add";
     }
-    //
-    //    @PostMapping("/add")
-    //    public String addBrand(@Valid CarBrandDTO brandDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
-    //        if (bindingResult.hasErrors()) {
-    //            // Исправленные имена атрибутов для соответствия DTO
-    //            redirectAttributes.addFlashAttribute("brandDTO", brandDTO);
-    //            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.brandDTO",
-    //                bindingResult);
-    //            return "redirect:/brands/add";
-    //        }
-    //        brandService.addNewBrandDTO(brandDTO); // Убедитесь, что у вашего сервиса правильный метод
-    //
-    //        return "redirect:/";
-    //    }
-    //
-    //    @GetMapping("/edit/{name}")
-    //    public String editBrand(@PathVariable String name, Model model) {
-    //        model.addAttribute("brandDTO", brandService.getBrandByName(name));
-    //        return "brands/brand-edit";
-    //    }
-    //
-    //    @PostMapping("/edit/{name}")
-    //    public String editBrand(@Valid CarBrandDTO brandDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
-    //        System.out.println(brandService.getBrandById(brandDTO.getId()));
-    //        System.out.println("-----------------");
-    //        System.out.println(brandService.updateBrandNameByID(brandDTO.getId(), brandDTO.getName()));
-    //        if (bindingResult.hasErrors()) {
-    //            // Исправленные имена атрибутов для соответствия DTO
-    //            redirectAttributes.addFlashAttribute("brandDTO", brandDTO);
-    //            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.brandDTO",
-    //                bindingResult);
-    //            return "redirect:/brands/edit/" + brandDTO.getName();
-    //        }
-    //        //        brandService.updateBrandNameByID(brandDTO.getId(), brandDTO.getName()); // Убедитесь, что у вашего сервиса правильный метод
-    //        return "redirect:/brands/all";
-    //    }
+
+    @PostMapping("/add")
+    public String addOffer(@Valid OfferDTO offerDTO, BindingResult bindingResult,
+        Model model, @RequestParam String sellerUsername) {
+
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("models", modelService.getAllModels());
+            return "offers/offer-add";
+        }
+
+        // Поиск пользователя по username
+        UserDTO user = userService.getBaseUserByUsername(sellerUsername);
+        if (user != null) {
+            offerDTO.setSeller(user.getId());
+            offerService.addNewOffer(offerDTO);
+            return "redirect:/offers/all";
+        } else {
+            model.addAttribute("models", modelService.getAllModels());
+            model.addAttribute("userNotFoundError", "User not found");
+            return "offers/offer-add";
+        }
+    }
+
+    @GetMapping("/edit/{id}")
+    public String editOffer(@PathVariable("id") String id, Model model) {
+        model.addAttribute("offerDTO", offerService.getOfferById(id));
+        model.addAttribute("models", modelService.getAllModels());
+        return "offers/offer-edit";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String editOffer(@PathVariable("id") String id, @Valid OfferDTO offerDTO, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("offerDTO", offerDTO);
+            model.addAttribute("org.springframework.validation.BindingResult.offerDTO", bindingResult);
+            model.addAttribute("models", modelService.getAllModels());
+            return "offers/offer-edit";
+        }
+        offerService.updateOffer(id, offerDTO);
+        return "redirect:/offers/all";
+    }
 
     @GetMapping("/all")
     public String showAllModels(Model model) {

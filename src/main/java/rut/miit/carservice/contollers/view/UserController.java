@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import rut.miit.carservice.services.dtos.input.CarModelDTO;
 import rut.miit.carservice.services.dtos.input.UserDTO;
 import rut.miit.carservice.services.implementations.UserServiceImpl;
 
@@ -59,7 +60,6 @@ public class UserController {
         return "users/user-sign-up";
     }
 
-    //todo pass validation and check adding
     @PostMapping("/sign/up")
     public String signIn(@Valid @ModelAttribute("userDTO") UserDTO userDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
@@ -70,6 +70,23 @@ public class UserController {
         }
         userService.addNewUser(userDTO);
         return "redirect:/";
+    }
+
+    @GetMapping("users/edit/{id}")
+    public String editModel(@PathVariable("id")  String id, Model model) {
+        model.addAttribute("userDTO", userService.getUserById(id));
+        return "users/user-edit";
+    }
+
+    @PostMapping("users/edit/{id}")
+    public String editModel(@PathVariable String id, @Valid UserDTO userDTO, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("userDTO", userDTO);
+            model.addAttribute("org.springframework.validation.BindingResult.userDTO", bindingResult);
+            return "users/user-edit";
+        }
+        userService.addNewUser(userDTO);
+        return "redirect:/users/all";
     }
 
     @GetMapping("/users/all")

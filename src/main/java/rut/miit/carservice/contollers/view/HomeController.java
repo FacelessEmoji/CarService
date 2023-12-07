@@ -62,7 +62,7 @@ public class HomeController {
             minPrice = BigDecimal.ZERO;
         }
         if (maxPrice == null) {
-            maxPrice = new BigDecimal("100000000");
+            maxPrice = new BigDecimal("10000000000");
         }
 
         // Проверка на "All"

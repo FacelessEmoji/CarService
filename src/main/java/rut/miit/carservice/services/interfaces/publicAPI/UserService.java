@@ -10,6 +10,7 @@ public interface UserService<ID>{
     UserDTO getBaseUserByUsername(String username);
     List<UserOutputDTO> getAllUsers();
     UserDTO addNewUser(UserDTO userDTO);
+    UserDTO updateUser(ID userId, UserDTO userDTO);
     UserDTO updateUsername(ID userId, String username);
     UserDTO updatePassword(ID userId, String password);
     UserDTO updateIsActive(ID userId, boolean isActive);
