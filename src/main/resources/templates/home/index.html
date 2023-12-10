@@ -8,9 +8,11 @@
         <div class="row">
             <div class="col-md-2"></div>
             <div class="jumbotron text-center rounded col-md-8 align-self-center pt-5">
+
                 <div class="justify-content-center">
-                    <h1>Welcome to Car Service!</h1>
+                    <h1 th:text="'Welcome to Car Service, ' + ${username} + '!'">Welcome to Car Service, stranger!</h1>
                 </div>
+
                 <form th:action="@{/}" th:method="get">
                     <div class="mb-3">
                         <label for="brand">Brand</label>
@@ -55,9 +57,9 @@
                         <p th:text="${o.description}"></p>
                         <div class="d-flex justify-content-center">
                             <img th:src="${o.imageUrl}" alt="Car Image" style="max-width: 200px; max-height: 150px; border: 1px solid black;"/>
-                        </div>
-<!--                        <h6><a class="btn-block" th:href="@{/offers/edit/{id}(id=${o.id})}">Update</a></h6>-->
-                    </div>
+<!--                        </div>-->
+<!--                            <h6><a class="btn-block" th:href="@{/offers/edit/{id}(id=${o.id})}">Update</a></h6>-->
+<!--                        </div>-->
                 </div>
             </div>
         </div>

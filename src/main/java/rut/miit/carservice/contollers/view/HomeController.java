@@ -13,6 +13,7 @@ import rut.miit.carservice.services.implementations.CarModelServiceImpl;
 import rut.miit.carservice.services.implementations.OfferServiceImpl;
 
 import java.math.BigDecimal;
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -52,7 +53,7 @@ public class HomeController {
         @RequestParam(required = false) String modelName,
         @RequestParam(required = false) BigDecimal minPrice,
         @RequestParam(required = false) BigDecimal maxPrice,
-        Model model) {
+        Model model, Principal principal) {
 
         model.addAttribute("brands", brandService.getAllBrands());
         model.addAttribute("models", modelService.getAllModels());
@@ -78,6 +79,12 @@ public class HomeController {
         model.addAttribute("selectedModelName", modelName);
         model.addAttribute("selectedMinPrice", minPrice);
         model.addAttribute("selectedMaxPrice", maxPrice);
+
+        if (principal != null) {
+            model.addAttribute("username", principal.getName());
+        } else {
+            model.addAttribute("username", "stranger");
+        }
 
         return "home/index";
     }

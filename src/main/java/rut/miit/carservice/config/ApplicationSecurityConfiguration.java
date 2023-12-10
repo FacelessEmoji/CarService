@@ -29,6 +29,7 @@ public class ApplicationSecurityConfiguration {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, SecurityContextRepository securityContextRepository) throws Exception {
+        //todo: make error page if cant access page
         http
             .authorizeHttpRequests(
                 authorizeHttpRequests ->
