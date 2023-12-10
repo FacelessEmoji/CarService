@@ -54,18 +54,6 @@ public class AuthController {
         return "auth/user-sign-in";
     }
 
-    //    @PostMapping("/sign/in")
-    //    public String signIn(@ModelAttribute("userDTO") UserDTO userDTO, Model model) {
-    //        UserDTO foundUser = userService.getBaseUserByUsername(userDTO.getUsername());
-    //        System.out.println(foundUser);
-    //        if (foundUser != null && foundUser.getPassword().equals(userDTO.getPassword())) {
-    //            model.addAttribute("authSuccess", true);
-    //        } else {
-    //            model.addAttribute("authError", "Invalid username or password.");
-    //        }
-    //        return "users/user-sign-in";
-    //    }
-
 
     @PostMapping("/sign/in/error")
     public String onFailedLogin(

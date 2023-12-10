@@ -13,6 +13,8 @@ import rut.miit.carservice.services.implementations.CarModelServiceImpl;
 import rut.miit.carservice.services.implementations.OfferServiceImpl;
 import rut.miit.carservice.services.implementations.UserServiceImpl;
 
+import java.security.Principal;
+
 @Controller
 @RequestMapping("/offers")
 public class OfferController {
@@ -94,7 +96,9 @@ public class OfferController {
     }
 
     @GetMapping("/all")
-    public String showAllModels(Model model) {
+    public String showAllModels(Principal principal, Model model) {
+        String username = principal.getName();
+        model.addAttribute("username", username);
         model.addAttribute("allOffers", offerService.getAllOffers());
         return "offers/offer-all";
     }

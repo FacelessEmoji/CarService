@@ -91,10 +91,15 @@ public class UserServiceImpl implements UserService<String>, UserInternalService
         return userDTO;
     }
 
+    //todo: if editing, u are able not to change username
     @Override
     public UserDTO updateUser(String userId, UserDTO userDTO) {
         User user = userRepository.findById(userId).orElseThrow();
+//        if (!userDTO.getUsername().equals(user.getUsername())){
         user.setUsername(userDTO.getUsername());
+//        } else {
+//            user.setUsername(user.getUsername());
+//        }
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         user.setFirstName(userDTO.getFirstName());
         user.setLastName(userDTO.getLastName());

@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" class="h-100" xmlns:th="http://thymeleaf.org">
+<html lang="en" class="h-100"
+      xmlns:th="http://thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
 <head th:replace="fragments/head"/>
 <body class="d-flex flex-column h-100">
 <div th:replace="fragments/navbar">Navbar</div>
@@ -21,7 +23,9 @@
                     <div class="d-flex justify-content-center">
                         <img th:src="${o.imageUrl}" alt="Car Image" style="max-width: 200px; max-height: 150px; border: 1px solid black;"/>
                     </div>
-                    <h6><a class="btn-block" th:href="@{/offers/edit/{id}(id=${o.id})}">Update</a></h6>
+                    <h6 th:if="${o.sellerUsername} == ${username}">
+                        <a class="btn-block" th:href="@{/offers/edit/{id}(id=${o.id})}">Update</a>
+                    </h6>
                 </div>
             </div>
 

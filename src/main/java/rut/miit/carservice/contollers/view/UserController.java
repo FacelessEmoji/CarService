@@ -56,7 +56,7 @@ public class UserController {
     @GetMapping("users/edit/{id}")
     public String editModel(@PathVariable("id")  String id, Model model) {
         User user = userService.getUserById(id);
-        user.setPassword("");
+        user.setPassword("Testing1");
         model.addAttribute("userDTO", user);
         return "users/user-edit";
     }
@@ -69,7 +69,7 @@ public class UserController {
             return "users/user-edit";
         }
 
-        userService.addNewUser(userDTO);
+        userService.updateUser(id, userDTO);
 
         // Получение новых данных пользователя
         UserDetails newUserDetails = userDetailsService.loadUserByUsername(userDTO.getUsername());
@@ -82,7 +82,7 @@ public class UserController {
     }
 
 
-    @GetMapping("users/profile")
+    @GetMapping("/users/profile")
     public String profile(Principal principal, Model model) {
         String username = principal.getName();
         model.addAttribute("user", userService.getUserByUsername(username));
