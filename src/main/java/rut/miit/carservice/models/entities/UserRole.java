@@ -11,7 +11,8 @@ import java.util.*;
 @Table(name = "user_roles")
 public class UserRole extends BaseEntity {
 
-    @Convert(converter = RoleTypeConverter.class)
+    @Enumerated(EnumType.STRING)
+//    @Convert(converter = RoleTypeConverter.class)
     @Column(name = "role", length = 11, nullable = false)
     private UserRoleType role;
 

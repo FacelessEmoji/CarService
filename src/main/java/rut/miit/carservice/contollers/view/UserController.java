@@ -2,20 +2,34 @@ package rut.miit.carservice.contollers.view;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import rut.miit.carservice.models.entities.User;
 import rut.miit.carservice.services.dtos.input.CarModelDTO;
 import rut.miit.carservice.services.dtos.input.UserDTO;
+import rut.miit.carservice.services.dtos.output.UserOutputDTO;
 import rut.miit.carservice.services.implementations.UserServiceImpl;
+import rut.miit.carservice.services.security.AppUserDetailsService;
+
+import java.security.Principal;
 
 //todo custom validators
 @Controller
 public class UserController {
-
+    private AppUserDetailsService userDetailsService;
     private UserServiceImpl userService;
+
+    @Autowired
+    public void setUserDetailsService(AppUserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
 
     @Autowired
     public void setUserService(UserServiceImpl userService) {
@@ -37,56 +51,42 @@ public class UserController {
         userService.setAdmin(user);
         return user;
     }
-
-    @GetMapping("/sign/in")
-    public String signIn() {
-        return "users/user-sign-in";
-    }
-
-    @PostMapping("/sign/in")
-    public String signIn(@ModelAttribute("userDTO") UserDTO userDTO, Model model) {
-        UserDTO foundUser = userService.getBaseUserByUsername(userDTO.getUsername());
-        System.out.println(foundUser);
-        if (foundUser != null && foundUser.getPassword().equals(userDTO.getPassword())) {
-            model.addAttribute("authSuccess", true);
-        } else {
-            model.addAttribute("authError", "Invalid username or password.");
-        }
-        return "users/user-sign-in";
-    }
-
-    @GetMapping("/sign/up")
-    public String signUp() {
-        return "users/user-sign-up";
-    }
-
-    @PostMapping("/sign/up")
-    public String signIn(@Valid @ModelAttribute("userDTO") UserDTO userDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
-        if (bindingResult.hasErrors()) {
-            // Исправленные имена атрибутов для соответствия DTO
-            redirectAttributes.addFlashAttribute("userDTO", userDTO);
-            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userDTO", bindingResult);
-            return "redirect:/sign/up";
-        }
-        userService.addNewUser(userDTO);
-        return "redirect:/";
-    }
+//todo fix endpoints for sign in sign up
 
     @GetMapping("users/edit/{id}")
     public String editModel(@PathVariable("id")  String id, Model model) {
-        model.addAttribute("userDTO", userService.getUserById(id));
+        User user = userService.getUserById(id);
+        user.setPassword("");
+        model.addAttribute("userDTO", user);
         return "users/user-edit";
     }
 
     @PostMapping("users/edit/{id}")
-    public String editModel(@PathVariable String id, @Valid UserDTO userDTO, BindingResult bindingResult, Model model) {
+    public String editModel(@PathVariable String id, @Valid UserDTO userDTO, BindingResult bindingResult, Model model, Authentication currentAuthentication) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("userDTO", userDTO);
             model.addAttribute("org.springframework.validation.BindingResult.userDTO", bindingResult);
             return "users/user-edit";
         }
+
         userService.addNewUser(userDTO);
-        return "redirect:/users/all";
+
+        // Получение новых данных пользователя
+        UserDetails newUserDetails = userDetailsService.loadUserByUsername(userDTO.getUsername());
+
+        // Обновление Authentication объекта
+        Authentication newAuthentication = new UsernamePasswordAuthenticationToken(newUserDetails, currentAuthentication.getCredentials(), newUserDetails.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(newAuthentication);
+
+        return "redirect:/users/profile";
+    }
+
+
+    @GetMapping("users/profile")
+    public String profile(Principal principal, Model model) {
+        String username = principal.getName();
+        model.addAttribute("user", userService.getUserByUsername(username));
+        return "users/user-profile";
     }
 
     @GetMapping("/users/all")

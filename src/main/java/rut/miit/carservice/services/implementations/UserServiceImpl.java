@@ -2,6 +2,7 @@ package rut.miit.carservice.services.implementations;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import rut.miit.carservice.models.enums.UserRoleType;
 import rut.miit.carservice.repositories.UserRoleRepository;
@@ -14,13 +15,16 @@ import rut.miit.carservice.services.interfaces.internalAPI.UserInternalService;
 import rut.miit.carservice.services.interfaces.publicAPI.UserService;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
+//todo: check encrypt
 @Service
 public class UserServiceImpl implements UserService<String>, UserInternalService<String> {
     private UserRepository userRepository;
     private UserRoleRepository roleRepository;
     private ModelMapper modelMapper;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     public void setUserRepository(UserRepository userRepository) {
@@ -34,6 +38,10 @@ public class UserServiceImpl implements UserService<String>, UserInternalService
     public void setModelMapper(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
     }
+    @Autowired
+    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Override
     public User getUserById(String userId) {
@@ -42,7 +50,7 @@ public class UserServiceImpl implements UserService<String>, UserInternalService
 
     @Override
     public UserOutputDTO getUserByUsername(String username) {
-        User user = userRepository.findByUsername(username);
+        Optional<User> user = userRepository.findByUsername(username);
         if (user == null) {
             return null;
         }
@@ -51,8 +59,9 @@ public class UserServiceImpl implements UserService<String>, UserInternalService
 
     @Override
     public UserDTO getBaseUserByUsername(String username) {
-        User user = userRepository.findByUsername(username);
+        User user = userRepository.findByUsername(username).orElse(null);
         if (user == null) {
+            System.out.println("User with this username not found");
             return null;
         }
         return modelMapper.map(user, UserDTO.class);
@@ -65,8 +74,9 @@ public class UserServiceImpl implements UserService<String>, UserInternalService
     }
 
     @Override
-    public UserDTO addNewUser(UserDTO user) {
-        return modelMapper.map(userRepository.saveAndFlush(modelMapper.map(user, User.class)), UserDTO.class);
+    public UserDTO addNewUser(UserDTO userDTO) {
+        userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        return modelMapper.map(userRepository.saveAndFlush(modelMapper.map(userDTO, User.class)), UserDTO.class);
     }
 
     @Override
@@ -85,7 +95,7 @@ public class UserServiceImpl implements UserService<String>, UserInternalService
     public UserDTO updateUser(String userId, UserDTO userDTO) {
         User user = userRepository.findById(userId).orElseThrow();
         user.setUsername(userDTO.getUsername());
-        user.setPassword(userDTO.getPassword());
+        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         user.setFirstName(userDTO.getFirstName());
         user.setLastName(userDTO.getLastName());
         user.setImageUrl(userDTO.getImageUrl());

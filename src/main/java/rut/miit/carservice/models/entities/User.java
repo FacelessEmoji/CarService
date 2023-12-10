@@ -3,11 +3,12 @@ package rut.miit.carservice.models.entities;
 import jakarta.persistence.*;
 import rut.miit.carservice.models.baseEntities.TimestampedEntity;
 
+import java.io.Serializable;
 import java.util.*;
 
 @Entity
 @Table(name = "users")
-public class User extends TimestampedEntity {
+public class User extends TimestampedEntity  implements Serializable {
     @Column(name = "username", length = 255, nullable = false)
     private String username;
 
@@ -27,6 +28,7 @@ public class User extends TimestampedEntity {
     private String imageUrl;
 
     //
+    @Enumerated(EnumType.STRING)
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id")
     private UserRole role;

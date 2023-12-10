@@ -34,8 +34,13 @@ public class UserRoleServiceImpl implements UserRoleService<String>, UserRoleInt
 
     @Override
     public UserRoleDTO getRoleByName(UserRoleType roleName) {
-        return modelMapper.map(roleRepository.findByRole(roleName), UserRoleDTO.class);
+        UserRole role = roleRepository.findByRole(roleName);
+        if (role == null) {
+            throw new IllegalArgumentException("Role not found: " + roleName);
+        }
+        return modelMapper.map(role, UserRoleDTO.class);
     }
+
 
     @Override
     public List<UserRoleDTO> getAllRoles() {

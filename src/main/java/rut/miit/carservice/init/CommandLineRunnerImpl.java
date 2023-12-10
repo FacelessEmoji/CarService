@@ -37,9 +37,11 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
 
     public void seedData() {
         userRoleService.addNewRole(new UserRoleDTO(UserRoleType.USER));
+        userRoleService.addNewRole(new UserRoleDTO(UserRoleType.MODERATOR  ));
         userRoleService.addNewRole(new UserRoleDTO(UserRoleType.ADMIN));
 
-        userService.addNewUser(new UserDTO("test1", "111", "Nick", "Jackson", true, "https://82.126.59.6:80", userRoleService.getRoleByName(UserRoleType.USER)));
+
+        userService.addNewUser(new UserDTO("test1", "111", "Nick", "Jackson", true, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSB1o4IwyEY822wA5mbymjmI-VwPuYo0m33kg&usqp=CAU", userRoleService.getRoleByName(UserRoleType.ADMIN)));
         //userService.addNewUser(new UserDTO("test3", "111", "Nick", "Jackson", true, "https://82.126.59.6:80"));
         userService.addNewUser(new UserDTO("test2", "qwerty123", "test", "test", true, "https://42.146.59.6:80", userRoleService.getRoleByName(UserRoleType.USER)));
         userService.addNewUser(new UserDTO("martin23", "passw123", "Martin", "Gates", true, "https://82.126.59.5:80", userRoleService.getRoleByName(UserRoleType.USER)));

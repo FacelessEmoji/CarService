@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" class="h-100" xmlns:th="http://thymeleaf.org">
 <head th:replace="fragments/head"/>
+<!--sec:authorize="!isAuthenticated()"-->
 <body class="d-flex flex-column h-100">
 <div th:replace="fragments/navbar">Navbar</div>
 <main class="flex-shrink-0">
@@ -12,10 +13,13 @@
                     <h1>Welcome to CarService:</h1>
                 </div>
 
+                <a href="/sign/in" class="btn btn-link mt-3">Уже есть аккаунт? Войдите здесь!</a>
+
                 <form th:action="@{/sign/up}"
                       th:method="post"
                       th:object="${userDTO}"
                       class="m-md-auto w-50 pb-3">
+<!--                    changed from userDTO-->
 
                     <div class="mb-3">
                         <label class="form-label" for="username">Username</label>
