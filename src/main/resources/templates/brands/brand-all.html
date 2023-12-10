@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" class="h-100" xmlns:th="http://thymeleaf.org">
+<html lang="en" class="h-100"
+      xmlns:th="http://thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
 <head th:replace="fragments/head"/>
 <body class="d-flex flex-column h-100">
 <div th:replace="fragments/navbar">Navbar</div>
@@ -11,7 +13,9 @@
                 <h1 class="text-center text-dark mt-5">All Brands:</h1>
                 <div th:each="b : ${allBrands}" class="d-flex flex-column bg-text mb-3">
                     <h4 th:text="'' + ${b.name}"></h4>
+                    <div sec:authorize="hasRole('ADMIN')">
                     <h6><a class="btn-block" th:href="@{/brands/edit/{id}(id=${b.id})}">Update</a></h6>
+                    </div>
                 </div>
             </div>
         </div>

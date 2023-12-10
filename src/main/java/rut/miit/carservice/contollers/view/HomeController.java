@@ -74,6 +74,11 @@ public class HomeController {
             model.addAttribute("offers", offers);
         }
 
+        model.addAttribute("selectedBrandName", brandName);
+        model.addAttribute("selectedModelName", modelName);
+        model.addAttribute("selectedMinPrice", minPrice);
+        model.addAttribute("selectedMaxPrice", maxPrice);
+
         return "home/index";
     }
 }

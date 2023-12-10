@@ -32,15 +32,14 @@ public class ApplicationSecurityConfiguration {
         http
             .authorizeHttpRequests(
                 authorizeHttpRequests ->
-                    authorizeHttpRequests.
-                        requestMatchers(PathRequest.toStaticResources().atCommonLocations())
-                        .permitAll().
-                        requestMatchers("/", "/sign/in", "/sign/up", "/sign/in/error")//todo /sign/in/error
-                        .permitAll().
-                        requestMatchers("/users/profile","/offers/add","/offers/edit/","/offers/all","/brands/all","/models/all", "/sign/out").authenticated().
-                        requestMatchers("/models/add","/models/edit/*").hasRole(UserRoleType.MODERATOR.name()).
-                        requestMatchers("/brands/add","/brands/edit/*","/users/all").hasRole(UserRoleType.ADMIN.name()).
-                        anyRequest().authenticated()
+                    authorizeHttpRequests
+                    .requestMatchers("/get-models").permitAll()
+                    .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+                    .requestMatchers("/", "/sign/in", "/sign/up", "/sign/in/error").permitAll()
+                    .requestMatchers("/users/profile", "/offers/add", "/offers/edit/*", "/offers/all", "/brands/all", "/models/all", "/sign/out").authenticated()
+                    .requestMatchers("/models/add", "/models/edit/*").hasAnyRole(UserRoleType.MODERATOR.name(), UserRoleType.ADMIN.name())
+                    .requestMatchers("/brands/add", "/brands/edit/*", "/users/all").hasRole(UserRoleType.ADMIN.name())
+                    .anyRequest().authenticated()
             )
             .formLogin(
                 (formLogin) ->

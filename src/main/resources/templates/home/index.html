@@ -15,22 +15,28 @@
                     <div class="mb-3">
                         <label for="brand">Brand</label>
                         <select class="form-control" id="brand" name="brandName" onchange="updateModels()">
-                            <option th:each="brand : ${brands}" th:value="${brand.name}" th:text="${brand.name}"></option>
+                            <option th:each="brand : ${brands}"
+                                    th:value="${brand.name}"
+                                    th:text="${brand.name}"
+                                    th:selected="${brand.name == selectedBrandName}">Brand Name</option>
                         </select>
                     </div>
                     <div class="mb-3">
                         <label for="model">Model</label>
                         <select class="form-control" id="model" name="modelName">
-                            <option th:each="model : ${models}" th:value="${model.name}" th:text="${model.name}"></option>
+                            <option th:each="model : ${models}"
+                                    th:value="${model.name}"
+                                    th:text="${model.name}"
+                                    th:selected="${model.name == selectedModelName}">Model Name</option>
                         </select>
                     </div>
                     <div class="mb-3">
                         <label for="minPrice">Minimum Price</label>
-                        <input type="number" class="form-control" id="minPrice" name="minPrice">
+                        <input type="number" class="form-control" id="minPrice" name="minPrice" th:value="${selectedMinPrice}">
                     </div>
                     <div class="mb-3">
                         <label for="maxPrice">Maximum Price</label>
-                        <input type="number" class="form-control" id="maxPrice" name="maxPrice">
+                        <input type="number" class="form-control" id="maxPrice" name="maxPrice" th:value="${selectedMaxPrice}">
                     </div>
                     <button type="submit" class="btn btn-primary">Search</button>
                 </form>
@@ -50,7 +56,7 @@
                         <div class="d-flex justify-content-center">
                             <img th:src="${o.imageUrl}" alt="Car Image" style="max-width: 200px; max-height: 150px; border: 1px solid black;"/>
                         </div>
-                        <h6><a class="btn-block" th:href="@{/offers/edit/{id}(id=${o.id})}">Update</a></h6>
+<!--                        <h6><a class="btn-block" th:href="@{/offers/edit/{id}(id=${o.id})}">Update</a></h6>-->
                     </div>
                 </div>
             </div>
