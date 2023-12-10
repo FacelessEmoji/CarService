@@ -11,22 +11,13 @@
 
                 <div class="justify-content-center">
                     <h1>Add Offer</h1>
+                    <h3 th:text="'Seller Username: ' + ${username}"></h3>
                 </div>
+
                 <form th:action="@{/offers/add}"
                       th:method="post"
                       th:object="${offerDTO}"
                       class="m-md-auto w-50 pb-3">
-
-                    <!-- Используйте обычный атрибут name для sellerUsername -->
-                    <div class="mb-3">
-                        <label class="form-label" for="sellerUsername">Seller Username</label>
-                        <input type="text" class="form-control text-center" id="sellerUsername" name="sellerUsername"/>
-                        <div th:if="${userNotFoundError}" class="text-danger">
-                            <p th:text="${userNotFoundError}"></p>
-                        </div>
-                    </div>
-
-
 
                     <div class="mb-3">
                         <label for="model">Model</label>

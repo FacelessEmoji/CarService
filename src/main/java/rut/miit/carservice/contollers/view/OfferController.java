@@ -2,6 +2,7 @@ package rut.miit.carservice.contollers.view;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -45,43 +46,46 @@ public class OfferController {
 
     @ModelAttribute("offerDTO")
     public OfferDTO initOffer() {
-        return new OfferDTO();
+        OfferDTO offerDTO = new OfferDTO();
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        UserDTO user = userService.getBaseUserByUsername(username);
+        if (user != null) {
+            offerDTO.setSeller(user.getId());
+        }
+        return offerDTO;
     }
 
     @GetMapping("/add")
-    public String addOffer(Model model) {
+    public String addOffer(Model model, Principal principal) {
         model.addAttribute("models", modelService.getAllModels());
+        String username = principal != null ? principal.getName() : "N/A";
+        model.addAttribute("username", username);
         return "offers/offer-add";
     }
 
-    @PostMapping("/add")
-    public String addOffer(@Valid OfferDTO offerDTO, BindingResult bindingResult,
-        Model model, @RequestParam String sellerUsername) {
 
+    @PostMapping("/add")
+    public String addOffer(@Valid OfferDTO offerDTO, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("models", modelService.getAllModels());
             return "offers/offer-add";
         }
-
-        // Поиск пользователя по username
-        UserDTO user = userService.getBaseUserByUsername(sellerUsername);
-        if (user != null) {
-            offerDTO.setSeller(user.getId());
-            offerService.addNewOffer(offerDTO);
-            return "redirect:/offers/all";
-        } else {
-            model.addAttribute("models", modelService.getAllModels());
-            model.addAttribute("userNotFoundError", "User not found");
-            return "offers/offer-add";
-        }
+        offerService.addNewOffer(offerDTO);
+        return "redirect:/offers/all";
     }
 
     @GetMapping("/edit/{id}")
     public String editOffer(@PathVariable("id") String id, Model model) {
         model.addAttribute("offerDTO", offerService.getOfferById(id));
         model.addAttribute("models", modelService.getAllModels());
+
+        // Добавление имени пользователя в модель
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        model.addAttribute("username", username);
+
         return "offers/offer-edit";
     }
+
 
     @PostMapping("/edit/{id}")
     public String editOffer(@PathVariable("id") String id, @Valid OfferDTO offerDTO, BindingResult bindingResult, Model model) {
