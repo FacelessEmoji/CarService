@@ -64,7 +64,7 @@ public class OfferServiceImpl implements OfferService<String>, OfferInternalServ
 
     @Override
     public List<OfferWithDetailsDTO> getOffersBySellerUsername(String username) {
-        return offerRepository.findAllBySeller_UsernameAndSeller_IsActiveAndSeller_RoleRole(username, true, UserRoleType.USER).stream()
+        return offerRepository.findAllBySeller_UsernameAndSeller_IsActive(username, true).stream()
                 .map(o -> modelMapper.map(o, OfferWithDetailsDTO.class)).collect(Collectors.toList());
     }
 

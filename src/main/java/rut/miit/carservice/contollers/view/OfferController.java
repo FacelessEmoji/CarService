@@ -100,7 +100,7 @@ public class OfferController {
     }
 
     @GetMapping("/all")
-    public String showAllModels(Principal principal, Model model) {
+    public String showAllOffers(Principal principal, Model model) {
         String username = principal.getName();
         model.addAttribute("username", username);
         model.addAttribute("allOffers", offerService.getAllOffers());

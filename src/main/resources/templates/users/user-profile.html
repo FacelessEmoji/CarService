@@ -31,6 +31,36 @@
                     </form>
                     <a th:href="@{/users/edit/{id}(id=${user.id})}" class="btn btn-secondary btn-lg" style="margin-left: 30px;">Edit Profile</a>
                 </div>
+
+                <!-- Основной блок информации о профиле пользователя -->
+
+                <!-- Блок офферов пользователя -->
+                <div class="mt-5">
+                    <h3>Your Offers:</h3>
+                    <div th:unless="${hasOffers}" class="alert alert-info">
+                        <p>You don't have any active offers yet, you can create one <a href="/offers/add">here</a>!</p>
+                    </div>
+                    <div th:each="offer : ${userOffers}" class="mb-3 p-3 border border-secondary rounded">
+                        <!-- Информация об оффере -->
+                        <div class="d-flex align-items-center">
+                            <!-- Миниатюра изображения оффера с рамкой и увеличенным отступом справа -->
+                            <div class="border border-dark" style="max-width: 100px; max-height: 75px; overflow: hidden; margin-right: 20px;">
+                                <img th:src="${offer.imageUrl}" alt="Offer Image" class="img-fluid">
+                            </div>
+                            <!-- Текстовая информация об оффере -->
+                            <div>
+                                <h4 th:text="'Offer: ' + ${offer.brandName} + ' ' + ${offer.modelName}"></h4>
+                                <p th:text="'Price: ' + ${offer.price} + ' $'"></p>
+                            </div>
+                        </div>
+                        <!-- Кнопка для редактирования оффера -->
+                        <div class="d-flex justify-content-end mt-2">
+                            <a th:href="@{/offers/edit/{id}(id=${offer.id})}" class="btn btn-primary">Update</a>
+                        </div>
+                    </div>
+                </div>
+
+
             </div>
         </div>
     </div>

@@ -12,8 +12,7 @@ import java.util.List;
 @Repository
 public interface OfferRepository extends JpaRepository<Offer, String> {
 
-    List<Offer> findAllBySeller_UsernameAndSeller_IsActiveAndSeller_RoleRole
-            (String username, boolean isActive, UserRoleType roleType);
+    List<Offer> findAllBySeller_UsernameAndSeller_IsActive(String username, boolean isActive);
 
     List<Offer> findAllByCreatedAfterAndCreatedBeforeOrderByCreated(LocalDateTime startTime, LocalDateTime endTime);
 

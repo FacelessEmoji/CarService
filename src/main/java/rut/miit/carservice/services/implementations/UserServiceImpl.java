@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService<String>, UserInternalService
     @Override
     public UserOutputDTO getUserByUsername(String username) {
         Optional<User> user = userRepository.findByUsername(username);
-        if (user == null) {
+        if (user.isEmpty()) {
             return null;
         }
         return modelMapper.map(user, UserOutputDTO.class);

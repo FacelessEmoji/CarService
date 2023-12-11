@@ -14,17 +14,26 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import rut.miit.carservice.models.entities.User;
 import rut.miit.carservice.services.dtos.input.CarModelDTO;
 import rut.miit.carservice.services.dtos.input.UserDTO;
+import rut.miit.carservice.services.dtos.output.OfferWithDetailsDTO;
 import rut.miit.carservice.services.dtos.output.UserOutputDTO;
+import rut.miit.carservice.services.implementations.OfferServiceImpl;
 import rut.miit.carservice.services.implementations.UserServiceImpl;
 import rut.miit.carservice.services.security.AppUserDetailsService;
 
 import java.security.Principal;
+import java.util.List;
 
 //todo custom validators
 @Controller
 public class UserController {
     private AppUserDetailsService userDetailsService;
     private UserServiceImpl userService;
+    private OfferServiceImpl offerService;
+
+    @Autowired
+    public void setOfferService(OfferServiceImpl offerService) {
+        this.offerService = offerService;
+    }
 
     @Autowired
     public void setUserDetailsService(AppUserDetailsService userDetailsService) {
@@ -86,8 +95,15 @@ public class UserController {
     public String profile(Principal principal, Model model) {
         String username = principal.getName();
         model.addAttribute("user", userService.getUserByUsername(username));
+
+        List<OfferWithDetailsDTO> userOffers = offerService.getOffersBySellerUsername(username);
+        System.out.println(userOffers);
+        model.addAttribute("userOffers", userOffers);
+        model.addAttribute("hasOffers", !userOffers.isEmpty());
+
         return "users/user-profile";
     }
+
 
     @GetMapping("/users/all")
     public String showAllUsers(Model model) {

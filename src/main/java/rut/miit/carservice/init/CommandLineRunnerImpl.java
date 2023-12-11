@@ -133,6 +133,8 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
         System.out.println(userRoleService.getRoleByName(UserRoleType.USER));
         System.out.println("-----");
         System.out.println(userService.getBaseUserByUsername("test1"));
+        System.out.println("-----");
+        offerService.getOffersBySellerUsername("test1").forEach(System.out::println);
     }
 }
 
