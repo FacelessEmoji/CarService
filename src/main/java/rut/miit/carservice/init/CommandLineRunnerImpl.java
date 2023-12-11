@@ -35,9 +35,15 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
     @Autowired
     private ModelMapper modelMapper;
 
+    public void seedDataForRedis() {
+        for (int i = 0; i < 1000; i++) {
+            carBrandService.addNewBrand("Brand №" + i);
+        }
+    }
+
     public void seedData() {
         userRoleService.addNewRole(new UserRoleDTO(UserRoleType.USER));
-        userRoleService.addNewRole(new UserRoleDTO(UserRoleType.MODERATOR  ));
+        userRoleService.addNewRole(new UserRoleDTO(UserRoleType.MODERATOR));
         userRoleService.addNewRole(new UserRoleDTO(UserRoleType.ADMIN));
 
 
@@ -112,6 +118,7 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
 
     @Override
     public void run(String... args){
+        //seedDataForRedis();
         seedData();
         System.out.println("Test");
         LocalDateTime startTime = LocalDateTime.of(2023, Month.JANUARY, 1, 0, 0);

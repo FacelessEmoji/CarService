@@ -2,6 +2,9 @@ package rut.miit.carservice.services.implementations;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.stereotype.Service;
 import rut.miit.carservice.services.dtos.input.CarBrandDTO;
 import rut.miit.carservice.models.entities.CarBrand;
@@ -13,6 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@EnableCaching
 public class CarBrandServiceImpl implements CarBrandService<String>, CarBrandInternalService<String> {
     private CarBrandRepository brandRepository;
     private ModelMapper modelMapper;
@@ -42,6 +46,7 @@ public class CarBrandServiceImpl implements CarBrandService<String>, CarBrandInt
     }
 
     @Override
+    @Cacheable("brands")
     public List<CarBrandDTO> getAllBrands() {
         return brandRepository.findAll().stream()
                 .map((c)-> modelMapper.map(c, CarBrandDTO.class)).collect(Collectors.toList());
@@ -54,6 +59,7 @@ public class CarBrandServiceImpl implements CarBrandService<String>, CarBrandInt
     }
 
     @Override
+    @CacheEvict(value = "brands", allEntries = true)
     public CarBrandDTO addNewBrandDTO(CarBrandDTO brand) {
         return modelMapper.map(brandRepository.saveAndFlush(modelMapper.map(brand,CarBrand.class)),CarBrandDTO.class);
     }
@@ -67,6 +73,7 @@ public class CarBrandServiceImpl implements CarBrandService<String>, CarBrandInt
     }
 
     @Override
+    @CacheEvict(value = "brands", allEntries = true)
     public CarBrandDTO updateBrandNameByID(String brandId, String newBrandName) {
         CarBrand newCarBrand = brandRepository.findById(brandId).orElse(null);
         newCarBrand.setName(newBrandName);
