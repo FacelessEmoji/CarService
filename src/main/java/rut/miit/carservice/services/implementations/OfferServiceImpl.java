@@ -2,6 +2,9 @@ package rut.miit.carservice.services.implementations;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.stereotype.Service;
 import rut.miit.carservice.repositories.CarModelRepository;
 import rut.miit.carservice.repositories.UserRepository;
@@ -19,6 +22,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@EnableCaching
 public class OfferServiceImpl implements OfferService<String>, OfferInternalService<String> {
     private CarModelRepository modelRepository;
     private UserRepository userRepository;
@@ -51,6 +55,7 @@ public class OfferServiceImpl implements OfferService<String>, OfferInternalServ
     }
 
     @Override
+    @Cacheable("offers")
     public List<OfferWithDetailsDTO> getAllOffers() {
         return offerRepository.findAll().stream()
                 .map(o -> modelMapper.map(o, OfferWithDetailsDTO.class)).collect(Collectors.toList());
@@ -63,6 +68,7 @@ public class OfferServiceImpl implements OfferService<String>, OfferInternalServ
     }
 
     @Override
+    @Cacheable("userOffers")
     public List<OfferWithDetailsDTO> getOffersBySellerUsername(String username) {
         return offerRepository.findAllBySeller_UsernameAndSeller_IsActive(username, true).stream()
                 .map(o -> modelMapper.map(o, OfferWithDetailsDTO.class)).collect(Collectors.toList());
@@ -95,6 +101,7 @@ public class OfferServiceImpl implements OfferService<String>, OfferInternalServ
     }
 
     @Override
+    @CacheEvict(cacheNames = {"offers", "userOffers"}, allEntries = true)
     public OfferDTO addNewOffer(OfferDTO offerDTO) {
         Offer offer = modelMapper.map(offerDTO, Offer.class);
         offer.setModel(modelRepository.findById(offerDTO.getModel()).orElse(null));
@@ -102,7 +109,9 @@ public class OfferServiceImpl implements OfferService<String>, OfferInternalServ
         return modelMapper.map(offerRepository.saveAndFlush(modelMapper.map(offer, Offer.class)), OfferDTO.class);
     }
 
+
     @Override
+    @CacheEvict(cacheNames = {"offers", "userOffers"}, allEntries = true)
     public OfferDTO updateOffer(String offerId, OfferDTO offerDTO) {
         Offer offer = offerRepository.findById(offerId).orElseThrow();
         offer.setModel(modelRepository.findById(offerDTO.getModel()).orElse(null));

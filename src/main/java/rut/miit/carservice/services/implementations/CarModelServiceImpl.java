@@ -2,6 +2,9 @@ package rut.miit.carservice.services.implementations;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.stereotype.Service;
 import rut.miit.carservice.repositories.CarBrandRepository;
 import rut.miit.carservice.services.dtos.input.CarModelDTO;
@@ -17,6 +20,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@EnableCaching
 public class CarModelServiceImpl implements CarModelService<String>, CarModelInternalService<String>{
     private CarModelRepository modelRepository;
     private CarBrandRepository brandRepository;
@@ -50,12 +54,14 @@ public class CarModelServiceImpl implements CarModelService<String>, CarModelInt
     }
 
     @Override
+    @Cacheable("models")
     public List<CarModelOutputDTO> getAllModels() {
         return modelRepository.findAll().stream()
                 .map(m -> modelMapper.map(m, CarModelOutputDTO.class)).collect(Collectors.toList());
     }
 
     @Override
+    @Cacheable("modelsByBrand")
     public List<CarModelOutputDTO> getAllModelsByBrand(String brandName) {
         return modelRepository.findAllByBrand_Name(brandName).stream()
             .map(m -> modelMapper.map(m, CarModelOutputDTO.class)).collect(Collectors.toList());
@@ -74,6 +80,7 @@ public class CarModelServiceImpl implements CarModelService<String>, CarModelInt
     }
 
     @Override
+    @CacheEvict(cacheNames = {"models", "modelsByBrand"}, allEntries = true)
     public CarModelDTO addNewModel(CarModelDTO carModelDTO) {
         CarModel carModel = modelMapper.map(carModelDTO, CarModel.class);
         carModel.setBrand(brandRepository.findById(carModelDTO.getBrand()).orElse(null));
@@ -81,6 +88,7 @@ public class CarModelServiceImpl implements CarModelService<String>, CarModelInt
     }
 
     @Override
+    @CacheEvict(cacheNames = {"models", "modelsByBrand"}, allEntries = true)
     public CarModelDTO updateModel(String modelId, CarModelDTO modelDTO) {
         CarModel carModel = modelRepository.findById(modelId).orElseThrow();
         carModel.setName(modelDTO.getName());
