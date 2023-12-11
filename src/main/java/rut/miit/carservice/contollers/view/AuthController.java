@@ -63,4 +63,9 @@ public class AuthController {
         redirectAttributes.addFlashAttribute("badCredentials", true);
         return "redirect:/sign/in";
     }
+
+    @GetMapping("/forbidden")
+    public String forbidden() {
+        return "auth/forbidden";
+    }
 }

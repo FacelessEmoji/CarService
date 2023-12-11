@@ -58,7 +58,10 @@ public class ApplicationSecurityConfiguration {
             ).securityContext(
                 securityContext -> securityContext.
                     securityContextRepository(securityContextRepository)
-            );
+            ).exceptionHandling()
+            .accessDeniedHandler((request, response, accessDeniedException) -> {
+                response.sendRedirect("/forbidden");
+            });
 
         return http.build();
     }
@@ -76,6 +79,4 @@ public class ApplicationSecurityConfiguration {
         return new BCryptPasswordEncoder();
     }
 
-//    @Bean
-//    public UserDetailsService userDetailsService() { return new AppUserDetailsService(userRepository); }
 }
