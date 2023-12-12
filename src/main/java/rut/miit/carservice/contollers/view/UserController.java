@@ -24,6 +24,8 @@ import rut.miit.carservice.services.implementations.UserServiceImpl;
 import rut.miit.carservice.services.security.AppUserDetailsService;
 
 import java.security.Principal;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 //todo custom validators
@@ -64,18 +66,28 @@ public class UserController {
         userService.setAdmin(user);
         return user;
     }
-//todo fix endpoints for sign in sign up
 
     @GetMapping("users/edit/{id}")
-    public String editModel(@PathVariable("id")  String id, Model model) {
+    public String editModel(@PathVariable("id") String id, Model model, Principal principal) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String currentTime = LocalDateTime.now().format(formatter);
+        String logMessage = String.format("User %s started editing profile with ID %s at %s.", principal.getName(), id, currentTime);
+        LOG.log(Level.INFO, logMessage);
+
         User user = userService.getUserById(id);
         user.setPassword("Testing1");
         model.addAttribute("userDTO", user);
         return "users/user-edit";
     }
 
+
     @PostMapping("users/edit/{id}")
-    public String editModel(@PathVariable String id, @Valid UserDTO userDTO, BindingResult bindingResult, Model model, Authentication currentAuthentication) {
+    public String editModel(@PathVariable String id, @Valid UserDTO userDTO, BindingResult bindingResult, Model model, Authentication currentAuthentication, Principal principal) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String currentTime = LocalDateTime.now().format(formatter);
+        String startLogMessage = String.format("User %s started POST request to edit profile with ID %s at %s.", principal.getName(), id, currentTime);
+        LOG.log(Level.INFO, startLogMessage);
+
         if (bindingResult.hasErrors()) {
             model.addAttribute("userDTO", userDTO);
             model.addAttribute("org.springframework.validation.BindingResult.userDTO", bindingResult);
@@ -83,21 +95,25 @@ public class UserController {
         }
 
         userService.updateUser(id, userDTO);
-
-        // Получение новых данных пользователя
         UserDetails newUserDetails = userDetailsService.loadUserByUsername(userDTO.getUsername());
-
-        // Обновление Authentication объекта
         Authentication newAuthentication = new UsernamePasswordAuthenticationToken(newUserDetails, currentAuthentication.getCredentials(), newUserDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(newAuthentication);
+
+        String endLogMessage = String.format("User %s successfully updated profile with ID %s at %s.", principal.getName(), id, currentTime);
+        LOG.log(Level.INFO, endLogMessage);
 
         return "redirect:/users/profile";
     }
 
 
+
     @GetMapping("/users/profile")
     public String profile(Principal principal, Model model) {
-        LOG.log(Level.INFO, principal.getName() + "opened his profile.");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String currentTime = LocalDateTime.now().format(formatter);
+        String logMessage = String.format("User %s opened his profile at %s", principal.getName(), currentTime);
+        LOG.log(Level.INFO, logMessage);
+
         String username = principal.getName();
         model.addAttribute("user", userService.getUserByUsername(username));
 
@@ -111,8 +127,14 @@ public class UserController {
 
 
     @GetMapping("/users/all")
-    public String showAllUsers(Model model) {
+    public String showAllUsers(Model model, Principal principal) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String currentTime = LocalDateTime.now().format(formatter);
+        String logMessage = String.format("User %s accessed all users list at %s.", principal.getName(), currentTime);
+        LOG.log(Level.INFO, logMessage);
+
         model.addAttribute("allUsers", userService.getAllUsers());
         return "users/user-all";
     }
+
 }
