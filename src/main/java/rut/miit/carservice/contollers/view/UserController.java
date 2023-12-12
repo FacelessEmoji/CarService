@@ -1,6 +1,9 @@
 package rut.miit.carservice.contollers.view;
 
 import jakarta.validation.Valid;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -26,6 +29,7 @@ import java.util.List;
 //todo custom validators
 @Controller
 public class UserController {
+    private static final Logger LOG = LogManager.getLogger(Controller.class);
     private AppUserDetailsService userDetailsService;
     private UserServiceImpl userService;
     private OfferServiceImpl offerService;
@@ -93,6 +97,7 @@ public class UserController {
 
     @GetMapping("/users/profile")
     public String profile(Principal principal, Model model) {
+        LOG.log(Level.INFO, principal.getName() + "opened his profile.");
         String username = principal.getName();
         model.addAttribute("user", userService.getUserByUsername(username));
 

@@ -1,6 +1,9 @@
 package rut.miit.carservice.contollers.view;
 
 import jakarta.validation.Valid;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Controller;
@@ -16,7 +19,7 @@ import rut.miit.carservice.services.implementations.UserServiceImpl;
 @Controller
 @RequestMapping("/")
 public class AuthController {
-
+    private static final Logger LOG = LogManager.getLogger(Controller.class);
     private UserServiceImpl userService;
 
     @Autowired
