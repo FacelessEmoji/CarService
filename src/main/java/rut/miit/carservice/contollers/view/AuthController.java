@@ -90,5 +90,4 @@ public class AuthController {
         LOG.log(Level.INFO, "Accessed forbidden page.");
         return "auth/forbidden";
     }
-
 }

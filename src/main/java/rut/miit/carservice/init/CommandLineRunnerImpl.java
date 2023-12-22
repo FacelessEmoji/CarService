@@ -12,9 +12,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.Month;
 
-/**
- * todo add all to prohibited usernames, models and other
- */
+
 @Component
 public class CommandLineRunnerImpl implements CommandLineRunner {
     @Autowired
@@ -118,7 +116,7 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
 
     @Override
     public void run(String... args){
-        //seedDataForRedis();
+//        seedDataForRedis();
         seedData();
         System.out.println("Test");
         LocalDateTime startTime = LocalDateTime.of(2023, Month.JANUARY, 1, 0, 0);

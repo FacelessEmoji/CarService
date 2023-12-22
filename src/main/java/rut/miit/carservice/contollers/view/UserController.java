@@ -28,7 +28,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-//todo custom validators
 @Controller
 public class UserController {
     private static final Logger LOG = LogManager.getLogger(Controller.class);
@@ -80,9 +79,9 @@ public class UserController {
         return "users/user-edit";
     }
 
-
     @PostMapping("users/edit/{id}")
-    public String editModel(@PathVariable String id, @Valid UserDTO userDTO, BindingResult bindingResult, Model model, Authentication currentAuthentication, Principal principal) {
+    public String editModel(@PathVariable String id, @Valid UserDTO userDTO, BindingResult bindingResult, Model model, Authentication currentAuthentication,
+        Principal principal) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String currentTime = LocalDateTime.now().format(formatter);
         String startLogMessage = String.format("User %s started POST request to edit profile with ID %s at %s.", principal.getName(), id, currentTime);
@@ -96,7 +95,8 @@ public class UserController {
 
         userService.updateUser(id, userDTO);
         UserDetails newUserDetails = userDetailsService.loadUserByUsername(userDTO.getUsername());
-        Authentication newAuthentication = new UsernamePasswordAuthenticationToken(newUserDetails, currentAuthentication.getCredentials(), newUserDetails.getAuthorities());
+        Authentication newAuthentication =
+            new UsernamePasswordAuthenticationToken(newUserDetails, currentAuthentication.getCredentials(), newUserDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(newAuthentication);
 
         String endLogMessage = String.format("User %s successfully updated profile with ID %s at %s.", principal.getName(), id, currentTime);
@@ -104,8 +104,6 @@ public class UserController {
 
         return "redirect:/users/profile";
     }
-
-
 
     @GetMapping("/users/profile")
     public String profile(Principal principal, Model model) {
@@ -125,7 +123,6 @@ public class UserController {
         return "users/user-profile";
     }
 
-
     @GetMapping("/users/all")
     public String showAllUsers(Model model, Principal principal) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -136,5 +133,4 @@ public class UserController {
         model.addAttribute("allUsers", userService.getAllUsers());
         return "users/user-all";
     }
-
 }
